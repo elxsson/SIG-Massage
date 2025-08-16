@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void pausar() {
     printf("\n Pressione Enter para continuar...");
     while(getchar() != '\n');
@@ -126,6 +127,23 @@ int main() {
                 printf("╚══════════════════════════════════════════════════╝\n");
                 pausar();
                 break;
+
+            case 7:
+                system("clear || cls");
+                printf("\n╔══════════════════════════════════════════════════╗\n");
+                printf("║                  EQUIPE SIG-MASSAGE              ║\n");
+                printf("╠══════════════════════════════════════════════════╣\n");
+                printf("║                                                  ║\n");
+                printf("║   Desenvolvedores:                               ║\n");
+                printf("║      • Felipe Eduardo Silva Fernandes            ║\n");
+                printf("║      • Elisson Tavares                           ║\n");
+                printf("║                                                  ║\n");
+                printf("║   Contato:                                       ║\n");
+                printf("║      • felipe.fernandes.710@edu.br               ║\n");
+                printf("║      • elisson.tavares.dev@gmail.com             ║\n");
+                printf("║                                                  ║\n");
+                printf("╚══════════════════════════════════════════════════╝\n");
+                pausar();
 
                 
             case 0:
