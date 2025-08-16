@@ -1,6 +1,12 @@
+/*
+ |===========================================================================|
+ |                             SIG-MASSAGE                                   |
+ |        Um Sistema de Gestão para Serviços de Massagens Terapêuticas       |
+ |===========================================================================|
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
-
 
 void pausar() {
     printf("\n Pressione Enter para continuar...");
@@ -23,6 +29,7 @@ int main() {
         printf("║ ► 4. Módulo Agendamentos                         ║\n");
         printf("║ ► 5. Módulo Relatórios                           ║\n");
         printf("║ ► 6. Sobre o SIG-MASSAGE                         ║\n");
+        printf("║ ► 7. Equipe SIG-MASSAGE                          ║\n");
         printf("║ ► 0. Sair do Sistema                             ║\n");
         printf("║                                                  ║\n");
         printf("╚══════════════════════════════════════════════════╝\n");
@@ -139,12 +146,12 @@ int main() {
                 printf("║      • Elisson Tavares                           ║\n");
                 printf("║                                                  ║\n");
                 printf("║   Contato:                                       ║\n");
-                printf("║      • felipe.fernandes.710@edu.br               ║\n");
+                printf("║      • felipe.fernandes.710@ufrn.edu.br          ║\n");
                 printf("║      • elisson.tavares.dev@gmail.com             ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
                 pausar();
-
+                break;
                 
             case 0:
                 system("clear || cls");
