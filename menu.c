@@ -21,6 +21,7 @@ int main() {
         printf("║ ► 3. Módulo Serviços                             ║\n");
         printf("║ ► 4. Módulo Agendamentos                         ║\n");
         printf("║ ► 5. Módulo Relatórios                           ║\n");
+        printf("║ ► 6. Sobre o SIG-MASSAGE                         ║\n");
         printf("║ ► 0. Sair do Sistema                             ║\n");
         printf("║                                                  ║\n");
         printf("╚══════════════════════════════════════════════════╝\n");
@@ -103,6 +104,29 @@ int main() {
                 printf("╚══════════════════════════════════════════════════╝\n");
                 pausar();
                 break;
+            
+            case 6:
+                system("clear || cls");
+                printf("\n╔══════════════════════════════════════════════════╗\n");
+                printf("║               SOBRE O SIG-MASSAGE                ║\n");
+                printf("╠══════════════════════════════════════════════════╣\n");
+                printf("║                                                  ║\n");
+                printf("║ O SIG-MASSAGE é um sistema desenvolvido para     ║\n");
+                printf("║ auxiliar no gerenciamento de atendimentos de     ║\n");
+                printf("║ massagem terapêutica. Ele foi pensado para       ║\n");
+                printf("║ oferecer praticidade e organização, permitindo   ║\n");
+                printf("║ o cadastro de clientes, controle de sessões,     ║\n");
+                printf("║ agenda de horários e relatórios de atividades.   ║\n");
+                printf("║                                                  ║\n");
+                printf("║ Com o SIG-MASSAGE, o profissional pode manter    ║\n");
+                printf("║ seus atendimentos de forma estruturada,          ║\n");
+                printf("║ proporcionando um serviço mais eficiente e       ║\n");
+                printf("║ focado no bem-estar dos clientes.                ║\n");
+                printf("║                                                  ║\n");
+                printf("╚══════════════════════════════════════════════════╝\n");
+                pausar();
+                break;
+
                 
             case 0:
                 system("clear || cls");
