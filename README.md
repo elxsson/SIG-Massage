@@ -45,18 +45,20 @@ sig_massage.exe
 O sistema apresenta uma interface em ASCII com navegação por menus:
 
 ```bash
-╔══════════════════════════════════════════════════╗
-║ SIG-MASSAGE - SISTEMA DE GESTÃO DE MASSAGENS     ║
-╠══════════════════════════════════════════════════╣
-║                                                  ║
-║ ► 1. Módulo Clientes                             ║
-║ ► 2. Módulo Massoterapeutas                      ║
-║ ► 3. Módulo Serviços                             ║
-║ ► 4. Módulo Agendamentos                         ║
-║ ► 5. Módulo Relatórios                           ║
-║ ► 0. Sair do Sistema                             ║
-║                                                  ║
-╚══════════════════════════════════════════════════╝
+        ╔══════════════════════════════════════════════════╗
+        ║ SIG-MASSAGE - SISTEMA DE GESTÃO DE MASSAGENS     ║
+        ╠══════════════════════════════════════════════════╣
+        ║                                                  ║
+        ║ ► 1. Módulo Clientes                             ║
+        ║ ► 2. Módulo Massoterapeutas                      ║
+        ║ ► 3. Módulo Serviços                             ║
+        ║ ► 4. Módulo Agendamentos                         ║
+        ║ ► 5. Módulo Relatórios                           ║
+        ║ ► 6. Sobre o SIG-MASSAGE                         ║
+        ║ ► 7. Equipe SIG-MASSAGE                          ║
+        ║ ► 0. Sair do Sistema                             ║
+        ║                                                  ║
+        ╚══════════════════════════════════════════════════╝
 ```
 
 ### Status do Desenvolvimento
