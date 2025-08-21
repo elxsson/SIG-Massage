@@ -36,7 +36,11 @@ void cadastroCliente() {
 
 void listarClientes() {
     system("clear || cls");
-    printf("\n Função de listagem de clientes ainda não implementada.\n");
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║               LISTA DE CLIENTES              ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    printf("\n Nenhum cliente cadastrado ainda.\n");
+    printf("Para cadastrar um cliente, escolha a opção 1 no menu.\n");
     pausar();
 }
 
@@ -44,7 +48,12 @@ void listarClientes() {
 
 void buscarCliente() {
     system("clear || cls");
-    printf("\n Função de busca de cliente por CPF ainda não implementada.\n");
+    char cpf[20];
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║               BUSCA DE CLIENTE               ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    printf("Digite o CPF do cliente que deseja buscar: ");
+    scanf(" %s", cpf);
     pausar();
 }
 
@@ -52,7 +61,13 @@ void buscarCliente() {
 
 void atualizarCliente() {
     system("clear || cls");
-    printf("\n Função de atualização de dados do cliente ainda não implementada.\n");
+    char cpf[20];
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            ATUALIZAÇÃO DE CLIENTE            ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    printf("Digite o CPF do cliente que deseja atualizar: ");
+    scanf(" %s", cpf);
+    printf("\n Função de atualização de cliente ainda não implementada.\n");
     pausar();
 }
 
@@ -60,6 +75,12 @@ void atualizarCliente() {
 
 void deletarCliente() {
     system("clear || cls");
+    char cpf[20];
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║              DELEÇÃO DE CLIENTE              ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    printf("Digite o CPF do cliente que deseja deletar: ");
+    scanf(" %s", cpf);
     printf("\n Função de deleção de cliente ainda não implementada.\n");
     pausar();
 }
