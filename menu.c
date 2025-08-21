@@ -14,26 +14,50 @@ void pausar() {
     getchar();
 }
 
+void exibirMenuPrincipal() {
+    system("clear || cls");
+    printf("\n╔══════════════════════════════════════════════════╗\n");
+    printf("║ SIG-MASSAGE - SISTEMA DE GESTÃO DE MASSAGENS     ║\n");
+    printf("╠══════════════════════════════════════════════════╣\n");
+    printf("║                                                  ║\n");
+    printf("║ ► 1. Módulo Clientes                             ║\n");
+    printf("║ ► 2. Módulo Massoterapeutas                      ║\n");
+    printf("║ ► 3. Módulo Serviços                             ║\n");
+    printf("║ ► 4. Módulo Agendamentos                         ║\n");
+    printf("║ ► 5. Módulo Relatórios                           ║\n");
+    printf("║ ► 6. Sobre o SIG-MASSAGE                         ║\n");
+    printf("║ ► 7. Equipe SIG-MASSAGE                          ║\n");
+    printf("║ ► 0. Sair do Sistema                             ║\n");
+    printf("║                                                  ║\n");
+    printf("╚══════════════════════════════════════════════════╝\n");
+    printf("\n Digite a opção desejada: ");
+}
+
+void exibirMensagemSaida() {
+    system("clear || cls");
+    printf("\n╔════════════════════════════════════════════════════╗\n");
+    printf("║ OBRIGADO POR USAR O SIG-MASSAGE                    ║\n");
+    printf("╠════════════════════════════════════════════════════╣\n");
+    printf("║                                                    ║\n");
+    printf("║ Sistema encerrado com sucesso!                     ║\n");
+    printf("║                                                    ║\n");
+    printf("║ Esperamos que o SIG-Massage tenha                  ║\n");
+    printf("║ facilitado a gestão da sua clínica.                ║\n");
+    printf("║                                                    ║\n");
+    printf("║ Continue cuidando do bem-estar dos seus            ║\n");
+    printf("║ clientes com excelência!                           ║\n");
+    printf("║                                                    ║\n");
+    printf("║ Até logo!                                          ║\n");
+    printf("║                                                    ║\n");
+    printf("╚════════════════════════════════════════════════════╝\n");
+}
+
+
 int main() {
     int opcao;
     
     do {
-        system("clear || cls");
-        printf("\n╔══════════════════════════════════════════════════╗\n");
-        printf("║ SIG-MASSAGE - SISTEMA DE GESTÃO DE MASSAGENS     ║\n");
-        printf("╠══════════════════════════════════════════════════╣\n");
-        printf("║                                                  ║\n");
-        printf("║ ► 1. Módulo Clientes                             ║\n");
-        printf("║ ► 2. Módulo Massoterapeutas                      ║\n");
-        printf("║ ► 3. Módulo Serviços                             ║\n");
-        printf("║ ► 4. Módulo Agendamentos                         ║\n");
-        printf("║ ► 5. Módulo Relatórios                           ║\n");
-        printf("║ ► 6. Sobre o SIG-MASSAGE                         ║\n");
-        printf("║ ► 7. Equipe SIG-MASSAGE                          ║\n");
-        printf("║ ► 0. Sair do Sistema                             ║\n");
-        printf("║                                                  ║\n");
-        printf("╚══════════════════════════════════════════════════╝\n");
-        printf("\n Digite a opção desejada: ");
+        exibirMenuPrincipal();
         
         scanf("%d", &opcao);
         
@@ -154,22 +178,7 @@ int main() {
                 break;
                 
             case 0:
-                system("clear || cls");
-                printf("\n╔════════════════════════════════════════════════════╗\n");
-                printf("║ OBRIGADO POR USAR O SIG-MASSAGE                    ║\n");
-                printf("╠════════════════════════════════════════════════════╣\n");
-                printf("║                                                    ║\n");
-                printf("║ Sistema encerrado com sucesso!                     ║\n");
-                printf("║                                                    ║\n");
-                printf("║ Esperamos que o SIG-Massage tenha                  ║\n");
-                printf("║ facilitado a gestão da sua clínica.                ║\n");
-                printf("║                                                    ║\n");
-                printf("║ Continue cuidando do bem-estar dos seus            ║\n");
-                printf("║ clientes com excelência!                           ║\n");
-                printf("║                                                    ║\n");
-                printf("║ Até logo!                                          ║\n");
-                printf("║                                                    ║\n");
-                printf("╚════════════════════════════════════════════════════╝\n");
+                exibirMensagemSaida();
                 break;
                 
             default:
