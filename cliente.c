@@ -7,32 +7,64 @@ void pausar() {
     printf("\n Pressione Enter para continuar...");
     while(getchar() != '\n');
     getchar();
+
+
+
 }
 void cadastroCliente() {
+    char nome[70];
+    char cpf[20];
+    char telefone[20];
+    char email[70]; 
     system("clear || cls");
-    printf("\n Função de cadastro de cliente ainda não implementada.\n");
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║             CADASTRO DE CLIENTE              ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    printf("Digite o nome do cliente: ");
+    scanf(" %s", nome);
+    printf("Digite o CPF do cliente: ");
+    scanf(" %s", cpf);
+    printf("Digite o telefone do cliente: ");
+    scanf(" %s", telefone);
+    printf("Digite o email do cliente: ");
+    scanf(" %s", email);
+    printf("\n Cliente %s cadastrado com sucesso!\n", nome);
     pausar();
 }
+
+
+
 void listarClientes() {
     system("clear || cls");
     printf("\n Função de listagem de clientes ainda não implementada.\n");
     pausar();
 }
+
+
+
 void buscarCliente() {
     system("clear || cls");
     printf("\n Função de busca de cliente por CPF ainda não implementada.\n");
     pausar();
 }
+
+
+
 void atualizarCliente() {
     system("clear || cls");
     printf("\n Função de atualização de dados do cliente ainda não implementada.\n");
     pausar();
 }
+
+
+
 void deletarCliente() {
     system("clear || cls");
     printf("\n Função de deleção de cliente ainda não implementada.\n");
     pausar();
 }
+
+
 
 int main() {
     int opcao;
@@ -55,8 +87,7 @@ int main() {
         scanf("%d", &opcao);
 
 
-        switch (opcao)
-        {
+        switch (opcao){
         case 1: cadastroCliente(); break;
         case 2: listarClientes(); break;
         case 3: buscarCliente(); break;
