@@ -16,6 +16,7 @@ void cadastroCliente() {
     char cpf[20];
     char telefone[20];
     char email[70]; 
+
     system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║             CADASTRO DE CLIENTE              ║\n");
@@ -39,7 +40,7 @@ void listarClientes() {
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               LISTA DE CLIENTES              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    printf("\n Nenhum cliente cadastrado ainda.\n");
+    printf("Nenhum cliente cadastrado ainda.\n");
     printf("Para cadastrar um cliente, escolha a opção 1 no menu.\n");
     pausar();
 }
@@ -47,37 +48,40 @@ void listarClientes() {
 
 
 void buscarCliente() {
+    char nome[70];
+
     system("clear || cls");
-    char cpf[20];
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               BUSCA DE CLIENTE               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    printf("Digite o CPF do cliente que deseja buscar: ");
-    scanf(" %s", cpf);
+    printf("Digite o nome do cliente que deseja buscar: ");
+    scanf(" %s", nome);
     pausar();
 }
 
 
 
 void atualizarCliente() {
-    system("clear || cls");
     char cpf[20];
+
+    system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║            ATUALIZAÇÃO DE CLIENTE            ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    printf("Digite o CPF do cliente que deseja atualizar: ");
+    printf("Digite o CPF do cliente que deseja atualizar:  \n");
     scanf(" %s", cpf);
-    printf("\n Função de atualização de cliente ainda não implementada.\n");
+    printf("Função de atualização de cliente ainda não implementada.\n");
     pausar();
 }
 
 
 
 void deletarCliente() {
-    system("clear || cls");
     char cpf[20];
+    
+    system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║              DELEÇÃO DE CLIENTE              ║\n");
+    printf("║              DELETAR DE CLIENTE              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Digite o CPF do cliente que deseja deletar: ");
     scanf(" %s", cpf);
