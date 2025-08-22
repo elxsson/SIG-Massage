@@ -11,6 +11,24 @@ void pausar() {
 
 
 
+void menucliente() {
+    system("clear || cls");
+        printf("\n╔══════════════════════════════════════════════╗\n");
+        printf("║                 MODULO CLIENTE               ║\n");
+        printf("╠══════════════════════════════════════════════╣\n");
+        printf("║                                              ║\n");
+        printf("║ 1. Cadastrar Cliente                         ║\n");
+        printf("║ 2. Listar Clientes                           ║\n");
+        printf("║ 3. procurar Cliente                          ║\n");
+        printf("║ 4. Atualizar Dados do Cliente                ║\n");
+        printf("║ 5. exluir Cliente                            ║\n");
+        printf("║ 0. Voltar ao Menu Principal                  ║\n");
+        printf("║                                              ║\n");
+        printf("╚══════════════════════════════════════════════╝\n");
+        printf("\n Digite a opção desejada: ");
+}
+
+
 void cadastroCliente() {
     char nome[70];
     char cpf[20];
@@ -96,20 +114,7 @@ int main() {
     int opcao;
 
     do {
-        system("clear || cls");
-        printf("\n╔══════════════════════════════════════════════╗\n");
-        printf("║                 MODULO CLIENTE               ║\n");
-        printf("╠══════════════════════════════════════════════╣\n");
-        printf("║                                              ║\n");
-        printf("║ 1. Cadastrar Cliente                         ║\n");
-        printf("║ 2. Listar Clientes                           ║\n");
-        printf("║ 3. procurar Cliente                          ║\n");
-        printf("║ 4. Atualizar Dados do Cliente                ║\n");
-        printf("║ 5. exluir Cliente                            ║\n");
-        printf("║ 0. Voltar ao Menu Principal                  ║\n");
-        printf("║                                              ║\n");
-        printf("╚══════════════════════════════════════════════╝\n");
-        printf("\n Digite a opção desejada: ");
+        menucliente();
         scanf("%d", &opcao);
 
         switch (opcao){
