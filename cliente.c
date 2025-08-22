@@ -19,7 +19,7 @@ void cadastroCliente() {
 
     system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║             CADASTRO DE CLIENTE              ║\n");
+    printf("║               CADASTRAR CLIENTE              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Digite o nome do cliente: ");
     scanf(" %s", nome);
@@ -38,7 +38,7 @@ void cadastroCliente() {
 void listarClientes() {
     system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║               LISTA DE CLIENTES              ║\n");
+    printf("║                LISTAR CLIENTES               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Nenhum cliente cadastrado ainda.\n");
     printf("Para cadastrar um cliente, escolha a opção 1 no menu.\n");
@@ -67,7 +67,7 @@ void atualizarCliente() {
 
     system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║            ATUALIZAÇÃO DE CLIENTE            ║\n");
+    printf("║          ATUALIZAR DADOS DO CLIENTE          ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Digite o CPF do cliente que deseja atualizar:  \n");
     scanf(" %s", cpf);
