@@ -52,7 +52,7 @@ void buscarCliente() {
 
     system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║               BUSCA DE CLIENTE               ║\n");
+    printf("║               PROCURAR CLIENTE               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Digite o nome do cliente que deseja buscar: \n");
     scanf(" %s", nome);
