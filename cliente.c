@@ -7,10 +7,10 @@ void pausar() {
     printf("\n Pressione Enter para continuar...");
     while(getchar() != '\n');
     getchar();
-
-
-
 }
+
+
+
 void cadastroCliente() {
     char nome[70];
     char cpf[20];
@@ -54,8 +54,9 @@ void buscarCliente() {
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               BUSCA DE CLIENTE               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    printf("Digite o nome do cliente que deseja buscar: ");
+    printf("Digite o nome do cliente que deseja buscar: \n");
     scanf(" %s", nome);
+    printf("função de busca de cliente ainda não implementada.\n");
     pausar();
 }
 
@@ -78,10 +79,10 @@ void atualizarCliente() {
 
 void deletarCliente() {
     char cpf[20];
-    
+
     system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║              DELETAR DE CLIENTE              ║\n");
+    printf("║               EXCLUIR CLIENTE                ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Digite o CPF do cliente que deseja deletar: ");
     scanf(" %s", cpf);
@@ -102,15 +103,14 @@ int main() {
         printf("║                                              ║\n");
         printf("║ 1. Cadastrar Cliente                         ║\n");
         printf("║ 2. Listar Clientes                           ║\n");
-        printf("║ 3. Buscar Cliente                            ║\n");
+        printf("║ 3. procurar Cliente                          ║\n");
         printf("║ 4. Atualizar Dados do Cliente                ║\n");
-        printf("║ 5. Deletar Cliente                           ║\n");
+        printf("║ 5. exluir Cliente                            ║\n");
         printf("║ 0. Voltar ao Menu Principal                  ║\n");
         printf("║                                              ║\n");
         printf("╚══════════════════════════════════════════════╝\n");
         printf("\n Digite a opção desejada: ");
         scanf("%d", &opcao);
-
 
         switch (opcao){
         case 1: cadastroCliente(); break;
