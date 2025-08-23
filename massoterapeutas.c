@@ -150,3 +150,34 @@ void atualizarMassoterapeuta() {
     pausar();
 }
 
+void deletarMassoterapeuta() {
+    char cpf[20];
+    char confirmacao;
+
+    system("clear || cls");
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            EXCLUIR MASSOTERAPEUTA           ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    
+    printf("Digite o CPF do massoterapeuta que deseja excluir: ");
+    if (scanf(" %19s", cpf) != 1) {
+        printf("\n Erro: CPF inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+    
+    printf("Tem certeza que deseja excluir? (s/N): ");
+    limparBuffer();
+    scanf("%c", &confirmacao);
+    
+    if (confirmacao == 's' || confirmacao == 'S') {
+        printf("\n Função de exclusão de massoterapeuta ainda não implementada.\n");
+        printf("CPF que seria excluído: %s\n", cpf);
+    } else {
+        printf("\n Operação cancelada pelo usuário.\n");
+    }
+    
+    pausar();
+}
+
