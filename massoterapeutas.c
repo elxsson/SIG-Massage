@@ -181,3 +181,42 @@ void deletarMassoterapeuta() {
     pausar();
 }
 
+void menuMassoterapeutas() {
+    int opcao;
+
+    do {
+        menumassoterapeuta();
+        
+        if (scanf("%d", &opcao) != 1) {
+            printf("\n Erro: Digite apenas números!\n");
+            limparBuffer();
+            pausar();
+            continue;
+        }
+
+        switch (opcao) {
+            case 1: 
+                cadastroMassoterapeuta(); 
+                break;
+            case 2: 
+                listarMassoterapeutas(); 
+                break;
+            case 3: 
+                buscarMassoterapeuta(); 
+                break;
+            case 4: 
+                atualizarMassoterapeuta(); 
+                break;
+            case 5: 
+                deletarMassoterapeuta(); 
+                break;
+            case 0: 
+                printf("\n Retornando ao menu principal...\n");
+                break;
+            default:
+                printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
+                pausar();
+                break;
+        }
+    } while(opcao != 0);
+}
