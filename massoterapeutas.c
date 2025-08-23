@@ -14,6 +14,11 @@ void pausar() {
     getchar();
 }
 
+void limparBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 void mostrarMenuMassoterapeutas() {
     system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
