@@ -127,3 +127,26 @@ void buscarMassoterapeuta() {
     
     pausar();
 }
+
+void atualizarMassoterapeuta() {
+    char cpf[20];
+
+    system("clear || cls");
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║      ATUALIZAR DADOS DO MASSOTERAPEUTA       ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    
+    printf("Digite o CPF do massoterapeuta que deseja atualizar: ");
+    if (scanf(" %19s", cpf) != 1) {
+        printf("\n Erro: CPF inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+    
+    printf("Função de atualização de massoterapeuta ainda não implementada.\n");
+    printf("CPF informado: %s\n", cpf);
+    
+    pausar();
+}
+
