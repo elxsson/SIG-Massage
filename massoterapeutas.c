@@ -105,3 +105,25 @@ void listarMassoterapeutas() {
     
     pausar();
 }
+
+void buscarMassoterapeuta() {
+    char nome[70];
+
+    system("clear || cls");
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║           PROCURAR MASSOTERAPEUTA           ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    
+    printf("Digite o nome do massoterapeuta que deseja buscar: ");
+    if (scanf(" %69[^\n]", nome) != 1) {
+        printf("\n Erro: Nome inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+    
+    printf("Função de busca de massoterapeuta ainda não implementada.\n");
+    printf("Busca seria feita por: %s\n", nome);
+    
+    pausar();
+}
