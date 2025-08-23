@@ -92,3 +92,16 @@ void cadastroMassoterapeuta() {
     printf("\n Massoterapeuta %s cadastrado com sucesso!\n", nome);
     pausar();
 }
+
+void listarMassoterapeutas() {
+    system("clear || cls");
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            LISTAR MASSOTERAPEUTAS           ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    
+    // Simulando que não há dados ainda
+    printf("Nenhum massoterapeuta cadastrado ainda.\n");
+    printf("Para cadastrar um massoterapeuta, escolha a opção 1 no menu.\n");
+    
+    pausar();
+}
