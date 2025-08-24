@@ -2,6 +2,21 @@
 #include <stdlib.h>
 #include "menu.h"
 
+void pausar() {
+    printf("\n Pressione Enter para continuar...");
+    while(getchar() != '\n');
+    getchar();
+}
+
+
+
+void limparBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+
+
 
 void menucliente() {
     system("clear || cls");
@@ -31,14 +46,39 @@ void cadastroCliente() {
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               CADASTRAR CLIENTE              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
+    
     printf("Digite o nome do cliente: ");
-    scanf(" %s", nome);
+    if (scanf(" %69[^\n]", nome) != 1) {
+        printf("\n Erro: Nome inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
     printf("Digite o CPF do cliente: ");
-    scanf(" %s", cpf);
+       if (scanf(" %19s", cpf) != 1) {
+        printf("\n Erro: CPF inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
     printf("Digite o telefone do cliente: ");
-    scanf(" %s", telefone);
+    if (scanf(" %19s", telefone) != 1) {
+        printf("\n Erro: Telefone inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
     printf("Digite o email do cliente: ");
-    scanf(" %s", email);
+    if (scanf(" %69s", email) != 1) {
+        printf("\n Erro: Email inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
     printf("\n Cliente %s cadastrado com sucesso!\n", nome);
     pausar();
 }
@@ -65,7 +105,13 @@ void buscarCliente() {
     printf("║               PROCURAR CLIENTE               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Digite o nome do cliente que deseja buscar: \n");
-    scanf(" %s", nome);
+    if (scanf(" %69[^\n]", nome) != 1) {
+        printf("\n Erro: Nome inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+    
     printf("função de busca de cliente ainda não implementada.\n");
     pausar();
 }
@@ -79,8 +125,14 @@ void atualizarCliente() {
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║          ATUALIZAR DADOS DO CLIENTE          ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
+    
     printf("Digite o CPF do cliente que deseja atualizar:  \n");
-    scanf(" %s", cpf);
+    if (scanf(" %19s", cpf) != 1) {
+        printf("\n Erro: CPF inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
     printf("Função de atualização de cliente ainda não implementada.\n");
     pausar();
 }
@@ -95,7 +147,12 @@ void deletarCliente() {
     printf("║               EXCLUIR CLIENTE                ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Digite o CPF do cliente que deseja deletar: ");
-    scanf(" %s", cpf);
+    if (scanf(" %19s", cpf) != 1) {
+        printf("\n Erro: CPF inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
     printf("\n Função de deleção de cliente ainda não implementada.\n");
     pausar();
 }
@@ -107,25 +164,40 @@ void cliente() {
 
     do {
         menucliente();
-        scanf("%d", &opcao);
+        if (scanf("%d", &opcao) != 1) {
+            printf("\n Erro: Digite apenas números!\n");
+            limparBuffer();
+            pausar();
+            continue;
+        }
 
         switch(opcao) {
-
-        case 1: cadastroCliente(); break;
-        case 2: listarClientes(); break;
-        case 3: buscarCliente(); break;
-        case 4: atualizarCliente(); break;
-        case 5: deletarCliente(); break;
-        case 0: break;
+            case 1: 
+                cadastroCliente(); 
+                break;
+            case 2: 
+                listarClientes(); 
+                break;
+            case 3: 
+                buscarCliente(); 
+                break;
+            case 4: 
+                atualizarCliente(); 
+                break;
+            case 5: 
+                deletarCliente(); 
+                break;
+            case 0:
+                printf("\n Retornando ao menu principal...\n"); 
+                break;
         
-        default:
-            printf("\n Opção inválida! Por favor, tente novamente.\n");
-            pausar();
+            default:
+                system("clear || cls");
+                printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
+                pausar();
             break;
         }
  
     } while(opcao != 0);
     
-    return;
 }
-
