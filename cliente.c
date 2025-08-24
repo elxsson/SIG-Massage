@@ -1,14 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-
-void pausar() {
-
-    printf("\n Pressione Enter para continuar...");
-    while(getchar() != '\n');
-    getchar();
-}
-
+#include "menu.h"
 
 
 void menucliente() {
@@ -110,14 +102,15 @@ void deletarCliente() {
 
 
 
-int main() {
+void cliente() {
     int opcao;
 
     do {
         menucliente();
         scanf("%d", &opcao);
 
-        switch (opcao){
+        switch(opcao) {
+
         case 1: cadastroCliente(); break;
         case 2: listarClientes(); break;
         case 3: buscarCliente(); break;
@@ -133,6 +126,6 @@ int main() {
  
     } while(opcao != 0);
     
-    return 0;
+    return;
 }
 
