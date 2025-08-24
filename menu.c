@@ -7,12 +7,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "cliente.h"
 
 void pausar() {
     printf("\n Pressione Enter para continuar...");
     while(getchar() != '\n');
     getchar();
 }
+
+
 
 int main() {
     int opcao;
@@ -38,20 +41,8 @@ int main() {
         scanf("%d", &opcao);
         
         switch(opcao) {
-            case 1:
-                system("clear || cls");
-                printf("\n╔══════════════════════════════════════════════════╗\n");
-                printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
-                printf("╠══════════════════════════════════════════════════╣\n");
-                printf("║                                                  ║\n");
-                printf("║ O módulo CLIENTES está em desenvolvimento        ║\n");
-                printf("║ e estará disponível em breve!                    ║\n");
-                printf("║                                                  ║\n");
-                printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
-                printf("║                                                  ║\n");
-                printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
-                break;
+            
+            case 1: cliente(); break;
                 
             case 2:
                 system("clear || cls");
