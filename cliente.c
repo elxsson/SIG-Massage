@@ -43,6 +43,7 @@ void menucliente() {
 }
 
 
+
 void cadastroCliente() {
     char nome[70];
     char cpf[20];
@@ -97,6 +98,7 @@ void listarClientes() {
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║                LISTAR CLIENTES               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
+
     printf("Nenhum cliente cadastrado ainda.\n");
     printf("Para cadastrar um cliente, escolha a opção 1 no menu.\n");
     pausar();
@@ -111,6 +113,7 @@ void buscarCliente() {
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               PROCURAR CLIENTE               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
+
     printf("Digite o nome do cliente que deseja buscar: \n");
     if (scanf(" %69[^\n]", nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
@@ -148,11 +151,13 @@ void atualizarCliente() {
 
 void deletarCliente() {
     char cpf[20];
+    char confirmacao;
 
     system("clear || cls");
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               EXCLUIR CLIENTE                ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
+
     printf("Digite o CPF do cliente que deseja deletar: ");
     if (scanf(" %19s", cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
@@ -160,7 +165,17 @@ void deletarCliente() {
         pausar();
         return;
     }
-    printf("\n Função de deleção de cliente ainda não implementada.\n");
+     printf("Tem certeza que deseja excluir? (s/N): ");
+    limparBuffer();
+    scanf("%c", &confirmacao);
+    
+    if (confirmacao == 's' || confirmacao == 'S') {
+        printf("\n Função de exclusão de massoterapeuta ainda não implementada.\n");
+        printf("CPF que seria excluído: %s\n", cpf);
+    } else {
+        printf("\n Operação cancelada pelo usuário.\n");
+    }
+    
     pausar();
 }
 
