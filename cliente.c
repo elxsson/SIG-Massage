@@ -1,3 +1,10 @@
+/*
+|=============================================================|
+|                    MODULO CLIENTE                           |
+| CRUD para a gestao de clientes do sistema SIG-MASSAGE       |
+|=============================================================|
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "menu.h"
