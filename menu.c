@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "cliente.h"
 
-void pausar() {
+void Pausar() {
     printf("\n Pressione Enter para continuar...");
     while(getchar() != '\n');
     getchar();
@@ -56,7 +56,7 @@ int main() {
                 printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                Pausar();
                 break;
                 
             case 3:
@@ -71,7 +71,7 @@ int main() {
                 printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                Pausar();
                 break;
                 
             case 4:
@@ -86,7 +86,7 @@ int main() {
                 printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                Pausar();
                 break;
                 
             case 5:
@@ -101,7 +101,7 @@ int main() {
                 printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                Pausar();
                 break;
             
             case 6:
@@ -123,7 +123,7 @@ int main() {
                 printf("║ focado no bem-estar dos clientes.                ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                Pausar();
                 break;
 
             case 7:
@@ -141,7 +141,7 @@ int main() {
                 printf("║      • elisson.tavares.dev@gmail.com             ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                Pausar();
                 break;
                 
             case 0:
@@ -165,9 +165,10 @@ int main() {
                 
             default:
                 printf("\n Opção inválida! Por favor, tente novamente.\n");
-                pausar();
+                Pausar();
         }
     } while(opcao != 0);
     
     return 0;
+    
 }
