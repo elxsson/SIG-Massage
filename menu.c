@@ -8,43 +8,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cliente.h"
-
-void Pausar() {
-    printf("\n Pressione Enter para continuar...");
-    while(getchar() != '\n');
-    getchar();
-}
-
+#include "massoterapeutas.h"
+#include "utils.h"
 
 int main() {
     int opcao;
     
     do {
-        exibirMenuPrincipal();
+        limparTela();
+        printf("\n╔══════════════════════════════════════════════════╗\n");
+        printf("║ SIG-MASSAGE - SISTEMA DE GESTÃO DE MASSAGENS     ║\n");
+        printf("╠══════════════════════════════════════════════════╣\n");
+        printf("║                                                  ║\n");
+        printf("║ ► 1. Módulo Clientes                             ║\n");
+        printf("║ ► 2. Módulo Massoterapeutas                      ║\n");
+        printf("║ ► 3. Módulo Serviços                             ║\n");
+        printf("║ ► 4. Módulo Agendamentos                         ║\n");
+        printf("║ ► 5. Módulo Relatórios                           ║\n");
+        printf("║ ► 6. Sobre o SIG-MASSAGE                         ║\n");
+        printf("║ ► 7. Equipe SIG-MASSAGE                          ║\n");
+        printf("║ ► 0. Sair do Sistema                             ║\n");
+        printf("║                                                  ║\n");
+        printf("╚══════════════════════════════════════════════════╝\n");
+        printf("\n Digite a opção desejada: ");
         
         scanf("%d", &opcao);
         
         switch(opcao) {
             
-            case 1: cliente(); break;
+            case 1: 
+                cliente(); 
+                break;
                 
             case 2:
-                system("clear || cls");
-                printf("\n╔══════════════════════════════════════════════════╗\n");
-                printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
-                printf("╠══════════════════════════════════════════════════╣\n");
-                printf("║                                                  ║\n");
-                printf("║ O módulo MASSOTERAPEUTAS está em                 ║\n");
-                printf("║ desenvolvimento e estará disponível em breve!    ║\n");
-                printf("║                                                  ║\n");
-                printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
-                printf("║                                                  ║\n");
-                printf("╚══════════════════════════════════════════════════╝\n");
-                Pausar();
+                massoterapeuta();
                 break;
                 
             case 3:
-                system("clear || cls");
+                limparTela();
                 printf("\n╔══════════════════════════════════════════════════╗\n");
                 printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
                 printf("╠══════════════════════════════════════════════════╣\n");
@@ -55,11 +56,11 @@ int main() {
                 printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                Pausar();
+                pausar();
                 break;
                 
             case 4:
-                system("clear || cls");
+                limparTela();
                 printf("\n╔══════════════════════════════════════════════════╗\n");
                 printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
                 printf("╠══════════════════════════════════════════════════╣\n");
@@ -70,11 +71,11 @@ int main() {
                 printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                Pausar();
+                pausar();
                 break;
                 
             case 5:
-                system("clear || cls");
+                limparTela();
                 printf("\n╔══════════════════════════════════════════════════╗\n");
                 printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
                 printf("╠══════════════════════════════════════════════════╣\n");
@@ -85,11 +86,11 @@ int main() {
                 printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                Pausar();
+                pausar();
                 break;
             
             case 6:
-                system("clear || cls");
+                limparTela();
                 printf("\n╔══════════════════════════════════════════════════╗\n");
                 printf("║               SOBRE O SIG-MASSAGE                ║\n");
                 printf("╠══════════════════════════════════════════════════╣\n");
@@ -107,11 +108,11 @@ int main() {
                 printf("║ focado no bem-estar dos clientes.                ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                Pausar();
+                pausar();
                 break;
 
             case 7:
-                system("clear || cls");
+                limparTela();
                 printf("\n╔══════════════════════════════════════════════════╗\n");
                 printf("║                  EQUIPE SIG-MASSAGE              ║\n");
                 printf("╠══════════════════════════════════════════════════╣\n");
@@ -125,19 +126,33 @@ int main() {
                 printf("║      • elisson.tavares.dev@gmail.com             ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
-                Pausar();
+                pausar();
                 break;
                 
             case 0:
-                exibirMensagemSaida();
+                limparTela();
+                printf("\n╔════════════════════════════════════════════════════╗\n");
+                printf("║ OBRIGADO POR USAR O SIG-MASSAGE                    ║\n");
+                printf("╠════════════════════════════════════════════════════╣\n");
+                printf("║                                                    ║\n");
+                printf("║ Sistema encerrado com sucesso!                     ║\n");
+                printf("║                                                    ║\n");
+                printf("║ Esperamos que o SIG-Massage tenha                  ║\n");
+                printf("║ facilitado a gestão da sua clínica.                ║\n");
+                printf("║                                                    ║\n");
+                printf("║ Continue cuidando do bem-estar dos seus            ║\n");
+                printf("║ clientes com excelência!                           ║\n");
+                printf("║                                                    ║\n");
+                printf("║ Até logo!                                          ║\n");
+                printf("║                                                    ║\n");
+                printf("╚════════════════════════════════════════════════════╝\n");
                 break;
                 
             default:
                 printf("\n Opção inválida! Por favor, tente novamente.\n");
-                Pausar();
+                pausar();
         }
     } while(opcao != 0);
     
     return 0;
-    
 }
