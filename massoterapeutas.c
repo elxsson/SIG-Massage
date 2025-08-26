@@ -1,28 +1,19 @@
 /*
- |===========================================================================|
- |                         MÓDULO MASSOTERAPEUTAS                           |
- |        CRUD para Gestão de Massoterapeutas do SIG-MASSAGE                |
- |===========================================================================|
+|=============================================================|
+|                  MODULO MASSOTERAPEUTA                      |
+| CRUD para a gestao de massoterapeutas do sistema SIG-MASSAGE|
+|=============================================================|
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "massoterapeutas.h"
+#include "utils.h"
 
-void pausar() {
-    printf("\n Pressione Enter para continuar...");
-    while(getchar() != '\n');
-    getchar();
-}
-
-void limparBuffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
-
-void mostrarMenuMassoterapeutas() {
-    system("clear || cls");
+void menuMassoterapeuta() {
+    limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║             MODULO MASSOTERAPEUTA           ║\n");
+    printf("║             MODULO MASSOTERAPEUTA            ║\n");
     printf("╠══════════════════════════════════════════════╣\n");
     printf("║                                              ║\n");
     printf("║ 1. Cadastrar Massoterapeuta                  ║\n");
@@ -41,11 +32,12 @@ void cadastroMassoterapeuta() {
     char cpf[20];
     char telefone[20];
     char email[70];
+    char crefito[20];
     char especialidade[50];
 
-    system("clear || cls");
+    limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║           CADASTRAR MASSOTERAPEUTA          ║\n");
+    printf("║            CADASTRAR MASSOTERAPEUTA          ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     
     printf("Digite o nome do massoterapeuta: ");
@@ -55,7 +47,7 @@ void cadastroMassoterapeuta() {
         pausar();
         return;
     }
-    
+
     printf("Digite o CPF do massoterapeuta: ");
     if (scanf(" %19s", cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
@@ -63,7 +55,7 @@ void cadastroMassoterapeuta() {
         pausar();
         return;
     }
-    
+
     printf("Digite o telefone do massoterapeuta: ");
     if (scanf(" %19s", telefone) != 1) {
         printf("\n Erro: Telefone inválido!\n");
@@ -71,7 +63,7 @@ void cadastroMassoterapeuta() {
         pausar();
         return;
     }
-    
+
     printf("Digite o email do massoterapeuta: ");
     if (scanf(" %69s", email) != 1) {
         printf("\n Erro: Email inválido!\n");
@@ -79,42 +71,47 @@ void cadastroMassoterapeuta() {
         pausar();
         return;
     }
-    
-    limparBuffer();
-    printf("Digite a especialidade do massoterapeuta: ");
+
+    printf("Digite o número do CREFITO: ");
+    if (scanf(" %19s", crefito) != 1) {
+        printf("\n Erro: CREFITO inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("Digite a especialidade: ");
     if (scanf(" %49[^\n]", especialidade) != 1) {
         printf("\n Erro: Especialidade inválida!\n");
         limparBuffer();
         pausar();
         return;
     }
-    
+
     printf("\n Massoterapeuta %s cadastrado com sucesso!\n", nome);
     pausar();
 }
 
 void listarMassoterapeutas() {
-    system("clear || cls");
+    limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║            LISTAR MASSOTERAPEUTAS           ║\n");
+    printf("║             LISTAR MASSOTERAPEUTAS           ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    
-    // Simulando que não há dados ainda
+
     printf("Nenhum massoterapeuta cadastrado ainda.\n");
     printf("Para cadastrar um massoterapeuta, escolha a opção 1 no menu.\n");
-    
     pausar();
 }
 
 void buscarMassoterapeuta() {
     char nome[70];
 
-    system("clear || cls");
+    limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║           PROCURAR MASSOTERAPEUTA           ║\n");
+    printf("║            PROCURAR MASSOTERAPEUTA           ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    
-    printf("Digite o nome do massoterapeuta que deseja buscar: ");
+
+    printf("Digite o nome do massoterapeuta que deseja buscar: \n");
     if (scanf(" %69[^\n]", nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
         limparBuffer();
@@ -123,30 +120,25 @@ void buscarMassoterapeuta() {
     }
     
     printf("Função de busca de massoterapeuta ainda não implementada.\n");
-    printf("Busca seria feita por: %s\n", nome);
-    
     pausar();
 }
 
 void atualizarMassoterapeuta() {
     char cpf[20];
 
-    system("clear || cls");
+    limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║      ATUALIZAR DADOS DO MASSOTERAPEUTA       ║\n");
+    printf("║       ATUALIZAR DADOS DO MASSOTERAPEUTA      ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     
-    printf("Digite o CPF do massoterapeuta que deseja atualizar: ");
+    printf("Digite o CPF do massoterapeuta que deseja atualizar: \n");
     if (scanf(" %19s", cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
         pausar();
         return;
     }
-    
     printf("Função de atualização de massoterapeuta ainda não implementada.\n");
-    printf("CPF informado: %s\n", cpf);
-    
     pausar();
 }
 
@@ -154,12 +146,12 @@ void deletarMassoterapeuta() {
     char cpf[20];
     char confirmacao;
 
-    system("clear || cls");
+    limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║            EXCLUIR MASSOTERAPEUTA           ║\n");
+    printf("║            EXCLUIR MASSOTERAPEUTA            ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    
-    printf("Digite o CPF do massoterapeuta que deseja excluir: ");
+
+    printf("Digite o CPF do massoterapeuta que deseja deletar: ");
     if (scanf(" %19s", cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
@@ -181,12 +173,11 @@ void deletarMassoterapeuta() {
     pausar();
 }
 
-void menuMassoterapeutas() {
+void massoterapeuta() {
     int opcao;
 
     do {
-        menumassoterapeuta();
-        
+        menuMassoterapeuta();
         if (scanf("%d", &opcao) != 1) {
             printf("\n Erro: Digite apenas números!\n");
             limparBuffer();
@@ -194,7 +185,7 @@ void menuMassoterapeutas() {
             continue;
         }
 
-        switch (opcao) {
+        switch(opcao) {
             case 1: 
                 cadastroMassoterapeuta(); 
                 break;
@@ -210,13 +201,16 @@ void menuMassoterapeutas() {
             case 5: 
                 deletarMassoterapeuta(); 
                 break;
-            case 0: 
-                printf("\n Retornando ao menu principal...\n");
+            case 0:
+                printf("\n Retornando ao menu principal...\n"); 
                 break;
+        
             default:
+                limparTela();
                 printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
                 pausar();
-                break;
+            break;
         }
+ 
     } while(opcao != 0);
 }
