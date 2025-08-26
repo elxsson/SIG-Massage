@@ -25,7 +25,7 @@ void limparBuffer() {
 
 
 void menucliente() {
-    system("clear || cls");
+    
         printf("\n╔══════════════════════════════════════════════╗\n");
         printf("║                 MODULO CLIENTE               ║\n");
         printf("╠══════════════════════════════════════════════╣\n");
@@ -49,7 +49,7 @@ void cadastroCliente() {
     char telefone[20];
     char email[70]; 
 
-    system("clear || cls");
+    
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               CADASTRAR CLIENTE              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
@@ -93,7 +93,7 @@ void cadastroCliente() {
 
 
 void listarClientes() {
-    system("clear || cls");
+    
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║                LISTAR CLIENTES               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
@@ -108,7 +108,7 @@ void listarClientes() {
 void buscarCliente() {
     char nome[70];
 
-    system("clear || cls");
+    
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               PROCURAR CLIENTE               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
@@ -130,7 +130,7 @@ void buscarCliente() {
 void atualizarCliente() {
     char cpf[20];
 
-    system("clear || cls");
+    
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║          ATUALIZAR DADOS DO CLIENTE          ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
@@ -152,7 +152,7 @@ void deletarCliente() {
     char cpf[20];
     char confirmacao;
 
-    system("clear || cls");
+    
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               EXCLUIR CLIENTE                ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
@@ -213,7 +213,6 @@ void cliente() {
                 break;
         
             default:
-                system("clear || cls");
                 printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
                 pausar();
             break;
