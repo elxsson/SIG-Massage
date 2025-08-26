@@ -7,22 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-void pausar() {
-    printf("\n Pressione Enter para continuar...");
-    while(getchar() != '\n');
-    getchar();
-}
-
-
-
-void limparBuffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
-
-
-
+#include "cliente.h"
+#include "utils.h"
 
 void menucliente() {
         limparTela();
