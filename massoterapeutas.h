@@ -1,6 +1,24 @@
-#ifndef MODULO_MASSOTERAPEUTAS_H
-#define MODULO_MASSOTERAPEUTAS_H
+/*
+|=============================================================|
+|                MASSOTERAPEUTA HEADER                        |
+|=============================================================|
+*/
 
-void menuMassoterapeutas();
+#ifndef MASSOTERAPEUTA_H
+#define MASSOTERAPEUTA_H
+
+void massoterapeuta();
+
+void menuMassoterapeuta();
+
+void cadastroMassoterapeuta();
+
+void listarMassoterapeutas();
+
+void buscarMassoterapeuta();
+
+void atualizarMassoterapeuta();
+
+void deletarMassoterapeuta();
 
 #endif
