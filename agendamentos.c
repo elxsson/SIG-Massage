@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "agendamentos.h"
 
 void menuAgendamentos() {
     limparTela();
@@ -130,7 +131,7 @@ void agendamentos() {
             pausar();
             continue;
         }
-        
+
         switch (opcao) {
             case 1:
                 novoAgendamento();
@@ -151,5 +152,8 @@ void agendamentos() {
                 printf("\n Erro: Opção inválida!\n");
                 pausar();
         }
+
     } while (opcao != 0);
+
 }
+
