@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "cliente.h"
 #include "massoterapeutas.h"
-#include "agendamentos.c"
+#include "agendamentos.h"
 #include "utils.h"
 
 int main() {
