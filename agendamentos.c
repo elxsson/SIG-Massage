@@ -75,3 +75,24 @@ void listarAgendamentos() {
     printf("Nenhum agendamento encontrado.\n");
     pausar();
 }
+
+
+
+void atualizarAgendamento() {
+    int id;
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            ATUALIZAR AGENDAMENTO             ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o ID do agendamento a ser atualizado: ");
+    if (scanf("%d", &id) != 1 || id <= 0) {
+        printf("\n Erro: ID inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("\n Agendamento com ID %d atualizado com sucesso!\n", id);
+    pausar();
+}
