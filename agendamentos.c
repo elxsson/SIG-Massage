@@ -96,3 +96,24 @@ void atualizarAgendamento() {
     printf("\n Agendamento com ID %d atualizado com sucesso!\n", id);
     pausar();
 }
+
+
+
+void excluirAgendamento() {
+    int id;
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║             EXCLUIR AGENDAMENTO              ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o ID do agendamento a ser excluído: ");
+    if (scanf("%d", &id) != 1 || id <= 0) {
+        printf("\n Erro: ID inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("\n Agendamento com ID %d excluído com sucesso!\n", id);
+    pausar();
+}
