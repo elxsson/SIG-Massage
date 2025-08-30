@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "cliente.h"
 #include "massoterapeutas.h"
+#include "agendamentos.c"
 #include "utils.h"
 
 int main() {
@@ -60,18 +61,7 @@ int main() {
                 break;
                 
             case 4:
-                limparTela();
-                printf("\n╔══════════════════════════════════════════════════╗\n");
-                printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
-                printf("╠══════════════════════════════════════════════════╣\n");
-                printf("║                                                  ║\n");
-                printf("║ O módulo AGENDAMENTOS está em                    ║\n");
-                printf("║ desenvolvimento e estará disponível em breve!    ║\n");
-                printf("║                                                  ║\n");
-                printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
-                printf("║                                                  ║\n");
-                printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                agendamentos();
                 break;
                 
             case 5:
