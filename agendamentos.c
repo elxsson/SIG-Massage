@@ -117,3 +117,39 @@ void excluirAgendamento() {
     printf("\n Agendamento com ID %d excluído com sucesso!\n", id);
     pausar();
 }
+
+
+
+void agendamentos() {
+    int opcao;
+    do {
+        menuAgendamentos();
+        if (scanf("%d", &opcao) != 1) {
+            printf("\n Erro: Entrada inválida!\n");
+            limparBuffer();
+            pausar();
+            continue;
+        }
+        
+        switch (opcao) {
+            case 1:
+                novoAgendamento();
+                break;
+            case 2:
+                listarAgendamentos();
+                break;
+            case 3:
+                atualizarAgendamento();
+                break;
+            case 4:
+                excluirAgendamento();
+                break;
+            case 0:
+                printf("\n Retornando ao menu principal...\n");
+                break;
+            default:
+                printf("\n Erro: Opção inválida!\n");
+                pausar();
+        }
+    } while (opcao != 0);
+}
