@@ -63,3 +63,15 @@ void novoAgendamento() {
     printf("\n Agendamento criado com sucesso para o dia %d às %dh!\n", diaSemana, hora);
     pausar();
 }
+
+
+
+void listarAgendamentos() {
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║              LISTAR AGENDAMENTOS             ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Nenhum agendamento encontrado.\n");
+    pausar();
+}
