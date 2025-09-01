@@ -1,16 +1,16 @@
 #ifndef AGENDAMENTOS_H
 #define AGENDAMENTOS_H
 
-void agendamentos(void);
+void agendamentos();
 
-void menuAgendamentos(void);
+void menuAgendamentos();
 
-void cadastrarAgendamento(void);
+void cadastrarAgendamento();
 
-void listarAgendamentos(void);
+void listarAgendamentos();
 
-void atualizarAgendamento(void);
+void atualizarAgendamento();
 
-void excluirAgendamento(void);
+void excluirAgendamento();
 
 #endif
