@@ -1,3 +1,11 @@
+/*
+|=============================================================|
+|                    MODULO AGENDAMENTOS                      |
+| CRUD para a gestao de clientes do sistema SIG-MASSAGE       |
+|=============================================================|
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
