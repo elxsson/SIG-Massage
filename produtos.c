@@ -84,3 +84,24 @@ void listarProdutos() {
     printf("Para cadastrar um produto, escolha a opção 1 no menu.\n");
     pausar();
 }
+
+void buscarProduto() {
+    char nome[70];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║                PROCURAR PRODUTO              ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o nome do produto que deseja buscar: \n");
+    if (scanf(" %69[^\n]", nome) != 1) {
+        printf("\n Erro: Nome inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+    
+    printf("Função de busca de produto ainda não implementada.\n");
+    pausar();
+}
+
