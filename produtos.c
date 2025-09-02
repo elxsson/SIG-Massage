@@ -154,3 +154,45 @@ void deletarProduto() {
     
     pausar();
 }
+
+void produtos() {
+    int opcao;
+
+    do {
+        menuProdutos();
+        if (scanf("%d", &opcao) != 1) {
+            printf("\n Erro: Digite apenas números!\n");
+            limparBuffer();
+            pausar();
+            continue;
+        }
+
+        switch(opcao) {
+            case 1: 
+                cadastroProduto(); 
+                break;
+            case 2: 
+                listarProdutos(); 
+                break;
+            case 3: 
+                buscarProduto(); 
+                break;
+            case 4: 
+                atualizarProduto(); 
+                break;
+            case 5: 
+                deletarProduto(); 
+                break;
+            case 0:
+                printf("\n Retornando ao menu principal...\n"); 
+                break;
+        
+            default:
+                limparTela();
+                printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
+                pausar();
+            break;
+        }
+ 
+    } while(opcao != 0);
+}
