@@ -105,3 +105,21 @@ void buscarProduto() {
     pausar();
 }
 
+void atualizarProduto() {
+    char codigo[20];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║          ATUALIZAR DADOS DO PRODUTO          ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    
+    printf("Digite o código do produto que deseja atualizar: \n");
+    if (scanf(" %19s", codigo) != 1) {
+        printf("\n Erro: Código inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+    printf("Função de atualização de produto ainda não implementada.\n");
+    pausar();
+}
