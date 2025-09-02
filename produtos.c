@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "produtos.h"
+#include "utils.h"
 
 void menuProdutos() {
     limparTela();
