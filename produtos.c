@@ -73,3 +73,14 @@ void cadastroProduto() {
     printf("\n Produto %s cadastrado com sucesso!\n", nome);
     pausar();
 }
+
+void listarProdutos() {
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║               LISTAR PRODUTOS                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Nenhum produto cadastrado ainda.\n");
+    printf("Para cadastrar um produto, escolha a opção 1 no menu.\n");
+    pausar();
+}
