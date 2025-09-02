@@ -26,3 +26,50 @@ void menuProdutos() {
     printf("╚══════════════════════════════════════════════╝\n");
     printf("\n Digite a opção desejada: ");
 }
+
+void cadastroProduto() {
+    char nome[70];
+    char codigo[20];
+    float preco;
+    int estoque;
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║              CADASTRAR PRODUTO               ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    
+    printf("Digite o nome do produto: ");
+    if (scanf(" %69[^\n]", nome) != 1) {
+        printf("\n Erro: Nome inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("Digite o código do produto: ");
+    if (scanf(" %19s", codigo) != 1) {
+        printf("\n Erro: Código inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("Digite o preço do produto: ");
+    if (scanf("%f", &preco) != 1) {
+        printf("\n Erro: Preço inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("Digite a quantidade em estoque: ");
+    if (scanf("%d", &estoque) != 1) {
+        printf("\n Erro: Estoque inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("\n Produto %s cadastrado com sucesso!\n", nome);
+    pausar();
+}
