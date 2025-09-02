@@ -123,3 +123,34 @@ void atualizarProduto() {
     printf("Função de atualização de produto ainda não implementada.\n");
     pausar();
 }
+
+void deletarProduto() {
+    char codigo[20];
+    char confirmacao;
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║               EXCLUIR PRODUTO                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o código do produto que deseja deletar: ");
+    if (scanf(" %19s", codigo) != 1) {
+        printf("\n Erro: Código inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+    
+    printf("Tem certeza que deseja excluir? (s/N): ");
+    limparBuffer();
+    scanf("%c", &confirmacao);
+    
+    if (confirmacao == 's' || confirmacao == 'S') {
+        printf("\n Função de exclusão de produto ainda não implementada.\n");
+        printf("Produto que seria excluído: %s\n", codigo);
+    } else {
+        printf("\n Operação cancelada pelo usuário.\n");
+    }
+    
+    pausar();
+}
