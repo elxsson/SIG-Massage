@@ -10,6 +10,7 @@
 #include "cliente.h"
 #include "massoterapeutas.h"
 #include "agendamentos.h"
+#include "produtos.h"
 #include "utils.h"
 
 int main() {
@@ -46,18 +47,7 @@ int main() {
                 break;
                 
             case 3:
-                limparTela();
-                printf("\n╔══════════════════════════════════════════════════╗\n");
-                printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
-                printf("╠══════════════════════════════════════════════════╣\n");
-                printf("║                                                  ║\n");
-                printf("║ O módulo SERVIÇOS está em desenvolvimento        ║\n");
-                printf("║ e estará disponível em breve!                    ║\n");
-                printf("║                                                  ║\n");
-                printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
-                printf("║                                                  ║\n");
-                printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                produtos();
                 break;
                 
             case 4:
