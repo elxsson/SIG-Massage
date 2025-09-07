@@ -10,6 +10,7 @@
 #include "cliente.h"
 #include "massoterapeutas.h"
 #include "agendamentos.h"
+#include "produtos.h"
 #include "utils.h"
 
 int main() {
