@@ -54,3 +54,33 @@ void registrarEntrada() {
     printf("Valor: R$ %.2f | Descrição: %s\n", valor, descricao);
     pausar();
 }
+
+void registrarSaida() {
+    float valor;
+    char cpf[20];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║          REGISTRAR SAÍDA DE DINHEIRO         ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o valor do pagamento (R$): ");
+    if (scanf("%f", &valor) != 1) {
+        printf("\n Erro: Valor inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("Digite o CPF do massoterapeuta: ");
+    if (scanf(" %19s", cpf) != 1) {
+        printf("\n Erro: CPF inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("\n Saída registrada com sucesso!\n");
+    printf("Valor: R$ %.2f | Pago ao massoterapeuta CPF: %s\n", valor, cpf);
+    pausar();
+}
