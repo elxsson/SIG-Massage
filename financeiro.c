@@ -84,3 +84,14 @@ void registrarSaida() {
     printf("Valor: R$ %.2f | Pago ao massoterapeuta CPF: %s\n", valor, cpf);
     pausar();
 }
+
+void listarFinanceiro() {
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║      LISTAR MOVIMENTAÇÕES FINANCEIRAS        ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Nenhuma movimentação registrada ainda.\n");
+    printf("Use as opções de entrada ou saída para registrar.\n");
+    pausar();
+}
