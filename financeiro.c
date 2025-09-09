@@ -95,3 +95,38 @@ void listarFinanceiro() {
     printf("Use as opções de entrada ou saída para registrar.\n");
     pausar();
 }
+
+void financeiro() {
+    int opcao;
+
+    do {
+        menuFinanceiro();
+        if (scanf("%d", &opcao) != 1) {
+            printf("\n Erro: Digite apenas números!\n");
+            limparBuffer();
+            pausar();
+            continue;
+        }
+
+        switch(opcao) {
+            case 1:
+                registrarEntrada();
+                break;
+            case 2:
+                registrarSaida();
+                break;
+            case 3:
+                listarFinanceiro();
+                break;
+            case 0:
+                printf("\n Retornando ao menu principal...\n");
+                break;
+            default:
+                limparTela();
+                printf("\n Opção inválida! Digite um número entre 0 e 3.\n");
+                pausar();
+                break;
+        }
+
+    } while(opcao != 0);
+}
