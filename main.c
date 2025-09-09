@@ -10,6 +10,8 @@
 #include "cliente.h"
 #include "massoterapeutas.h"
 #include "agendamentos.h"
+#include "produtos.h"
+#include "financeiro.h"
 #include "utils.h"
 
 int main() {
@@ -23,11 +25,12 @@ int main() {
         printf("║                                                  ║\n");
         printf("║ ► 1. Módulo Clientes                             ║\n");
         printf("║ ► 2. Módulo Massoterapeutas                      ║\n");
-        printf("║ ► 3. Módulo Serviços                             ║\n");
+        printf("║ ► 3. Módulo Produtos                             ║\n");
         printf("║ ► 4. Módulo Agendamentos                         ║\n");
         printf("║ ► 5. Módulo Relatórios                           ║\n");
         printf("║ ► 6. Sobre o SIG-MASSAGE                         ║\n");
         printf("║ ► 7. Equipe SIG-MASSAGE                          ║\n");
+        printf("║ ► 8. Módulo Financeiro                           ║\n");
         printf("║ ► 0. Sair do Sistema                             ║\n");
         printf("║                                                  ║\n");
         printf("╚══════════════════════════════════════════════════╝\n");
@@ -46,18 +49,7 @@ int main() {
                 break;
                 
             case 3:
-                limparTela();
-                printf("\n╔══════════════════════════════════════════════════╗\n");
-                printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
-                printf("╠══════════════════════════════════════════════════╣\n");
-                printf("║                                                  ║\n");
-                printf("║ O módulo SERVIÇOS está em desenvolvimento        ║\n");
-                printf("║ e estará disponível em breve!                    ║\n");
-                printf("║                                                  ║\n");
-                printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
-                printf("║                                                  ║\n");
-                printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                menuProdutos();
                 break;
                 
             case 4:
@@ -117,6 +109,10 @@ int main() {
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
                 pausar();
+                break;
+
+            case 8:
+                financeiro();
                 break;
                 
             case 0:
