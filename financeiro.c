@@ -24,3 +24,33 @@ void menuFinanceiro() {
     printf("╚══════════════════════════════════════════════╝\n");
     printf("\n Digite a opção desejada: ");
 }
+
+void registrarEntrada() {
+    float valor;
+    char descricao[100];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║         REGISTRAR ENTRADA DE DINHEIRO        ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o valor da entrada (R$): ");
+    if (scanf("%f", &valor) != 1) {
+        printf("\n Erro: Valor inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    limparBuffer();
+    printf("Digite a descrição da entrada (sessão/produto): ");
+    if (scanf(" %99[^\n]", descricao) != 1) {
+        printf("\n Erro: Descrição inválida!\n");
+        pausar();
+        return;
+    }
+
+    printf("\n Entrada registrada com sucesso!\n");
+    printf("Valor: R$ %.2f | Descrição: %s\n", valor, descricao);
+    pausar();
+}
