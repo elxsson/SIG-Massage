@@ -99,7 +99,7 @@ void buscarCliente() {
     printf("║               PROCURAR CLIENTE               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
-    printf("Digite o nome do cliente que deseja buscar: \n");
+    printf("Digite o nome do cliente que deseja buscar: ");
     if (scanf(" %69[^\n]", nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
         limparBuffer();
@@ -121,7 +121,7 @@ void atualizarCliente() {
     printf("║          ATUALIZAR DADOS DO CLIENTE          ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     
-    printf("Digite o CPF do cliente que deseja atualizar:  \n");
+    printf("Digite o CPF do cliente que deseja atualizar os dados:  /");
     if (scanf(" %19s", cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
@@ -150,7 +150,7 @@ void deletarCliente() {
         pausar();
         return;
     }
-     printf("Tem certeza que deseja excluir? (s/N): ");
+    printf("Tem certeza que deseja excluir? (s/N): ");
     limparBuffer();
     scanf("%c", &confirmacao);
     
