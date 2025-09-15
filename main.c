@@ -27,10 +27,10 @@ int main() {
         printf("║ ► 2. Módulo Massoterapeutas                      ║\n");
         printf("║ ► 3. Módulo Produtos                             ║\n");
         printf("║ ► 4. Módulo Agendamentos                         ║\n");
-        printf("║ ► 5. Módulo Relatórios                           ║\n");
-        printf("║ ► 6. Sobre o SIG-MASSAGE                         ║\n");
-        printf("║ ► 7. Equipe SIG-MASSAGE                          ║\n");
-        printf("║ ► 8. Módulo Financeiro                           ║\n");
+        printf("║ ► 5. Módulo Financeiro                           ║\n");
+        printf("║ ► 6. Módulo Relatórios                           ║\n");
+        printf("║ ► 7. Sobre o SIG-MASSAGE                         ║\n");
+        printf("║ ► 8. Equipe SIG-MASSAGE                          ║\n");
         printf("║ ► 0. Sair do Sistema                             ║\n");
         printf("║                                                  ║\n");
         printf("╚══════════════════════════════════════════════════╝\n");
@@ -55,8 +55,12 @@ int main() {
             case 4:
                 agendamentos();
                 break;
-                
+
             case 5:
+                financeiro();
+                break;      
+                
+            case 6:
                 limparTela();
                 printf("\n╔══════════════════════════════════════════════════╗\n");
                 printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
@@ -71,7 +75,7 @@ int main() {
                 pausar();
                 break;
             
-            case 6:
+            case 7:
                 limparTela();
                 printf("\n╔══════════════════════════════════════════════════╗\n");
                 printf("║               SOBRE O SIG-MASSAGE                ║\n");
@@ -93,7 +97,7 @@ int main() {
                 pausar();
                 break;
 
-            case 7:
+            case 8:
                 limparTela();
                 printf("\n╔══════════════════════════════════════════════════╗\n");
                 printf("║                  EQUIPE SIG-MASSAGE              ║\n");
@@ -109,10 +113,6 @@ int main() {
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
                 pausar();
-                break;
-
-            case 8:
-                financeiro();
                 break;
                 
             case 0:
