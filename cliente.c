@@ -155,7 +155,7 @@ void deletarCliente() {
     scanf("%c", &confirmacao);
     
     if (confirmacao == 's' || confirmacao == 'S') {
-        printf("\n Função de exclusão de massoterapeuta ainda não implementada.\n");
+        printf("\n Função de exclusão de cliente ainda não implementada.\n");
         printf("CPF que seria excluído: %s\n", cpf);
     } else {
         printf("\n Operação cancelada pelo usuário.\n");
