@@ -41,7 +41,7 @@ void novoAgendamento() {
     printf("║  2) Terapêutica      6) Reflexologia         ║\n");
     printf("║  3) Esportiva        7) Pedras Quentes       ║\n");
     printf("║  4) Shiatsu          8) Drenagem Linfática   ║\n");
-    printf("║                      9) Massagem Facial      ║\n");
+    printf("║  9) Massagem Facial                          ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("Escolha uma opção: ");
     if (scanf("%d", &tipoMassagem) != 1 || tipoMassagem < 1 || tipoMassagem > 9) {
@@ -70,7 +70,7 @@ void novoAgendamento() {
     printf("17h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
     printf("18h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
     printf("====================================================================\n");
-    
+
     printf("escolha o dia da semana (1-6): ");
     if (scanf("%d", &diaSemana) != 1 || diaSemana < 1 || diaSemana > 6) {
         printf("\n Erro: Dia da semana inválido!\n");
@@ -86,6 +86,8 @@ void novoAgendamento() {
         pausar();
         return;
     }
+
+
 
     printf("\n Agendamento criado com sucesso para o dia %d às %dh!\n", diaSemana, hora);
     pausar();
@@ -128,6 +130,7 @@ void atualizarAgendamento() {
 
 void excluirAgendamento() {
     int id;
+    char confirmacao;
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║             EXCLUIR AGENDAMENTO              ║\n");
@@ -140,6 +143,19 @@ void excluirAgendamento() {
         pausar();
         return;
     }
+
+    printf("Tem certeza que deseja excluir? (s/N): ");
+    limparBuffer();
+    scanf("%c", &confirmacao);
+    
+    if (confirmacao == 's' || confirmacao == 'S') {
+        printf("\n Função de exclusão de agendamento ainda não implementada.\n");
+        printf("ID que seria excluído: %i\n",id);
+    } else {    
+        printf("\n Operação cancelada pelo usuário.\n");
+    }
+    
+    pausar();
 
     printf("\n Agendamento com ID %d excluído com sucesso!\n", id);
     pausar();
