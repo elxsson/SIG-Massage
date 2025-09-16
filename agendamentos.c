@@ -57,7 +57,6 @@ void novoAgendamento() {
 
     printf("Hora     Segunda     Terca     Quarta     Quinta     Sexta     Sabado\n");
     printf("--------------------------------------------------------------------\n");
-
     printf("08h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
     printf("09h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
     printf("10h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
@@ -152,13 +151,11 @@ void excluirAgendamento() {
         printf("\n Função de exclusão de agendamento ainda não implementada.\n");
         printf("ID que seria excluído: %i\n",id);
     } else {    
-        printf("\n Operação cancelada pelo usuário.\n");
+        printf("\n Operação cancelada pelo usuário.\n");   
     }
     
     pausar();
 
-    printf("\n Agendamento com ID %d excluído com sucesso!\n", id);
-    pausar();
 }
 
 
