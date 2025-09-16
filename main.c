@@ -49,7 +49,7 @@ int main() {
                 break;
                 
             case 3:
-                menuProdutos();
+                produtos();
                 break;
                 
             case 4:
