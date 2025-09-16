@@ -19,8 +19,9 @@ void menuAgendamentos() {
     printf("║                                              ║\n");
     printf("║ 1. novo agendamento                          ║\n");
     printf("║ 2. Listar Agendamentos                       ║\n");
-    printf("║ 3. Atualizar Agendamento                     ║\n");
-    printf("║ 4. Excluir Agendamento                       ║\n");
+    printf("║ 3. buscar Agendamento                        ║\n");
+    printf("║ 4. Atualizar Agendamento                     ║\n");
+    printf("║ 5. Excluir Agendamento                       ║\n");
     printf("║ 0. Voltar ao Menu Principal                  ║\n");
     printf("║                                              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
@@ -57,7 +58,6 @@ void novoAgendamento() {
 
     printf("Hora     Segunda     Terca     Quarta     Quinta     Sexta     Sabado\n");
     printf("--------------------------------------------------------------------\n");
-
     printf("08h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
     printf("09h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
     printf("10h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
@@ -102,6 +102,27 @@ void listarAgendamentos() {
     printf("╚══════════════════════════════════════════════╝\n");
 
     printf("Nenhum agendamento encontrado.\n");
+    pausar();
+}
+
+
+
+void buscarAgendamento() {
+    int id;
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║              BUSCAR AGENDAMENTO              ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o ID do agendamento a ser buscado: ");
+    if (scanf("%d", &id) != 1 || id <= 0) {
+        printf("\n Erro: ID inválido!\n");
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("\n Nenhum agendamento encontrado com o ID %d.\n", id);
     pausar();
 }
 
@@ -152,13 +173,11 @@ void excluirAgendamento() {
         printf("\n Função de exclusão de agendamento ainda não implementada.\n");
         printf("ID que seria excluído: %i\n",id);
     } else {    
-        printf("\n Operação cancelada pelo usuário.\n");
+        printf("\n Operação cancelada pelo usuário.\n");   
     }
     
     pausar();
 
-    printf("\n Agendamento com ID %d excluído com sucesso!\n", id);
-    pausar();
 }
 
 
@@ -182,9 +201,12 @@ void agendamentos() {
                 listarAgendamentos();
                 break;
             case 3:
-                atualizarAgendamento();
+                buscarAgendamento();
                 break;
             case 4:
+                atualizarAgendamento();
+                break;
+            case 5:
                 excluirAgendamento();
                 break;
             case 0:
