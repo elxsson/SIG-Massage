@@ -53,9 +53,10 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
         ║ ► 2. Módulo Massoterapeutas                      ║
         ║ ► 3. Módulo Serviços                             ║
         ║ ► 4. Módulo Agendamentos                         ║
-        ║ ► 5. Módulo Relatórios                           ║
-        ║ ► 6. Sobre o SIG-MASSAGE                         ║
-        ║ ► 7. Equipe SIG-MASSAGE                          ║
+        ║ ► 5. modulo financeiro                           ║
+        ║ ► 6. Módulo Relatórios                           ║
+        ║ ► 7. Sobre o SIG-MASSAGE                         ║
+        ║ ► 8. Equipe SIG-MASSAGE                          ║
         ║ ► 0. Sair do Sistema                             ║
         ║                                                  ║
         ╚══════════════════════════════════════════════════╝
