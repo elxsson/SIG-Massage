@@ -7,10 +7,11 @@ Um sistema desenvolvido em C para facilitar o gerenciamento completo de clínica
 ## Funcionalidades Principais
 
 -  **Gestão de Clientes**: Cadastro completo e controle de histórico
--  **Cadastro de Massoterapeutas**: Gerenciamento de profissionais
--  **Controle de Serviços**: Catálogo de massagens e terapias oferecidas
+-  **Gestão de Massoterapeutas**: Gerenciamento de profissionais
+-  **Gestão de Produtos**: Cadastro de produtos e controle de estoque
 -  **Sistema de Agendamentos**: Controle de horários e disponibilidade
 -  **Relatórios Detalhados**: Análises e estatísticas do negócio
+-  **Controle Financeiro**: Controle de entrada e saída de finanças
 
 ## Como Executar
 
@@ -28,19 +29,16 @@ git clone [url-do-repositorio]
 cd sig-massage
 
 # Compile o programa
-gcc -o sig_massage main.c
+make
 
 # Execute o sistema
-./sig_massage
+./sig-massage
+
+# Limpe os arquivos gerados na compilação (opcional):
+make clean
 ```
 
-### No Windows:
-```cmd
-gcc -o sig_massage.exe main.c
-sig_massage.exe
-```
-
-###  Interface do Sistema
+##  Interface do Sistema
 
 O sistema apresenta uma interface em ASCII com navegação por menus:
 
@@ -51,9 +49,9 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
         ║                                                  ║
         ║ ► 1. Módulo Clientes                             ║
         ║ ► 2. Módulo Massoterapeutas                      ║
-        ║ ► 3. Módulo Serviços                             ║
+        ║ ► 3. Módulo Produtos                             ║
         ║ ► 4. Módulo Agendamentos                         ║
-        ║ ► 5. modulo financeiro                           ║
+        ║ ► 5. Módulo Financeiro                           ║
         ║ ► 6. Módulo Relatórios                           ║
         ║ ► 7. Sobre o SIG-MASSAGE                         ║
         ║ ► 8. Equipe SIG-MASSAGE                          ║
@@ -62,13 +60,23 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
         ╚══════════════════════════════════════════════════╝
 ```
 
-### Status do Desenvolvimento
+## Status do Desenvolvimento
 
 | Módulo | Status | Descrição |
 |--------|--------|-----------|
 | 🏠 **Menu Principal** | ✅ Concluído | Interface de navegação |
 | 👥 **Clientes** | 🚧 Em desenvolvimento | Cadastro e gestão de clientes |
 | 💆 **Massoterapeutas** | 🚧 Em desenvolvimento | Gestão de profissionais |
-| 🛠️ **Serviços** | 🚧 Em desenvolvimento | Catálogo de serviços |
+| 🛠️ **Produtos** | 🚧 Em desenvolvimento | Cadastro de produtos e controle de estoque |
 | 📅 **Agendamentos** | 🚧 Em desenvolvimento | Sistema de marcação |
 | 📊 **Relatórios** | 🚧 Em desenvolvimento | Análises e estatísticas |
+| 💰 **Financeiro** | 🚧 Em desenvolvimento | Controle de entrada e saída |
+
+## Próximos Passos:
+
+- Ajustar estrutura do projeto
+- Persistência em arquivos texto
+- Tipos abstratos de dados
+- Persistência em arquivos binários
+- Exclusão lógica e física de dados
+- Validação dos dados de entrada
