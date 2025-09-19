@@ -80,3 +80,22 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
 - Persistência em arquivos binários
 - Exclusão lógica e física de dados
 - Validação dos dados de entrada
+
+## Desenvolvedores
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Felipe-edu34" target="_blank">
+        <img src="https://github.com/Felipe-edu34.png" width="100px;" alt="Felipe Eduardo" style="border-radius:50%;"/>
+      </a><br />
+      <sub><b>Felipe Eduardo</b></sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/elxsson" target="_blank">
+        <img src="https://github.com/elxsson.png" width="100px;" alt="Elisson Tavares" style="border-radius:50%;"/>
+      </a><br />
+      <sub><b>Elisson Tavares</b></sub>
+    </td>
+  </tr>
+</table>
