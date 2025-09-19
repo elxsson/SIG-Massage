@@ -1,0 +1,33 @@
+# Arquivos compilados C/C++
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.so
+*.dll
+*.gch
+
+# Build directories
+build/
+bin/
+Debug/
+Release/
+
+# Arquivos temporários
+*.tmp
+*.log
+*.swp
+*~
+
+# Arquivos do VSCode
+.vscode/
+*.code-workspace
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Makefile backup
+*~
