@@ -1,6 +1,8 @@
 #ifndef PRODUTOS_H
 #define PRODUTOS_H
 
+void produtos();
+
 void menuProdutos();
 
 void cadastroProduto();
@@ -12,7 +14,5 @@ void buscarProduto();
 void atualizarProduto();
 
 void deletarProduto();
-
-void produtos();
 
 #endif
