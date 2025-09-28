@@ -7,8 +7,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "cliente.h"
 #include "utils.h"
+
+#define CLIENTE_FILE "clientes.csv"
+
+void salvarCliente(Cliente cliente) {
+    FILE *fp = fopen(CLIENTE_FILE, "a");
+    if (fp == NULL) {
+        perror("Erro ao abrir arquivo de clientes");
+        return;
+    }
+    fprintf(fp, "%s;%s;%s;%s\n", cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
+    fclose(fp);
+}
+
 
 void menucliente() {
         limparTela();
