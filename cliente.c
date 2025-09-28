@@ -45,18 +45,15 @@ void menucliente() {
 
 
 void cadastroCliente() {
-    char nome[70];
-    char cpf[20];
-    char telefone[20];
-    char email[70]; 
+    Cliente cliente;
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               CADASTRAR CLIENTE              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    
+
     printf("Digite o nome do cliente: ");
-    if (scanf(" %69[^\n]", nome) != 1) {
+    if (scanf(" %69[^\n]", cliente.nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
         limparBuffer();
         pausar();
@@ -64,7 +61,7 @@ void cadastroCliente() {
     }
 
     printf("Digite o CPF do cliente: ");
-       if (scanf(" %19s", cpf) != 1) {
+    if (scanf(" %19s", cliente.cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
         pausar();
@@ -72,7 +69,7 @@ void cadastroCliente() {
     }
 
     printf("Digite o telefone do cliente: ");
-    if (scanf(" %19s", telefone) != 1) {
+    if (scanf(" %19s", cliente.telefone) != 1) {
         printf("\n Erro: Telefone inválido!\n");
         limparBuffer();
         pausar();
@@ -80,14 +77,16 @@ void cadastroCliente() {
     }
 
     printf("Digite o email do cliente: ");
-    if (scanf(" %69s", email) != 1) {
+    if (scanf(" %69s", cliente.email) != 1) {
         printf("\n Erro: Email inválido!\n");
         limparBuffer();
         pausar();
         return;
     }
 
-    printf("\n Cliente %s cadastrado com sucesso!\n", nome);
+    salvarCliente(cliente);
+
+    printf("\n Cliente %s cadastrado com sucesso!\n", cliente.nome);
     pausar();
 }
 
