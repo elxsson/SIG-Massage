@@ -31,3 +31,6 @@ desktop.ini
 
 # Makefile backup
 *~
+
+# Dados
+*.csv
