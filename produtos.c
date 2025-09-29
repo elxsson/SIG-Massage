@@ -7,8 +7,24 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "produtos.h"
 #include "utils.h"
+
+#define PRODUTOS_FILE "produtos.csv"
+
+
+void salvarProduto(Produtos produto) {
+    FILE *fp = fopen(PRODUTOS_FILE, "a");
+    if (fp == NULL) {
+        perror("Erro ao abrir arquivo de produtos");
+        return;
+    }
+    fprintf(fp, "%s;%s;%.2f;%d\n", produto.nome, produto.codigo, produto.preco, produto.estoque);
+    fclose(fp);
+}
+
 
 void menuProdutos() {
     limparTela();
