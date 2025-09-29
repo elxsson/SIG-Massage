@@ -7,8 +7,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "cliente.h"
 #include "utils.h"
+
+#define CLIENTE_FILE "clientes.csv"
+
+void salvarCliente(Cliente cliente) {
+    FILE *fp = fopen(CLIENTE_FILE, "a");
+    if (fp == NULL) {
+        perror("Erro ao abrir arquivo de clientes");
+        return;
+    }
+    fprintf(fp, "%s;%s;%s;%s\n", cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
+    fclose(fp);
+}
+
 
 void menucliente() {
         limparTela();
@@ -30,18 +45,15 @@ void menucliente() {
 
 
 void cadastroCliente() {
-    char nome[70];
-    char cpf[20];
-    char telefone[20];
-    char email[70]; 
+    Cliente cliente;
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               CADASTRAR CLIENTE              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
-    
+
     printf("Digite o nome do cliente: ");
-    if (scanf(" %69[^\n]", nome) != 1) {
+    if (scanf(" %69[^\n]", cliente.nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
         limparBuffer();
         pausar();
@@ -49,7 +61,7 @@ void cadastroCliente() {
     }
 
     printf("Digite o CPF do cliente: ");
-       if (scanf(" %19s", cpf) != 1) {
+    if (scanf(" %19s", cliente.cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
         pausar();
@@ -57,7 +69,7 @@ void cadastroCliente() {
     }
 
     printf("Digite o telefone do cliente: ");
-    if (scanf(" %19s", telefone) != 1) {
+    if (scanf(" %19s", cliente.telefone) != 1) {
         printf("\n Erro: Telefone inválido!\n");
         limparBuffer();
         pausar();
@@ -65,14 +77,16 @@ void cadastroCliente() {
     }
 
     printf("Digite o email do cliente: ");
-    if (scanf(" %69s", email) != 1) {
+    if (scanf(" %69s", cliente.email) != 1) {
         printf("\n Erro: Email inválido!\n");
         limparBuffer();
         pausar();
         return;
     }
 
-    printf("\n Cliente %s cadastrado com sucesso!\n", nome);
+    salvarCliente(cliente);
+
+    printf("\n Cliente %s cadastrado com sucesso!\n", cliente.nome);
     pausar();
 }
 
@@ -84,8 +98,21 @@ void listarClientes() {
     printf("║                LISTAR CLIENTES               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
-    printf("Nenhum cliente cadastrado ainda.\n");
-    printf("Para cadastrar um cliente, escolha a opção 1 no menu.\n");
+    FILE *fp = fopen(CLIENTE_FILE, "r");
+    if (fp == NULL) {
+        printf("Nenhum cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Cliente cliente;
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        printf("Nome: %s | CPF: %s | Telefone: %s | Email: %s\n",
+               cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
+    }
+
+    fclose(fp);
     pausar();
 }
 

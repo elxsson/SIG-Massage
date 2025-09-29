@@ -1,18 +1,19 @@
-#ifndef MODULO_CLIENTE_H
-#define MODULO_CLIENTE_H
+#ifndef CLIENTE_H
+#define CLIENTE_H
 
-void cliente(void);
+typedef struct {
+    char nome[70];
+    char cpf[20];
+    char telefone[20];
+    char email[70];
+} Cliente;
 
-void menucliente(void);
-
-void cadastroCliente(void);
-
-void listarClientes(void);
-
-void buscarCliente(void);
-
-void atualizarCliente(void);
-
-void deletarCliente(void);
+void menucliente();
+void cliente();
+void cadastroCliente();
+void listarClientes();
+void buscarCliente();
+void atualizarCliente();
+void deletarCliente();
 
 #endif
