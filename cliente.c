@@ -98,8 +98,21 @@ void listarClientes() {
     printf("║                LISTAR CLIENTES               ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
-    printf("Nenhum cliente cadastrado ainda.\n");
-    printf("Para cadastrar um cliente, escolha a opção 1 no menu.\n");
+    FILE *fp = fopen(CLIENTE_FILE, "r");
+    if (fp == NULL) {
+        printf("Nenhum cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Cliente cliente;
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        printf("Nome: %s | CPF: %s | Telefone: %s | Email: %s\n",
+               cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
+    }
+
+    fclose(fp);
     pausar();
 }
 
