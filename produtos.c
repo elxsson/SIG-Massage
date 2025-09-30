@@ -7,8 +7,24 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "produtos.h"
 #include "utils.h"
+
+#define PRODUTOS_FILE "produtos.csv"
+
+
+void salvarProduto(Produtos produto) {
+    FILE *fp = fopen(PRODUTOS_FILE, "a");
+    if (fp == NULL) {
+        perror("Erro ao abrir arquivo de produtos");
+        return;
+    }
+    fprintf(fp, "%s;%s;%.2f;%d\n", produto.nome, produto.codigo, produto.preco, produto.estoque);
+    fclose(fp);
+}
+
 
 void menuProdutos() {
     limparTela();
@@ -28,10 +44,7 @@ void menuProdutos() {
 }
 
 void cadastroProduto() {
-    char nome[70];
-    char codigo[20];
-    float preco;
-    int estoque;
+    Produtos produto;
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -39,7 +52,7 @@ void cadastroProduto() {
     printf("╚══════════════════════════════════════════════╝\n");
     
     printf("Digite o nome do produto: ");
-    if (scanf(" %69[^\n]", nome) != 1) {
+    if (scanf(" %69[^\n]", produto.nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
         limparBuffer();
         pausar();
@@ -47,7 +60,7 @@ void cadastroProduto() {
     }
 
     printf("Digite o código do produto: ");
-    if (scanf(" %19s", codigo) != 1) {
+    if (scanf(" %19s", produto.codigo) != 1) {
         printf("\n Erro: Código inválido!\n");
         limparBuffer();
         pausar();
@@ -55,7 +68,7 @@ void cadastroProduto() {
     }
 
     printf("Digite o preço do produto: ");
-    if (scanf("%f", &preco) != 1) {
+    if (scanf("%f", &produto.preco) != 1) {
         printf("\n Erro: Preço inválido!\n");
         limparBuffer();
         pausar();
@@ -63,14 +76,16 @@ void cadastroProduto() {
     }
 
     printf("Digite a quantidade em estoque: ");
-    if (scanf("%d", &estoque) != 1) {
+    if (scanf("%d", &produto.estoque) != 1) {
         printf("\n Erro: Estoque inválido!\n");
         limparBuffer();
         pausar();
         return;
     }
 
-    printf("\n Produto %s cadastrado com sucesso!\n", nome);
+    salvarProduto(produto);
+
+    printf("\n Produto %s cadastrado com sucesso!\n", produto.nome);
     pausar();
 }
 
@@ -80,8 +95,21 @@ void listarProdutos() {
     printf("║               LISTAR PRODUTOS                ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
-    printf("Nenhum produto cadastrado ainda.\n");
-    printf("Para cadastrar um produto, escolha a opção 1 no menu.\n");
+    FILE *fp = fopen(PRODUTOS_FILE, "r");
+    if (fp == NULL) {
+        printf("Nenhum produto cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Produtos produto;
+    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
+                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
+        printf("Nome: %s | Código: %s | Preço: R$ %.2f | Estoque: %d\n",
+               produto.nome, produto.codigo, produto.preco, produto.estoque);
+    }
+
+    fclose(fp);
     pausar();
 }
 
