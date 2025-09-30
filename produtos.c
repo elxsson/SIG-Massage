@@ -82,7 +82,7 @@ void cadastroProduto() {
         pausar();
         return;
     }
-    
+
     salvarProduto(produto);
 
     printf("\n Produto %s cadastrado com sucesso!\n", produto.nome);
@@ -95,8 +95,21 @@ void listarProdutos() {
     printf("║               LISTAR PRODUTOS                ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
-    printf("Nenhum produto cadastrado ainda.\n");
-    printf("Para cadastrar um produto, escolha a opção 1 no menu.\n");
+    FILE *fp = fopen(PRODUTOS_FILE, "r");
+    if (fp == NULL) {
+        printf("Nenhum produto cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Produtos produto;
+    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
+                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
+        printf("Nome: %s | Código: %s | Preço: R$ %.2f | Estoque: %d\n",
+               produto.nome, produto.codigo, produto.preco, produto.estoque);
+    }
+
+    fclose(fp);
     pausar();
 }
 
