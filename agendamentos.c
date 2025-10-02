@@ -28,9 +28,7 @@ void menuAgendamentos() {
     printf("\n Digite a opção desejada: ");
 }
 
-
-
-void novoAgendamento() {
+void cadastrarAgendamento() {
     int diaSemana, hora, tipoMassagem;
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -51,10 +49,6 @@ void novoAgendamento() {
         pausar();
         return;
     }
-
-
-
-    
 
     printf("Hora     Segunda     Terca     Quarta     Quinta     Sexta     Sabado\n");
     printf("--------------------------------------------------------------------\n");
@@ -93,8 +87,6 @@ void novoAgendamento() {
     pausar();
 }
 
-
-
 void listarAgendamentos() {
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -104,8 +96,6 @@ void listarAgendamentos() {
     printf("Nenhum agendamento encontrado.\n");
     pausar();
 }
-
-
 
 void buscarAgendamento() {
     int id;
@@ -126,8 +116,6 @@ void buscarAgendamento() {
     pausar();
 }
 
-
-
 void atualizarAgendamento() {
     int id;
     limparTela();
@@ -147,9 +135,7 @@ void atualizarAgendamento() {
     pausar();
 }
 
-
-
-void excluirAgendamento() {
+void deletarAgendamento() {
     int id;
     char confirmacao;
     limparTela();
@@ -180,8 +166,6 @@ void excluirAgendamento() {
 
 }
 
-
-
 void agendamentos() {
     int opcao;
     do {
@@ -195,7 +179,7 @@ void agendamentos() {
 
         switch (opcao) {
             case 1:
-                novoAgendamento();
+                cadastrarAgendamento();
                 break;
             case 2:
                 listarAgendamentos();
@@ -207,7 +191,7 @@ void agendamentos() {
                 atualizarAgendamento();
                 break;
             case 5:
-                excluirAgendamento();
+                deletarAgendamento();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n");
@@ -215,10 +199,8 @@ void agendamentos() {
             default:
                 printf("\n Erro: Opção inválida!\n");
                 pausar();
+                break;
         }
 
     } while (opcao != 0);
-
 }
-
- 
