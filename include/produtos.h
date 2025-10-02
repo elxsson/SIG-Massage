@@ -10,7 +10,7 @@ typedef struct {
 
 void produtos();
 void menuProdutos();
-void cadastroProduto();
+void cadastrarProduto();
 void listarProdutos();
 void buscarProduto();
 void atualizarProduto();

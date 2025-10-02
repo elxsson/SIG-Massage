@@ -8,9 +8,9 @@ typedef struct {
     char email[70];
 } Cliente;
 
-void menucliente();
-void cliente();
-void cadastroCliente();
+void clientes();
+void menuClientes();
+void cadastrarCliente();
 void listarClientes();
 void buscarCliente();
 void atualizarCliente();

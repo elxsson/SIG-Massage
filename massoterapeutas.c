@@ -10,7 +10,7 @@
 #include "massoterapeutas.h"
 #include "utils.h"
 
-void menuMassoterapeuta() {
+void menuMassoterapeutas() {
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║             MODULO MASSOTERAPEUTA            ║\n");
@@ -27,7 +27,7 @@ void menuMassoterapeuta() {
     printf("\n Digite a opção desejada: ");
 }
 
-void cadastroMassoterapeuta() {
+void cadastrarMassoterapeuta() {
     char nome[70];
     char cpf[20];
     char telefone[20];
@@ -173,11 +173,11 @@ void deletarMassoterapeuta() {
     pausar();
 }
 
-void massoterapeuta() {
+void massoterapeutas() {
     int opcao;
 
     do {
-        menuMassoterapeuta();
+        menuMassoterapeutas();
         if (scanf("%d", &opcao) != 1) {
             printf("\n Erro: Digite apenas números!\n");
             limparBuffer();
@@ -187,7 +187,7 @@ void massoterapeuta() {
 
         switch(opcao) {
             case 1: 
-                cadastroMassoterapeuta(); 
+                cadastrarMassoterapeuta(); 
                 break;
             case 2: 
                 listarMassoterapeutas(); 
@@ -209,8 +209,8 @@ void massoterapeuta() {
                 limparTela();
                 printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
                 pausar();
-            break;
+                break;
         }
- 
+
     } while(opcao != 0);
 }

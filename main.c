@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "cliente.h"
+#include "clientes.h"
 #include "massoterapeutas.h"
 #include "agendamentos.h"
 #include "produtos.h"
@@ -41,11 +41,11 @@ int main() {
         switch(opcao) {
             
             case 1: 
-                cliente(); 
+                clientes(); 
                 break;
                 
             case 2:
-                massoterapeuta();
+                massoterapeutas();
                 break;
                 
             case 3:
@@ -137,6 +137,7 @@ int main() {
             default:
                 printf("\n Opção inválida! Por favor, tente novamente.\n");
                 pausar();
+                break;
         }
     } while(opcao != 0);
     
