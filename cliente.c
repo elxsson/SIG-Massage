@@ -13,6 +13,7 @@
 #include "utils.h"
 
 #define CLIENTE_FILE "clientes.csv"
+#define TEMP_FILE "clientes_temp.csv"
 
 void salvarCliente(Cliente cliente) {
     FILE *fp = fopen(CLIENTE_FILE, "a");
@@ -20,6 +21,11 @@ void salvarCliente(Cliente cliente) {
         perror("Erro ao abrir arquivo de clientes");
         return;
     }
+    
+    // converte para lowercase
+    for (int i = 0; cliente.nome[i]; i++) cliente.nome[i] = tolower(cliente.nome[i]);
+    for (int i = 0; cliente.email[i]; i++) cliente.email[i] = tolower(cliente.email[i]);
+    
     fprintf(fp, "%s;%s;%s;%s\n", cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
     fclose(fp);
 }
@@ -134,7 +140,39 @@ void buscarCliente() {
         return;
     }
     
-    printf("função de busca de cliente ainda não implementada.\n");
+    // converte busca para lowercase
+    for (int i = 0; nome[i]; i++) nome[i] = tolower(nome[i]);
+
+    FILE *fp = fopen(CLIENTE_FILE, "r");
+    if (fp == NULL) {
+        printf("\nNenhum cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Cliente cliente;
+    int encontrado = 0;
+    
+    printf("\n--- Resultados da busca ---\n\n");
+    
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        
+        if (strstr(cliente.nome, nome) != NULL) {
+            printf("Nome: %s\n", cliente.nome);
+            printf("CPF: %s\n", cliente.cpf);
+            printf("Telefone: %s\n", cliente.telefone);
+            printf("Email: %s\n", cliente.email);
+            printf("---------------------------\n");
+            encontrado = 1;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Nenhum cliente encontrado com o nome '%s'.\n", nome);
+    }
+
+    fclose(fp);
     pausar();
 }
 
@@ -148,14 +186,88 @@ void atualizarCliente() {
     printf("║          ATUALIZAR DADOS DO CLIENTE          ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     
-    printf("Digite o CPF do cliente que deseja atualizar os dados:  /");
+    printf("Digite o CPF do cliente que deseja atualizar os dados: ");
     if (scanf(" %19s", cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
         pausar();
         return;
     }
-    printf("Função de atualização de cliente ainda não implementada.\n");
+
+    FILE *fp = fopen(CLIENTE_FILE, "r");
+    if (fp == NULL) {
+        printf("\nNenhum cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    FILE *temp = fopen(TEMP_FILE, "w");
+    if (temp == NULL) {
+        printf("\nErro ao criar arquivo temporário.\n");
+        fclose(fp);
+        pausar();
+        return;
+    }
+
+    Cliente cliente;
+    int encontrado = 0;
+
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        
+        if (strcmp(cliente.cpf, cpf) == 0) {
+            encontrado = 1;
+            
+            printf("\nCliente encontrado:\n");
+            printf("Nome: %s\n", cliente.nome);
+            printf("CPF: %s\n", cliente.cpf);
+            printf("Telefone: %s\n", cliente.telefone);
+            printf("Email: %s\n\n", cliente.email);
+            
+            Cliente novoCliente;
+            strcpy(novoCliente.cpf, cliente.cpf); // CPF não muda
+            
+            printf("Digite o novo nome (atual: %s): ", cliente.nome);
+            if (scanf(" %69[^\n]", novoCliente.nome) != 1) {
+                strcpy(novoCliente.nome, cliente.nome);
+            }
+
+            for (int i = 0; novoCliente.nome[i]; i++) novoCliente.nome[i] = tolower(novoCliente.nome[i]);
+            
+            printf("Digite o novo telefone (atual: %s): ", cliente.telefone);
+            if (scanf(" %19s", novoCliente.telefone) != 1) {
+                strcpy(novoCliente.telefone, cliente.telefone);
+            }
+            
+            printf("Digite o novo email (atual: %s): ", cliente.email);
+            if (scanf(" %69s", novoCliente.email) != 1) {
+                strcpy(novoCliente.email, cliente.email);
+            }
+
+            for (int i = 0; novoCliente.email[i]; i++) novoCliente.email[i] = tolower(novoCliente.email[i]);
+            
+            fprintf(temp, "%s;%s;%s;%s\n", 
+                    novoCliente.nome, novoCliente.cpf, 
+                    novoCliente.telefone, novoCliente.email);
+            
+            printf("\nDados atualizados com sucesso!\n");
+        } else {
+            fprintf(temp, "%s;%s;%s;%s\n", 
+                    cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
+        }
+    }
+
+    fclose(fp);
+    fclose(temp);
+
+    if (encontrado) {
+        remove(CLIENTE_FILE);
+        rename(TEMP_FILE, CLIENTE_FILE);
+    } else {
+        printf("\nCliente com CPF %s não encontrado.\n", cpf);
+        remove(TEMP_FILE);
+    }
+
     pausar();
 }
 
@@ -177,17 +289,76 @@ void deletarCliente() {
         pausar();
         return;
     }
+
+    FILE *fp = fopen(CLIENTE_FILE, "r");
+    if (fp == NULL) {
+        printf("\nNenhum cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Cliente cliente;
+    int encontrado = 0;
+
+    // busca e exibe o cliente
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        if (strcmp(cliente.cpf, cpf) == 0) {
+            encontrado = 1;
+            printf("\nCliente encontrado:\n");
+            printf("Nome: %s\n", cliente.nome);
+            printf("CPF: %s\n", cliente.cpf);
+            printf("Telefone: %s\n", cliente.telefone);
+            printf("Email: %s\n\n", cliente.email);
+            break;
+        }
+    }
+    
+    fclose(fp);
+
+    if (!encontrado) {
+        printf("\nCliente com CPF %s não encontrado.\n", cpf);
+        pausar();
+        return;
+    }
+
     printf("Tem certeza que deseja excluir? (s/N): ");
     limparBuffer();
     scanf("%c", &confirmacao);
     
-    if (confirmacao == 's' || confirmacao == 'S') {
-        printf("\n Função de exclusão de cliente ainda não implementada.\n");
-        printf("CPF que seria excluído: %s\n", cpf);
-    } else {
+    if (confirmacao != 's' && confirmacao != 'S') {
         printf("\n Operação cancelada pelo usuário.\n");
+        pausar();
+        return;
     }
+
+    fp = fopen(CLIENTE_FILE, "r");
+    FILE *temp = fopen(TEMP_FILE, "w");
     
+    if (temp == NULL) {
+        printf("\nErro ao criar arquivo temporário.\n");
+        fclose(fp);
+        pausar();
+        return;
+    }
+
+    // copia todos os registros, exceto o que sera deletado
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        if (strcmp(cliente.cpf, cpf) != 0) {
+            fprintf(temp, "%s;%s;%s;%s\n", 
+                    cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
+        }
+    }
+
+    fclose(fp);
+    fclose(temp);
+
+    // remove o arquivo original e renomeia o temporario
+    remove(CLIENTE_FILE);
+    rename(TEMP_FILE, CLIENTE_FILE);
+
+    printf("\n Cliente excluído com sucesso!\n");
     pausar();
 }
 
