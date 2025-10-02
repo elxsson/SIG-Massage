@@ -25,7 +25,6 @@ void salvarProduto(Produtos produto) {
     fclose(fp);
 }
 
-
 void menuProdutos() {
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -34,7 +33,7 @@ void menuProdutos() {
     printf("║                                              ║\n");
     printf("║ 1. Cadastrar Produto                         ║\n");
     printf("║ 2. Listar Produtos                           ║\n");
-    printf("║ 3. Procurar Produto                          ║\n");
+    printf("║ 3. Buscar Produto                            ║\n");
     printf("║ 4. Atualizar Dados do Produto                ║\n");
     printf("║ 5. Excluir Produto                           ║\n");
     printf("║ 0. Voltar ao Menu Principal                  ║\n");
@@ -43,7 +42,7 @@ void menuProdutos() {
     printf("\n Digite a opção desejada: ");
 }
 
-void cadastroProduto() {
+void cadastrarProduto() {
     Produtos produto;
 
     limparTela();
@@ -197,7 +196,7 @@ void produtos() {
 
         switch(opcao) {
             case 1: 
-                cadastroProduto(); 
+                cadastrarProduto(); 
                 break;
             case 2: 
                 listarProdutos(); 
@@ -219,7 +218,7 @@ void produtos() {
                 limparTela();
                 printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
                 pausar();
-            break;
+                break;
         }
  
     } while(opcao != 0);
