@@ -9,11 +9,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "cliente.h"
+#include "clientes.h"
 #include "utils.h"
 
 #define CLIENTE_FILE "clientes.csv"
 #define TEMP_FILE "clientes_temp.csv"
+
 
 void salvarCliente(Cliente cliente) {
     FILE *fp = fopen(CLIENTE_FILE, "a");
@@ -30,8 +31,7 @@ void salvarCliente(Cliente cliente) {
     fclose(fp);
 }
 
-
-void menucliente() {
+void menuClientes() {
         limparTela();
         printf("\n╔══════════════════════════════════════════════╗\n");
         printf("║                 MODULO CLIENTE               ║\n");
@@ -48,9 +48,7 @@ void menucliente() {
         printf("\n Digite a opção desejada: ");
 }
 
-
-
-void cadastroCliente() {
+void cadastrarCliente() {
     Cliente cliente;
 
     limparTela();
@@ -96,8 +94,6 @@ void cadastroCliente() {
     pausar();
 }
 
-
-
 void listarClientes() {
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -121,8 +117,6 @@ void listarClientes() {
     fclose(fp);
     pausar();
 }
-
-
 
 void buscarCliente() {
     char nome[70];
@@ -175,8 +169,6 @@ void buscarCliente() {
     fclose(fp);
     pausar();
 }
-
-
 
 void atualizarCliente() {
     char cpf[20];
@@ -271,8 +263,6 @@ void atualizarCliente() {
     pausar();
 }
 
-
-
 void deletarCliente() {
     char cpf[20];
     char confirmacao;
@@ -362,13 +352,11 @@ void deletarCliente() {
     pausar();
 }
 
-
-
-void cliente() {
+void clientes() {
     int opcao;
 
     do {
-        menucliente();
+        menuClientes();
         if (scanf("%d", &opcao) != 1) {
             printf("\n Erro: Digite apenas números!\n");
             limparBuffer();
@@ -378,7 +366,7 @@ void cliente() {
 
         switch(opcao) {
             case 1: 
-                cadastroCliente(); 
+                cadastrarCliente(); 
                 break;
             case 2: 
                 listarClientes(); 
@@ -399,9 +387,8 @@ void cliente() {
             default:
                 printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
                 pausar();
-            break;
+                break;
         }
  
     } while(opcao != 0);
-    
 }
