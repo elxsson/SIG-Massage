@@ -141,7 +141,39 @@ void buscarCliente() {
         return;
     }
     
-    printf("função de busca de cliente ainda não implementada.\n");
+    // converte busca para lowercase
+    for (int i = 0; nome[i]; i++) nome[i] = tolower(nome[i]);
+
+    FILE *fp = fopen(CLIENTE_FILE, "r");
+    if (fp == NULL) {
+        printf("\nNenhum cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Cliente cliente;
+    int encontrado = 0;
+    
+    printf("\n--- Resultados da busca ---\n\n");
+    
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        
+        if (strstr(cliente.nome, nome) != NULL) {
+            printf("Nome: %s\n", cliente.nome);
+            printf("CPF: %s\n", cliente.cpf);
+            printf("Telefone: %s\n", cliente.telefone);
+            printf("Email: %s\n", cliente.email);
+            printf("---------------------------\n");
+            encontrado = 1;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Nenhum cliente encontrado com o nome '%s'.\n", nome);
+    }
+
+    fclose(fp);
     pausar();
 }
 
