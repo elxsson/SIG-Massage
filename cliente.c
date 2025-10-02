@@ -22,10 +22,8 @@ void salvarCliente(Cliente cliente) {
         return;
     }
     
-    // converte todos os dados para lowercase antes de salvar
+    // converte para lowercase
     for (int i = 0; cliente.nome[i]; i++) cliente.nome[i] = tolower(cliente.nome[i]);
-    for (int i = 0; cliente.cpf[i]; i++) cliente.cpf[i] = tolower(cliente.cpf[i]);
-    for (int i = 0; cliente.telefone[i]; i++) cliente.telefone[i] = tolower(cliente.telefone[i]);
     for (int i = 0; cliente.email[i]; i++) cliente.email[i] = tolower(cliente.email[i]);
     
     fprintf(fp, "%s;%s;%s;%s\n", cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
