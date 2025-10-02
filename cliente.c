@@ -289,17 +289,76 @@ void deletarCliente() {
         pausar();
         return;
     }
+
+    FILE *fp = fopen(CLIENTE_FILE, "r");
+    if (fp == NULL) {
+        printf("\nNenhum cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Cliente cliente;
+    int encontrado = 0;
+
+    // busca e exibe o cliente
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        if (strcmp(cliente.cpf, cpf) == 0) {
+            encontrado = 1;
+            printf("\nCliente encontrado:\n");
+            printf("Nome: %s\n", cliente.nome);
+            printf("CPF: %s\n", cliente.cpf);
+            printf("Telefone: %s\n", cliente.telefone);
+            printf("Email: %s\n\n", cliente.email);
+            break;
+        }
+    }
+    
+    fclose(fp);
+
+    if (!encontrado) {
+        printf("\nCliente com CPF %s não encontrado.\n", cpf);
+        pausar();
+        return;
+    }
+
     printf("Tem certeza que deseja excluir? (s/N): ");
     limparBuffer();
     scanf("%c", &confirmacao);
     
-    if (confirmacao == 's' || confirmacao == 'S') {
-        printf("\n Função de exclusão de cliente ainda não implementada.\n");
-        printf("CPF que seria excluído: %s\n", cpf);
-    } else {
+    if (confirmacao != 's' && confirmacao != 'S') {
         printf("\n Operação cancelada pelo usuário.\n");
+        pausar();
+        return;
     }
+
+    fp = fopen(CLIENTE_FILE, "r");
+    FILE *temp = fopen(TEMP_FILE, "w");
     
+    if (temp == NULL) {
+        printf("\nErro ao criar arquivo temporário.\n");
+        fclose(fp);
+        pausar();
+        return;
+    }
+
+    // copia todos os registros, exceto o que sera deletado
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^\n]\n",
+                  cliente.nome, cliente.cpf, cliente.telefone, cliente.email) == 4) {
+        if (strcmp(cliente.cpf, cpf) != 0) {
+            fprintf(temp, "%s;%s;%s;%s\n", 
+                    cliente.nome, cliente.cpf, cliente.telefone, cliente.email);
+        }
+    }
+
+    fclose(fp);
+    fclose(temp);
+
+    // remove o arquivo original e renomeia o temporario
+    remove(CLIENTE_FILE);
+    rename(TEMP_FILE, CLIENTE_FILE);
+
+    printf("\n Cliente excluído com sucesso!\n");
     pausar();
 }
 
