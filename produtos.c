@@ -23,8 +23,8 @@ void salvarProduto(Produtos produto) {
     }
 
     // Converte para lowercase
-    for (int i = 0; produto.nome[i]; i++) produto.nome[i] = tolower((unsigned char)produto.nome[i]);
-    for (int i = 0; produto.codigo[i]; i++) produto.codigo[i] = tolower((unsigned char)produto.codigo[i]);
+    for (int i = 0; produto.nome[i]; i++) produto.nome[i] = tolower(produto.nome[i]);
+    for (int i = 0; produto.codigo[i]; i++) produto.codigo[i] = tolower(produto.codigo[i]);
 
     fprintf(fp, "%s;%s;%.2f;%d\n", produto.nome, produto.codigo, produto.preco, produto.estoque);
     fclose(fp);
@@ -79,7 +79,7 @@ void cadastrarProduto() {
         return;
     }
 
-    printf("Digite a quantidade em estoque: ");
+    printf("Digite a estoque em estoque: ");
     if (scanf("%d", &produto.estoque) != 1) {
         printf("\n Erro: Estoque inválido!\n");
         limparBuffer();
@@ -107,7 +107,7 @@ void listarProdutos() {
     }
 
     Produtos produto;
-    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
+    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
                   produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
         printf("Nome: %s | Código: %s | Preço: R$ %.2f | Estoque: %d\n",
                produto.nome, produto.codigo, produto.preco, produto.estoque);
@@ -148,14 +148,14 @@ void buscarProduto() {
     
     printf("\n--- Resultados da busca ---\n\n");
 
-    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
-                  produto.nome, produto.codigo, &produto.preco, &produto.quantidade) == 4) {
+    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
+                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
                     
         if (strstr(produto.nome, nome) != NULL) {
             printf("Nome: %s\n", produto.nome);
             printf("Código: %s\n", produto.codigo);
             printf("Preço: %.2f\n", produto.preco);
-            printf("Quantidade: %d\n", produto.quantidade);
+            printf("Estoque: %d\n", produto.estoque);
             printf("---------------------------\n");
             encontrado = 1;
         }
@@ -206,17 +206,17 @@ void atualizarProduto() {
     Produtos produto;
     int encontrado = 0;
 
-    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
-                  produto.nome, produto.codigo, &produto.preco, &produto.quantidade) == 4) {
+    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
+                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
                     
-        if (strstr(produto.nome, nome) != NULL) {
-            encontrado = 1
+        if (strcmp(produto.codigo, codigo) == 0) {
+            encontrado = 1;
 
             printf("\nProduto encontrado:\n");
             printf("Nome: %s\n", produto.nome);
             printf("Código: %s\n", produto.codigo);
             printf("Preço: %.2f\n", produto.preco);
-            printf("Quantidade: %d\n", produto.quantidade);
+            printf("Estoque: %d\n", produto.estoque);
 
             Produtos novoProduto;
             strcpy(novoProduto.codigo,produto.codigo); // Código não muda
@@ -240,7 +240,7 @@ void atualizarProduto() {
 
             fprintf(temp, "%s;%s;%.2f;%d\n",
                     novoProduto.nome, novoProduto.codigo,
-                    novoProduto.preco, novoProduto.estoque;
+                    novoProduto.preco, novoProduto.estoque);
 
             printf("\nDados atualizados com sucesso!\n");
         }else {
@@ -293,17 +293,17 @@ void deletarProduto() {
     Produtos produto;
     int encontrado = 0;
 
-    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
-                  produto.nome, produto.codigo, &produto.preco, &produto.quantidade) == 4) {
+    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
+                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
                     
         if (strcmp(produto.codigo, codigo) == 0) {
-            encontrado = 1
+            encontrado = 1;
 
             printf("\nProduto encontrado:\n");
             printf("Nome: %s\n", produto.nome);
             printf("Código: %s\n", produto.codigo);
             printf("Preço: %.2f\n", produto.preco);
-            printf("Quantidade: %d\n", produto.quantidade);
+            printf("Estoque: %d\n", produto.estoque);
             break;
         }
     }
@@ -336,8 +336,8 @@ void deletarProduto() {
         return;
     }
 
-    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
-                  produto.nome, produto.codigo, &produto.preco, &produto.quantidade) == 4) {
+    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
+                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
         if (strcmp(produto.codigo, codigo) != 0) {
             fprintf(temp, "%s;%s;%.2f;%d\n",
                     produto.nome, produto.codigo, produto.preco, produto.estoque);
