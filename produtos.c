@@ -280,17 +280,79 @@ void deletarProduto() {
         return;
     }
     
+    // converte busca para lowercase
+    for (int i = 0; codigo[i]; i++) codigo[i] = tolower(codigo[i]);
+
+    FILE *fp = fopen(PRODUTOS_FILE, "r");
+    if (fp == NULL) {
+        printf("\nNenhum produto cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Produtos produto;
+    int encontrado = 0;
+
+    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
+                  produto.nome, produto.codigo, &produto.preco, &produto.quantidade) == 4) {
+                    
+        if (strcmp(produto.codigo, codigo) == 0) {
+            encontrado = 1
+
+            printf("\nProduto encontrado:\n");
+            printf("Nome: %s\n", produto.nome);
+            printf("Código: %s\n", produto.codigo);
+            printf("Preço: %.2f\n", produto.preco);
+            printf("Quantidade: %d\n", produto.quantidade);
+            break;
+        }
+    }
+    
+    fclose(fp);
+
+    if (!encontrado) {
+        printf("\nProduto com Código %s não encontrado.\n", codigo);
+        pausar();
+        return;
+    }
+
     printf("Tem certeza que deseja excluir? (s/N): ");
     limparBuffer();
     scanf("%c", &confirmacao);
     
-    if (confirmacao == 's' || confirmacao == 'S') {
-        printf("\n Função de exclusão de produto ainda não implementada.\n");
-        printf("Produto que seria excluído: %s\n", codigo);
-    } else {
+    if (confirmacao != 's' && confirmacao != 'S') {
         printf("\n Operação cancelada pelo usuário.\n");
+        pausar();
+        return;
     }
+
+    fp = fopen(PRODUTOS_FILE, "r");
+    FILE *temp = fopen(TEMP_FILE, "w");
     
+    if (temp == NULL) {
+        printf("\nErro ao criar arquivo temporário.\n");
+        fclose(fp);
+        pausar();
+        return;
+    }
+
+    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
+                  produto.nome, produto.codigo, &produto.preco, &produto.quantidade) == 4) {
+        if (strcmp(produto.codigo, codigo) != 0) {
+            fprintf(temp, "%s;%s;%.2f;%d\n",
+                    produto.nome, produto.codigo, produto.preco, produto.estoque);
+        }
+    }
+
+    fclose(fp);
+    fclose(temp);
+
+    // remove o arquivo original e renomeia o temporario
+    remove(PRODUTOS_FILE);
+    rename(TEMP_FILE, PRODUTOS_FILE);
+
+    printf("\n Produto excluído com sucesso!\n");
+
     pausar();
 }
 
