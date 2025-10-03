@@ -14,7 +14,6 @@
 
 #define MASSOTERAPEUTAS_FILE "massoterapeutas.csv"
 
-
 void salvarMassoterapeuta(Massoterapeutas massoterapeuta) {
     FILE *fp = fopen(MASSOTERAPEUTAS_FILE, "a");
     if (fp == NULL) {
@@ -23,8 +22,8 @@ void salvarMassoterapeuta(Massoterapeutas massoterapeuta) {
     }
 
     // Converte para lowercase
-    for (int i = 0; massoterapeuta.nome[i]; i++) massoterapeuta.nome[i] = tolower((unsigned char)massoterapeuta.nome[i]);
-    for (int i = 0; massoterapeuta.email[i]; i++) massoterapeuta.email[i] = tolower((unsigned char)massoterapeuta.email[i]);
+    for (int i = 0; massoterapeuta.nome[i]; i++) massoterapeuta.nome[i] = tolower(massoterapeuta.nome[i]);
+    for (int i = 0; massoterapeuta.email[i]; i++) massoterapeuta.email[i] = tolower(massoterapeuta.email[i]);
 
     fprintf(fp, "%s;%s;%s;%s;%s;%s\n",
             massoterapeuta.nome, massoterapeuta.cpf, massoterapeuta.telefone, massoterapeuta.email, massoterapeuta.crefito, massoterapeuta.especialidade);
@@ -49,7 +48,7 @@ void menuMassoterapeutas() {
 }
 
 void cadastrarMassoterapeuta() {
-    Massoterapeutas massoterapeuta
+    Massoterapeutas massoterapeuta;
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -115,7 +114,7 @@ void listarMassoterapeutas() {
     printf("║             LISTAR MASSOTERAPEUTAS           ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
-    FILE *fp = fopen(MASSOTERAPEUTA_FILE, "r");
+    FILE *fp = fopen(MASSOTERAPEUTAS_FILE, "r");
     if (fp == NULL) {
         printf("Nenhum massoterapeuta cadastrado ainda.\n");
         pausar();

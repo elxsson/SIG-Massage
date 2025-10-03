@@ -67,7 +67,7 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
 | 🏠 **Menu Principal** | ✅ Concluído | Interface de navegação |
 | 👥 **Clientes** | ✅ Concluído | Cadastro e gestão de clientes |
 | 💆 **Massoterapeutas** | 🚧 Em desenvolvimento | Gestão de profissionais |
-| 🛠️ **Produtos** | 🚧 Em desenvolvimento | Cadastro de produtos e controle de estoque |
+| 🛠️ **Produtos** | ✅ Concluído | Cadastro de produtos e controle de estoque |
 | 📅 **Agendamentos** | 🚧 Em desenvolvimento | Sistema de marcação |
 | 📊 **Relatórios** | 🚧 Em desenvolvimento | Análises e estatísticas |
 | 💰 **Financeiro** | 🚧 Em desenvolvimento | Controle de entrada e saída |
@@ -96,6 +96,12 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
         <img src="https://github.com/elxsson.png" width="100px;" alt="Elisson Tavares" style="border-radius:50%;"/>
       </a><br />
       <sub><b>Elisson Tavares</b></sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/HelenaMariano2025" target="_blank">
+        <img src="https://github.com/HelenaMariano2025.png" width="100px;" alt="Helena Dantas" style="border-radius:50%;"/>
+      </a><br />
+      <sub><b>Helena Dantas</b></sub>
     </td>
   </tr>
 </table>
