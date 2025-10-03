@@ -49,12 +49,7 @@ void menuMassoterapeutas() {
 }
 
 void cadastrarMassoterapeuta() {
-    char nome[70];
-    char cpf[20];
-    char telefone[20];
-    char email[70];
-    char crefito[20];
-    char especialidade[50];
+    Massoterapeutas massoterapeuta
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -62,7 +57,7 @@ void cadastrarMassoterapeuta() {
     printf("╚══════════════════════════════════════════════╝\n");
     
     printf("Digite o nome do massoterapeuta: ");
-    if (scanf(" %69[^\n]", nome) != 1) {
+    if (scanf(" %69[^\n]", massoterapeuta.nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
         limparBuffer();
         pausar();
@@ -70,7 +65,7 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite o CPF do massoterapeuta: ");
-    if (scanf(" %19s", cpf) != 1) {
+    if (scanf(" %19s", massoterapeuta.cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
         pausar();
@@ -78,7 +73,7 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite o telefone do massoterapeuta: ");
-    if (scanf(" %19s", telefone) != 1) {
+    if (scanf(" %19s", massoterapeuta.telefone) != 1) {
         printf("\n Erro: Telefone inválido!\n");
         limparBuffer();
         pausar();
@@ -86,7 +81,7 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite o email do massoterapeuta: ");
-    if (scanf(" %69s", email) != 1) {
+    if (scanf(" %69s", massoterapeuta.email) != 1) {
         printf("\n Erro: Email inválido!\n");
         limparBuffer();
         pausar();
@@ -94,7 +89,7 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite o número do CREFITO: ");
-    if (scanf(" %19s", crefito) != 1) {
+    if (scanf(" %19s", massoterapeuta.crefito) != 1) {
         printf("\n Erro: CREFITO inválido!\n");
         limparBuffer();
         pausar();
@@ -102,14 +97,15 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite a especialidade: ");
-    if (scanf(" %49[^\n]", especialidade) != 1) {
+    if (scanf(" %49[^\n]", massoterapeuta.especialidade) != 1) {
         printf("\n Erro: Especialidade inválida!\n");
         limparBuffer();
         pausar();
         return;
     }
+    salvarMassoterapeuta(massoterapeuta);
 
-    printf("\n Massoterapeuta %s cadastrado com sucesso!\n", nome);
+    printf("\n Massoterapeuta %s cadastrado com sucesso!\n", massoterapeuta.nome);
     pausar();
 }
 
