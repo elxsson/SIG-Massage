@@ -21,6 +21,11 @@ void salvarProduto(Produtos produto) {
         perror("Erro ao abrir arquivo de produtos");
         return;
     }
+
+    // Converte para lowercase
+    for (int i = 0; produto.nome[i]; i++) produto.nome[i] = tolower((unsigned char)produto.nome[i]);
+    for (int i = 0; produto.codigo[i]; i++) produto.codigo[i] = tolower((unsigned char)produto.codigo[i]);
+
     fprintf(fp, "%s;%s;%.2f;%d\n", produto.nome, produto.codigo, produto.preco, produto.estoque);
     fclose(fp);
 }

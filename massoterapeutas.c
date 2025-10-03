@@ -7,8 +7,29 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "massoterapeutas.h"
 #include "utils.h"
+
+#define MASSOTERAPEUTAS_FILE "massoterapeutas.csv"
+
+
+void salvarMassoterapeuta(Massoterapeutas massoterapeuta) {
+    FILE *fp = fopen(MASSOTERAPEUTAS_FILE, "a");
+    if (fp == NULL) {
+        perror("Erro ao abrir arquivo de massoterapeutas");
+        return;
+    }
+
+    // Converte para lowercase
+    for (int i = 0; massoterapeuta.nome[i]; i++) massoterapeuta.nome[i] = tolower((unsigned char)massoterapeuta.nome[i]);
+    for (int i = 0; massoterapeuta.email[i]; i++) massoterapeuta.email[i] = tolower((unsigned char)massoterapeuta.email[i]);
+
+    fprintf(fp, "%s;%s;%s;%s;%s;%s\n",
+            massoterapeuta.nome, massoterapeuta.cpf, massoterapeuta.telefone, massoterapeuta.email, massoterapeuta.crefito, massoterapeuta.especialidade);
+    fclose(fp);
+}
 
 void menuMassoterapeutas() {
     limparTela();
@@ -28,12 +49,7 @@ void menuMassoterapeutas() {
 }
 
 void cadastrarMassoterapeuta() {
-    char nome[70];
-    char cpf[20];
-    char telefone[20];
-    char email[70];
-    char crefito[20];
-    char especialidade[50];
+    Massoterapeutas massoterapeuta
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -41,7 +57,7 @@ void cadastrarMassoterapeuta() {
     printf("╚══════════════════════════════════════════════╝\n");
     
     printf("Digite o nome do massoterapeuta: ");
-    if (scanf(" %69[^\n]", nome) != 1) {
+    if (scanf(" %69[^\n]", massoterapeuta.nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
         limparBuffer();
         pausar();
@@ -49,7 +65,7 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite o CPF do massoterapeuta: ");
-    if (scanf(" %19s", cpf) != 1) {
+    if (scanf(" %19s", massoterapeuta.cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
         pausar();
@@ -57,7 +73,7 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite o telefone do massoterapeuta: ");
-    if (scanf(" %19s", telefone) != 1) {
+    if (scanf(" %19s", massoterapeuta.telefone) != 1) {
         printf("\n Erro: Telefone inválido!\n");
         limparBuffer();
         pausar();
@@ -65,7 +81,7 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite o email do massoterapeuta: ");
-    if (scanf(" %69s", email) != 1) {
+    if (scanf(" %69s", massoterapeuta.email) != 1) {
         printf("\n Erro: Email inválido!\n");
         limparBuffer();
         pausar();
@@ -73,7 +89,7 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite o número do CREFITO: ");
-    if (scanf(" %19s", crefito) != 1) {
+    if (scanf(" %19s", massoterapeuta.crefito) != 1) {
         printf("\n Erro: CREFITO inválido!\n");
         limparBuffer();
         pausar();
@@ -81,14 +97,15 @@ void cadastrarMassoterapeuta() {
     }
 
     printf("Digite a especialidade: ");
-    if (scanf(" %49[^\n]", especialidade) != 1) {
+    if (scanf(" %49[^\n]", massoterapeuta.especialidade) != 1) {
         printf("\n Erro: Especialidade inválida!\n");
         limparBuffer();
         pausar();
         return;
     }
+    salvarMassoterapeuta(massoterapeuta);
 
-    printf("\n Massoterapeuta %s cadastrado com sucesso!\n", nome);
+    printf("\n Massoterapeuta %s cadastrado com sucesso!\n", massoterapeuta.nome);
     pausar();
 }
 
@@ -98,8 +115,23 @@ void listarMassoterapeutas() {
     printf("║             LISTAR MASSOTERAPEUTAS           ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
-    printf("Nenhum massoterapeuta cadastrado ainda.\n");
-    printf("Para cadastrar um massoterapeuta, escolha a opção 1 no menu.\n");
+    FILE *fp = fopen(MASSOTERAPEUTA_FILE, "r");
+    if (fp == NULL) {
+        printf("Nenhum massoterapeuta cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Massoterapeutas massoterapeuta;
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^;];%19[^;];%49[^\n]\n",
+                  massoterapeuta.nome, massoterapeuta.cpf, massoterapeuta.telefone, 
+                  massoterapeuta.email, massoterapeuta.crefito, massoterapeuta.especialidade) == 6) {
+        printf("Nome: %s | CPF: %s | Telefone: %s | Email: %s | CREFITO: %s | Especialidade: %s\n",
+               massoterapeuta.nome, massoterapeuta.cpf, massoterapeuta.telefone, 
+               massoterapeuta.email, massoterapeuta.crefito, massoterapeuta.especialidade);
+    }
+
+    fclose(fp);
     pausar();
 }
 
