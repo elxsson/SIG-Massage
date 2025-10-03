@@ -12,7 +12,7 @@
 #include "massoterapeutas.h"
 #include "utils.h"
 
-#define MASSOTERAPEUTAS_FILE "massoterapeutas.csv";
+#define MASSOTERAPEUTAS_FILE "massoterapeutas.csv"
 
 void salvarMassoterapeuta(Massoterapeutas massoterapeuta) {
     FILE *fp = fopen(MASSOTERAPEUTAS_FILE, "a");

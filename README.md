@@ -97,5 +97,11 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
       </a><br />
       <sub><b>Elisson Tavares</b></sub>
     </td>
+    <td align="center">
+      <a href="https://github.com/HelenaMariano2025" target="_blank">
+        <img src="https://github.com/HelenaMariano2025.png" width="100px;" alt="Helena Dantas" style="border-radius:50%;"/>
+      </a><br />
+      <sub><b>Helena Dantas</b></sub>
+    </td>
   </tr>
 </table>

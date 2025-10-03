@@ -106,10 +106,12 @@ int main() {
                 printf("║   Desenvolvedores:                               ║\n");
                 printf("║      • Felipe Eduardo Silva Fernandes            ║\n");
                 printf("║      • Elisson Tavares                           ║\n");
+                printf("║      • Helena Dantas                             ║\n");
                 printf("║                                                  ║\n");
                 printf("║   Contato:                                       ║\n");
                 printf("║      • felipe.fernandes.710@ufrn.edu.br          ║\n");
                 printf("║      • elisson.tavares.dev@gmail.com             ║\n");
+                printf("║      • helena.mariano.123@ufrn.edu.br            ║\n");
                 printf("║                                                  ║\n");
                 printf("╚══════════════════════════════════════════════════╝\n");
                 pausar();
