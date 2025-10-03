@@ -133,7 +133,39 @@ void buscarProduto() {
         return;
     }
     
-    printf("Função de busca de produto ainda não implementada.\n");
+    // converte busca para lowercase
+    for (int i = 0; nome[i]; i++) nome[i] = tolower(nome[i]);
+
+    FILE *fp = fopen(PRODUTOS_FILE, "r");
+    if (fp == NULL) {
+        printf("\nNenhum produto cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Produtos produto;
+    int encontrado = 0;
+    
+    printf("\n--- Resultados da busca ---\n\n");
+
+    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
+                  produto.nome, produto.codigo, &produto.preco, &produto.quantidade) == 4) {
+                    
+        if (strstr(produto.nome, nome) != NULL) {
+            printf("Nome: %s\n", produto.nome);
+            printf("Código: %s\n", produto.codigo);
+            printf("Preço: %.2f\n", produto.preco);
+            printf("Quantidade: %d\n", produto.quantidade);
+            printf("---------------------------\n");
+            encontrado = 1;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Nenhum produto encontrado com o nome '%s'.\n", nome);
+    }
+
+    fclose(fp);
     pausar();
 }
 
