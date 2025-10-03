@@ -115,8 +115,23 @@ void listarMassoterapeutas() {
     printf("║             LISTAR MASSOTERAPEUTAS           ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
-    printf("Nenhum massoterapeuta cadastrado ainda.\n");
-    printf("Para cadastrar um massoterapeuta, escolha a opção 1 no menu.\n");
+    FILE *fp = fopen(MASSOTERAPEUTA_FILE, "r");
+    if (fp == NULL) {
+        printf("Nenhum massoterapeuta cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    Massoterapeutas massoterapeuta;
+    while (fscanf(fp, " %69[^;];%19[^;];%19[^;];%69[^;];%19[^;];%49[^\n]\n",
+                  massoterapeuta.nome, massoterapeuta.cpf, massoterapeuta.telefone, 
+                  massoterapeuta.email, massoterapeuta.crefito, massoterapeuta.especialidade) == 6) {
+        printf("Nome: %s | CPF: %s | Telefone: %s | Email: %s | CREFITO: %s | Especialidade: %s\n",
+               massoterapeuta.nome, massoterapeuta.cpf, massoterapeuta.telefone, 
+               massoterapeuta.email, massoterapeuta.crefito, massoterapeuta.especialidade);
+    }
+
+    fclose(fp);
     pausar();
 }
 
