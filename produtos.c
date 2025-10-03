@@ -13,7 +13,7 @@
 #include "utils.h"
 
 #define PRODUTOS_FILE "produtos.csv"
-
+#define TEMP_FILE "produtos_temp.csv"
 
 void salvarProduto(Produtos produto) {
     FILE *fp = fopen(PRODUTOS_FILE, "a");
@@ -184,7 +184,82 @@ void atualizarProduto() {
         pausar();
         return;
     }
-    printf("Função de atualização de produto ainda não implementada.\n");
+
+    // converte busca para lowercase
+    for (int i = 0; codigo[i]; i++) codigo[i] = tolower(codigo[i]);
+
+    FILE *fp = fopen(PRODUTOS_FILE, "r");
+    if (fp == NULL) {
+        printf("\nNenhum produto cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    FILE *temp = fopen(TEMP_FILE, "w");
+    if (temp == NULL) {
+        printf("\nErro ao criar arquivo temporário.\n");
+        fclose(fp);
+        pausar();
+        return;
+    }
+    
+    Produtos produto;
+    int encontrado = 0;
+
+    while (fscanf(fp, " %69[^;];%19[^;];%f;%d\n",
+                  produto.nome, produto.codigo, &produto.preco, &produto.quantidade) == 4) {
+                    
+        if (strstr(produto.nome, nome) != NULL) {
+            encontrado = 1
+
+            printf("\nProduto encontrado:\n");
+            printf("Nome: %s\n", produto.nome);
+            printf("Código: %s\n", produto.codigo);
+            printf("Preço: %.2f\n", produto.preco);
+            printf("Quantidade: %d\n", produto.quantidade);
+
+            Produtos novoProduto;
+            strcpy(novoProduto.codigo,produto.codigo); // Código não muda
+
+            printf("Digite o novo nome (atual: %s): ", produto.nome);
+            if (scanf(" %69[^\n]", novoProduto.nome) != 1) {
+                strcpy(novoProduto.nome, produto.nome);
+            }
+
+            for (int i = 0; novoProduto.nome[i]; i++) novoProduto.nome[i] = tolower(novoProduto.nome[i]);
+
+            printf("Digite o novo preço (atual: %.2f): ", produto.preco);
+            if (scanf("%f", &novoProduto.preco) != 1) {
+                novoProduto.preco = produto.preco;
+            }
+
+            printf("Digite a nova quantidade em estoque (atual: %d): ", produto.estoque);
+            if (scanf("%d", &novoProduto.estoque) != 1) {
+                novoProduto.estoque = produto.estoque;
+            }
+
+            fprintf(temp, "%s;%s;%.2f;%d\n",
+                    novoProduto.nome, novoProduto.codigo,
+                    novoProduto.preco, novoProduto.estoque;
+
+            printf("\nDados atualizados com sucesso!\n");
+        }else {
+            fprintf(temp, "%s;%s;%.2f;%d\n",
+                    produto.nome, produto.codigo, produto.preco, produto.estoque);
+        }
+    }
+    
+    fclose(fp);
+    fclose(temp);
+
+    if (encontrado) {
+        remove(PRODUTOS_FILE);
+        rename(TEMP_FILE, PRODUTOS_FILE);
+    } else {
+        printf("\nProduto com Código %s não encontrado.\n", codigo);
+        remove(TEMP_FILE);
+    }
+
     pausar();
 }
 
