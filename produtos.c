@@ -12,23 +12,8 @@
 #include "produtos.h"
 #include "utils.h"
 
-#define PRODUTOS_FILE "produtos.csv"
-#define TEMP_FILE "produtos_temp.csv"
+#define ARQUIVO_PRODUTOS "produtos.dat"
 
-void salvarProduto(Produtos produto) {
-    FILE *fp = fopen(PRODUTOS_FILE, "a");
-    if (fp == NULL) {
-        perror("Erro ao abrir arquivo de produtos");
-        return;
-    }
-
-    // Converte para lowercase
-    for (int i = 0; produto.nome[i]; i++) produto.nome[i] = tolower(produto.nome[i]);
-    for (int i = 0; produto.codigo[i]; i++) produto.codigo[i] = tolower(produto.codigo[i]);
-
-    fprintf(fp, "%s;%s;%.2f;%d\n", produto.nome, produto.codigo, produto.preco, produto.estoque);
-    fclose(fp);
-}
 
 void menuProdutos() {
     limparTela();
@@ -47,70 +32,147 @@ void menuProdutos() {
     printf("\n Digite a opção desejada: ");
 }
 
+int salvarProduto(Produto *p) {
+    FILE *arquivo = fopen(ARQUIVO_PRODUTOS, "ab");
+    if (arquivo == NULL) return 0;
+    
+    size_t escrito = fwrite(p, sizeof(Produto), 1, arquivo);
+    fclose(arquivo);
+    return (escrito == 1);
+}
+
+int carregarProdutos(Produto **produtos, int *quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_PRODUTOS, "rb");
+    if (arquivo == NULL) {
+        *produtos = NULL;
+        *quantidade = 0;
+        return 1;
+    }
+
+    fseek(arquivo, 0, SEEK_END);
+    long tamanho = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_SET);
+
+    *quantidade = tamanho / sizeof(Produto);
+
+    if (*quantidade == 0) {
+        *produtos = NULL;
+        fclose(arquivo);
+        return 1;
+    }
+
+    *produtos = (Produto*)malloc((*quantidade) * sizeof(Produto));
+    size_t lidos = fread(*produtos, sizeof(Produto), *quantidade, arquivo);
+    fclose(arquivo);
+
+    return (lidos == *quantidade);
+}
+
+int atualizarArquivoProdutos(Produto *produtos, int quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_PRODUTOS, "wb");
+    if (arquivo == NULL) return 0;
+    
+    size_t escritos = fwrite(produtos, sizeof(Produto), quantidade, arquivo);
+    fclose(arquivo);
+    return (escritos == quantidade);
+}
+
 void cadastrarProduto() {
-    Produtos produto;
+    Produto *produto = (Produto*)malloc(sizeof(Produto));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║              CADASTRAR PRODUTO               ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
-    
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
     printf("Digite o nome do produto: ");
-    if (scanf(" %69[^\n]", produto.nome) != 1) {
+    if (scanf(" %69[^\n]", produto->nome) != 1) {
         printf("\n Erro: Nome inválido!\n");
+        free(produto);
         limparBuffer();
         pausar();
         return;
     }
 
     printf("Digite o código do produto: ");
-    if (scanf(" %19s", produto.codigo) != 1) {
+    if (scanf(" %19s", produto->codigo) != 1) {
         printf("\n Erro: Código inválido!\n");
+        free(produto);
         limparBuffer();
         pausar();
         return;
     }
 
     printf("Digite o preço do produto: ");
-    if (scanf("%f", &produto.preco) != 1) {
+    if (scanf("%f", &produto->preco) != 1 || produto->preco <= 0) {
         printf("\n Erro: Preço inválido!\n");
+        free(produto);
         limparBuffer();
         pausar();
         return;
     }
 
-    printf("Digite a estoque em estoque: ");
-    if (scanf("%d", &produto.estoque) != 1) {
+    printf("Digite a quantidade em estoque: ");
+    if (scanf("%d", &produto->estoque) != 1 || produto->estoque < 0) {
         printf("\n Erro: Estoque inválido!\n");
+        free(produto);
         limparBuffer();
         pausar();
         return;
     }
 
-    salvarProduto(produto);
+    // Converte para lowercase
+    for (int i = 0; produto->nome[i]; i++) produto->nome[i] = tolower(produto->nome[i]);
+    for (int i = 0; produto->codigo[i]; i++) produto->codigo[i] = tolower(produto->codigo[i]);
 
-    printf("\n Produto %s cadastrado com sucesso!\n", produto.nome);
+    produto->status = 1;
+
+    if (salvarProduto(produto)) {
+        printf("\n Produto %s cadastrado com sucesso!\n", produto->nome);
+    } else {
+        printf("\n Erro ao salvar produto!\n");
+    }
+
+    free(produto);
     pausar();
 }
 
 void listarProdutos() {
+    FILE *fp;
+    Produto produto;
+    int produtosAtivos = 0;
+
+    produto = (Produto*)malloc(sizeof(Produto));
+
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               LISTAR PRODUTOS                ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    FILE *fp = fopen(PRODUTOS_FILE, "r");
+    fp = fopen(ARQUIVO_PRODUTOS, "rb");
     if (fp == NULL) {
         printf("Nenhum produto cadastrado ainda.\n");
+        free(produto);
         pausar();
         return;
     }
 
-    Produtos produto;
-    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
-                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
-        printf("Nome: %s | Código: %s | Preço: R$ %.2f | Estoque: %d\n",
-               produto.nome, produto.codigo, produto.preco, produto.estoque);
+    while (fread(&produto, sizeof(Produto), 1, fp)) {
+        if (produto->status == 1) {
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", produto->nome);
+            printf("Código: %s\n", produto->codigo);
+            printf("Preço: R$ %.2f\n", produto->preco);
+            printf("Estoque: %d\n", produto->estoque);
+            produtosAtivos++;
+        }
+    }
+
+    if (produtosAtivos == 0) {
+        printf("Nenhum produto ativo encontrado.\n");
+    } else {
+        printf("──────────────────────────────────────────────\n");
+        printf("\nTotal de produtos ativos: %d\n", produtosAtivos);
     }
 
     fclose(fp);
@@ -118,241 +180,172 @@ void listarProdutos() {
 }
 
 void buscarProduto() {
-    char nome[70];
+    Produto *produtos = NULL;
+    int quantidade = 0;
+    char codigoBusca[20];
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║                PROCURAR PRODUTO              ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("║                BUSCAR PRODUTO                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o nome do produto que deseja buscar: \n");
-    if (scanf(" %69[^\n]", nome) != 1) {
-        printf("\n Erro: Nome inválido!\n");
-        limparBuffer();
-        pausar();
-        return;
-    }
-    
-    // converte busca para lowercase
-    for (int i = 0; nome[i]; i++) nome[i] = tolower(nome[i]);
+    printf("Digite o código do produto: ");
+    scanf(" %19s", codigoBusca);
+    limparBuffer();
 
-    FILE *fp = fopen(PRODUTOS_FILE, "r");
-    if (fp == NULL) {
-        printf("\nNenhum produto cadastrado ainda.\n");
-        pausar();
-        return;
-    }
+    // converte para lowercase
+    for (int i = 0; codigoBusca[i]; i++) codigoBusca[i] = tolower(codigoBusca[i]);
 
-    Produtos produto;
+    carregarProdutos(&produtos, &quantidade);
+
     int encontrado = 0;
-    
-    printf("\n--- Resultados da busca ---\n\n");
-
-    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
-                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
-                    
-        if (strstr(produto.nome, nome) != NULL) {
-            printf("Nome: %s\n", produto.nome);
-            printf("Código: %s\n", produto.codigo);
-            printf("Preço: %.2f\n", produto.preco);
-            printf("Estoque: %d\n", produto.estoque);
-            printf("---------------------------\n");
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(produtos[i].codigo, codigoBusca) == 0 && produtos[i].status == 1) {
+            printf("\n Produto encontrado:\n");
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", produtos[i].nome);
+            printf("Código: %s\n", produtos[i].codigo);
+            printf("Preço: R$ %.2f\n", produtos[i].preco);
+            printf("Estoque: %d\n", produtos[i].estoque);
+            printf("──────────────────────────────────────────────\n");
             encontrado = 1;
+            break;
         }
     }
 
     if (!encontrado) {
-        printf("Nenhum produto encontrado com o nome '%s'.\n", nome);
+        printf("\n Produto não encontrado ou inativo!\n");
     }
 
-    fclose(fp);
+    free(produtos);
     pausar();
 }
 
 void atualizarProduto() {
-    char codigo[20];
+    Produto *produtos = NULL;
+    int quantidade = 0;
+    char codigoBusca[20];
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║          ATUALIZAR DADOS DO PRODUTO          ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
-    
-    printf("Digite o código do produto que deseja atualizar: \n");
-    if (scanf(" %19s", codigo) != 1) {
-        printf("\n Erro: Código inválido!\n");
-        limparBuffer();
-        pausar();
-        return;
-    }
+    printf("║            ATUALIZAR DADOS DO PRODUTO        ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    // converte busca para lowercase
-    for (int i = 0; codigo[i]; i++) codigo[i] = tolower(codigo[i]);
+    printf("Digite o código do produto a atualizar: ");
+    scanf(" %19s", codigoBusca);
+    limparBuffer();
 
-    FILE *fp = fopen(PRODUTOS_FILE, "r");
-    if (fp == NULL) {
-        printf("\nNenhum produto cadastrado ainda.\n");
-        pausar();
-        return;
-    }
+    // converte para lowercase
+    for (int i = 0; codigoBusca[i]; i++) codigoBusca[i] = tolower(codigoBusca[i]);
 
-    FILE *temp = fopen(TEMP_FILE, "w");
-    if (temp == NULL) {
-        printf("\nErro ao criar arquivo temporário.\n");
-        fclose(fp);
-        pausar();
-        return;
-    }
-    
-    Produtos produto;
-    int encontrado = 0;
+    carregarProdutos(&produtos, &quantidade);
 
-    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
-                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
-                    
-        if (strcmp(produto.codigo, codigo) == 0) {
-            encontrado = 1;
-
-            printf("\nProduto encontrado:\n");
-            printf("Nome: %s\n", produto.nome);
-            printf("Código: %s\n", produto.codigo);
-            printf("Preço: %.2f\n", produto.preco);
-            printf("Estoque: %d\n", produto.estoque);
-
-            Produtos novoProduto;
-            strcpy(novoProduto.codigo,produto.codigo); // Código não muda
-
-            printf("Digite o novo nome (atual: %s): ", produto.nome);
-            if (scanf(" %69[^\n]", novoProduto.nome) != 1) {
-                strcpy(novoProduto.nome, produto.nome);
-            }
-
-            for (int i = 0; novoProduto.nome[i]; i++) novoProduto.nome[i] = tolower(novoProduto.nome[i]);
-
-            printf("Digite o novo preço (atual: %.2f): ", produto.preco);
-            if (scanf("%f", &novoProduto.preco) != 1) {
-                novoProduto.preco = produto.preco;
-            }
-
-            printf("Digite a nova quantidade em estoque (atual: %d): ", produto.estoque);
-            if (scanf("%d", &novoProduto.estoque) != 1) {
-                novoProduto.estoque = produto.estoque;
-            }
-
-            fprintf(temp, "%s;%s;%.2f;%d\n",
-                    novoProduto.nome, novoProduto.codigo,
-                    novoProduto.preco, novoProduto.estoque);
-
-            printf("\nDados atualizados com sucesso!\n");
-        }else {
-            fprintf(temp, "%s;%s;%.2f;%d\n",
-                    produto.nome, produto.codigo, produto.preco, produto.estoque);
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(produtos[i].codigo, codigoBusca) == 0 && produtos[i].status == 1) {
+            indice = i;
+            break;
         }
     }
-    
-    fclose(fp);
-    fclose(temp);
 
-    if (encontrado) {
-        remove(PRODUTOS_FILE);
-        rename(TEMP_FILE, PRODUTOS_FILE);
-    } else {
-        printf("\nProduto com Código %s não encontrado.\n", codigo);
-        remove(TEMP_FILE);
+    if (indice == -1) {
+        printf("\n Produto não encontrado ou inativo!\n");
+        free(produtos);
+        pausar();
+        return;
     }
 
+    printf("\n Produto encontrado. Digite os novos dados:\n\n");
+
+    printf("Digite o novo nome (atual: %s): ", produtos[indice].nome);
+    char novoNome[70];
+    if (scanf(" %69[^\n]", novoNome) == 1) {
+        strcpy(produtos[indice].nome, novoNome);
+        for (int i = 0; produtos[indice].nome[i]; i++) 
+            produtos[indice].nome[i] = tolower(produtos[indice].nome[i]);
+    }
+    limparBuffer();
+
+    printf("Digite o novo preço (atual: R$ %.2f): ", produtos[indice].preco);
+    float novoPreco;
+    if (scanf("%f", &novoPreco) == 1) {
+        produtos[indice].preco = novoPreco;
+    }
+    limparBuffer();
+
+    printf("Digite a nova quantidade em estoque (atual: %d): ", produtos[indice].estoque);
+    int novoEstoque;
+    if (scanf("%d", &novoEstoque) == 1) {
+        produtos[indice].estoque = novoEstoque;
+    }
+    limparBuffer();
+
+    if (atualizarArquivoProdutos(produtos, quantidade)) {
+        printf("\n Produto atualizado com sucesso!\n");
+    } else {
+        printf("\n Erro ao atualizar produto!\n");
+    }
+
+    free(produtos);
     pausar();
 }
 
 void deletarProduto() {
-    char codigo[20];
+    Produto *produtos = NULL;
+    int quantidade = 0;
+    char codigoBusca[20];
     char confirmacao;
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║               EXCLUIR PRODUTO                ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o código do produto que deseja deletar: ");
-    if (scanf(" %19s", codigo) != 1) {
-        printf("\n Erro: Código inválido!\n");
-        limparBuffer();
-        pausar();
-        return;
-    }
-    
-    // converte busca para lowercase
-    for (int i = 0; codigo[i]; i++) codigo[i] = tolower(codigo[i]);
+    printf("Digite o código do produto a deletar: ");
+    scanf(" %19s", codigoBusca);
+    limparBuffer();
 
-    FILE *fp = fopen(PRODUTOS_FILE, "r");
-    if (fp == NULL) {
-        printf("\nNenhum produto cadastrado ainda.\n");
-        pausar();
-        return;
-    }
+    // converte para lowercase
+    for (int i = 0; codigoBusca[i]; i++) codigoBusca[i] = tolower(codigoBusca[i]);
 
-    Produtos produto;
-    int encontrado = 0;
+    carregarProdutos(&produtos, &quantidade);
 
-    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
-                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
-                    
-        if (strcmp(produto.codigo, codigo) == 0) {
-            encontrado = 1;
-
-            printf("\nProduto encontrado:\n");
-            printf("Nome: %s\n", produto.nome);
-            printf("Código: %s\n", produto.codigo);
-            printf("Preço: %.2f\n", produto.preco);
-            printf("Estoque: %d\n", produto.estoque);
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(produtos[i].codigo, codigoBusca) == 0 && produtos[i].status == 1) {
+            indice = i;
             break;
         }
     }
-    
-    fclose(fp);
 
-    if (!encontrado) {
-        printf("\nProduto com Código %s não encontrado.\n", codigo);
+    if (indice == -1) {
+        printf("\n Produto não encontrado ou já está inativo!\n");
+        free(produtos);
         pausar();
         return;
     }
 
-    printf("Tem certeza que deseja excluir? (s/N): ");
+    printf("\n Produto encontrado:\n");
+    printf("Nome: %s\n", produtos[indice].nome);
+    printf("Código: %s\n", produtos[indice].codigo);
+    printf("Preço: R$ %.2f\n", produtos[indice].preco);
+    printf("\nTem certeza que deseja deletar? (S/N): ");
+    scanf(" %c", &confirmacao);
     limparBuffer();
-    scanf("%c", &confirmacao);
-    
-    if (confirmacao != 's' && confirmacao != 'S') {
-        printf("\n Operação cancelada pelo usuário.\n");
-        pausar();
-        return;
-    }
 
-    fp = fopen(PRODUTOS_FILE, "r");
-    FILE *temp = fopen(TEMP_FILE, "w");
-    
-    if (temp == NULL) {
-        printf("\nErro ao criar arquivo temporário.\n");
-        fclose(fp);
-        pausar();
-        return;
-    }
+    if (confirmacao == 'S' || confirmacao == 's') {
+        produtos[indice].status = 0;
 
-    while (fscanf(fp,  " %69[^;];%19[^;];%f;%d",
-                  produto.nome, produto.codigo, &produto.preco, &produto.estoque) == 4) {
-        if (strcmp(produto.codigo, codigo) != 0) {
-            fprintf(temp, "%s;%s;%.2f;%d\n",
-                    produto.nome, produto.codigo, produto.preco, produto.estoque);
+        if (atualizarArquivoProdutos(produtos, quantidade)) {
+            printf("\n Produto deletado com sucesso!\n");
+        } else {
+            printf("\n Erro ao deletar produto!\n");
         }
+    } else {
+        printf("\n Operação cancelada!\n");
     }
 
-    fclose(fp);
-    fclose(temp);
-
-    // remove o arquivo original e renomeia o temporario
-    remove(PRODUTOS_FILE);
-    rename(TEMP_FILE, PRODUTOS_FILE);
-
-    printf("\n Produto excluído com sucesso!\n");
-
+    free(produtos);
     pausar();
 }
 

@@ -7,7 +7,7 @@ typedef struct {
     float preco;
     int estoque;
     int status;
-} Produtos;
+} Produto;
 
 void produtos();
 void menuProdutos();
