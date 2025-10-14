@@ -44,3 +44,10 @@ int lerTelefone(char *telefone, int tamanho) {
     limparBuffer();
     return 1;
 }
+
+int lerEmail(char *email, int tamanho) {
+    printf("Digite o email: ");
+    scanf(" %69[^\n]", email);
+    limparBuffer();
+    return 1;
+}
