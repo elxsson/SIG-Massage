@@ -31,6 +31,13 @@ void menuClientes() {
         printf("\n Digite a opção desejada: ");
 }
 
+int salvarCliente(Cliente *c) {
+    FILE *arquivo = fopen(ARQUIVO_CLIENTES, "ab");
+    size_t escrito = fwrite(c, sizeof(Cliente), 1, arquivo);
+    fclose(arquivo);
+    return (escrito == 1);
+}
+
 
 void clientes() {
     int opcao;
