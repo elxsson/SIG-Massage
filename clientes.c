@@ -201,6 +201,61 @@ void atualizarCliente() {
     pausar();
 }
 
+void deletarCliente() {
+    Cliente *clientes = NULL;
+    int quantidade = 0;
+    char cpfBusca[20];
+    char confirmacao;
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            DELETAR CLIENTE                   ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite o CPF do cliente a deletar: ");
+    scanf(" %19s", cpfBusca);
+    limparBuffer();
+
+    carregarClientes(&clientes, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(clientes[i].cpf, cpfBusca) == 0 && clientes[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\n Cliente não encontrado ou já está inativo!\n");
+        free(clientes);
+        pausar();
+        return;
+    }
+
+    printf("\n Cliente encontrado:\n");
+    printf("Nome: %s\n", clientes[indice].nome);
+    printf("CPF: %s\n", clientes[indice].cpf);
+    printf("\nTem certeza que deseja deletar? (S/N): ");
+    scanf(" %c", &confirmacao);
+    limparBuffer();
+
+    if (confirmacao == 'S' || confirmacao == 's') {
+        clientes[indice].status = 0;
+
+        if (atualizarArquivoClientes(clientes, quantidade)) {
+            printf("\n Cliente deletado com sucesso!\n");
+        } else {
+            printf("\n Erro ao deletar cliente!\n");
+        }
+    } else {
+        printf("\n Operação cancelada!\n");
+    }
+
+    free(clientes);
+    pausar();
+}
+
 void clientes() {
     int opcao;
 
