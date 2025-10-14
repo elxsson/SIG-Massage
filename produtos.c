@@ -76,6 +76,65 @@ int atualizarArquivoProdutos(Produto *produtos, int quantidade) {
     return (escritos == quantidade);
 }
 
+void cadastrarProduto() {
+    Produto *produto = (Produto*)malloc(sizeof(Produto));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║              CADASTRAR PRODUTO               ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite o nome do produto: ");
+    if (scanf(" %69[^\n]", produto->nome) != 1) {
+        printf("\n Erro: Nome inválido!\n");
+        free(produto);
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("Digite o código do produto: ");
+    if (scanf(" %19s", produto->codigo) != 1) {
+        printf("\n Erro: Código inválido!\n");
+        free(produto);
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("Digite o preço do produto: ");
+    if (scanf("%f", &produto->preco) != 1 || produto->preco <= 0) {
+        printf("\n Erro: Preço inválido!\n");
+        free(produto);
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    printf("Digite a quantidade em estoque: ");
+    if (scanf("%d", &produto->estoque) != 1 || produto->estoque < 0) {
+        printf("\n Erro: Estoque inválido!\n");
+        free(produto);
+        limparBuffer();
+        pausar();
+        return;
+    }
+
+    // Converte para lowercase
+    for (int i = 0; produto->nome[i]; i++) produto->nome[i] = tolower(produto->nome[i]);
+    for (int i = 0; produto->codigo[i]; i++) produto->codigo[i] = tolower(produto->codigo[i]);
+
+    produto->status = 1;
+
+    if (salvarProduto(produto)) {
+        printf("\n Produto %s cadastrado com sucesso!\n", produto->nome);
+    } else {
+        printf("\n Erro ao salvar produto!\n");
+    }
+
+    free(produto);
+    pausar();
+}
 
 void produtos() {
     int opcao;
