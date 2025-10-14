@@ -115,6 +115,45 @@ void listarClientes() {
     pausar();
 }
 
+void buscarCliente() {
+    Cliente *clientes = NULL;
+    int quantidade = 0;
+    char cpfBusca[20];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            BUSCAR CLIENTE                    ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite o CPF do cliente: ");
+    scanf(" %19s", cpfBusca);
+    limparBuffer();
+
+    carregarClientes(&clientes, &quantidade);
+
+    int encontrado = 0;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(clientes[i].cpf, cpfBusca) == 0 && clientes[i].status == 1) {
+            printf("\n Cliente encontrado:\n");
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", clientes[i].nome);
+            printf("CPF: %s\n", clientes[i].cpf);
+            printf("Telefone: %s\n", clientes[i].telefone);
+            printf("Email: %s\n", clientes[i].email);
+            printf("──────────────────────────────────────────────\n");
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("\n Cliente não encontrado ou inativo!\n");
+    }
+
+    free(clientes);
+    pausar();
+}
+
 void clientes() {
     int opcao;
 
