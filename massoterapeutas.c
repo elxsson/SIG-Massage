@@ -39,6 +39,33 @@ int salvarMassoterapeuta(Massoterapeutas *m) {
     return (escrito == 1);
 }
 
+int carregarMassoterapeutas(Massoterapeutas **massoterapeutas, int *quantidade) {
+    FILE *arquivo = fopen(MASSOTERAPEUTAS_FILE, "rb");
+    if (arquivo == NULL) {
+        *massoterapeutas = NULL;
+        *quantidade = 0;
+        return 1;
+    }
+
+    fseek(arquivo, 0, SEEK_END);
+    long tamanho = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_SET);
+
+    *quantidade = tamanho / sizeof(Massoterapeutas);
+
+    if (*quantidade == 0) {
+        *massoterapeutas = NULL;
+        fclose(arquivo);
+        return 1;
+    }
+
+    *massoterapeutas = (Massoterapeutas*)malloc((*quantidade) * sizeof(Massoterapeutas));
+    size_t lidos = fread(*massoterapeutas, sizeof(Massoterapeutas), *quantidade, arquivo);
+    fclose(arquivo);
+
+    return (lidos == *quantidade);
+}
+
 void massoterapeutas() {
     int opcao;
 
