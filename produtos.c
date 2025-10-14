@@ -40,6 +40,33 @@ int salvarProduto(Produto *p) {
     return (escrito == 1);
 }
 
+int carregarProdutos(Produto **produtos, int *quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_PRODUTOS, "rb");
+    if (arquivo == NULL) {
+        *produtos = NULL;
+        *quantidade = 0;
+        return 1;
+    }
+
+    fseek(arquivo, 0, SEEK_END);
+    long tamanho = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_SET);
+
+    *quantidade = tamanho / sizeof(Produto);
+
+    if (*quantidade == 0) {
+        *produtos = NULL;
+        fclose(arquivo);
+        return 1;
+    }
+
+    *produtos = (Produto*)malloc((*quantidade) * sizeof(Produto));
+    size_t lidos = fread(*produtos, sizeof(Produto), *quantidade, arquivo);
+    fclose(arquivo);
+
+    return (lidos == *quantidade);
+}
+
 void produtos() {
     int opcao;
 
