@@ -65,6 +65,14 @@ int carregarClientes(Cliente **clientes, int *quantidade) {
     return (lidos == *quantidade);
 }
 
+int atualizarArquivoClientes(Cliente *clientes, int quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_CLIENTES, "wb");
+    size_t escritos = fwrite(clientes, sizeof(Cliente), quantidade, arquivo);
+    fclose(arquivo);
+    return (escritos == quantidade);
+}
+
+
 void clientes() {
     int opcao;
 
