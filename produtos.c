@@ -67,6 +67,16 @@ int carregarProdutos(Produto **produtos, int *quantidade) {
     return (lidos == *quantidade);
 }
 
+int atualizarArquivoProdutos(Produto *produtos, int quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_PRODUTOS, "wb");
+    if (arquivo == NULL) return 0;
+    
+    size_t escritos = fwrite(produtos, sizeof(Produto), quantidade, arquivo);
+    fclose(arquivo);
+    return (escritos == quantidade);
+}
+
+
 void produtos() {
     int opcao;
 
