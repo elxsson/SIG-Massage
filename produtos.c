@@ -31,6 +31,15 @@ void menuProdutos() {
     printf("\n Digite a opção desejada: ");
 }
 
+int salvarProduto(Produto *p) {
+    FILE *arquivo = fopen(ARQUIVO_PRODUTOS, "ab");
+    if (arquivo == NULL) return 0;
+    
+    size_t escrito = fwrite(p, sizeof(Produto), 1, arquivo);
+    fclose(arquivo);
+    return (escrito == 1);
+}
+
 void produtos() {
     int opcao;
 
