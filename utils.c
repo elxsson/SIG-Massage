@@ -30,3 +30,10 @@ int lerNome(char *nome, int tamanho) {
     limparBuffer();
     return 1;
 }
+
+int lerCPF(char *cpf, int tamanho) {
+    printf("Digite o CPF (apenas números ou com pontos/traços): ");
+    scanf(" %19s", cpf);
+    limparBuffer();
+    return 1;
+}
