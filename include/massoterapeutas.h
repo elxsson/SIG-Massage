@@ -8,6 +8,7 @@ typedef struct {
     char email[70];
     char crefito[20];
     char especialidade[50];
+    int status;
 } Massoterapeutas;
 
 void massoterapeutas();
@@ -17,5 +18,9 @@ void listarMassoterapeutas();
 void buscarMassoterapeuta();
 void atualizarMassoterapeuta();
 void deletarMassoterapeuta();
+
+int salvarMassoterapeuta(Massoterapeutas *m);
+int carregarClientes(Massoterapeutas **massoterapeutas, int *quantidade);
+int atualizarArquivoClientes(Massoterapeutas *massoterapeutas, int quantidade);
 
 #endif
