@@ -20,7 +20,7 @@ void atualizarMassoterapeuta();
 void deletarMassoterapeuta();
 
 int salvarMassoterapeuta(Massoterapeutas *m);
-int carregarClientes(Massoterapeutas **massoterapeutas, int *quantidade);
-int atualizarArquivoClientes(Massoterapeutas *massoterapeutas, int quantidade);
+int carregarMassoterapeutas(Massoterapeutas **massoterapeutas, int *quantidade);
+int atualizarArquivoMassoterapeutas(Massoterapeutas *massoterapeutas, int quantidade);
 
 #endif
