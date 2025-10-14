@@ -203,6 +203,69 @@ void buscarMassoterapeuta() {
     pausar();
 }
 
+void atualizarMassoterapeuta() {
+    Massoterapeutas *massoterapeutas = NULL;
+    int quantidade = 0;
+    char cpfBusca[20];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║       ATUALIZAR DADOS DO MASSOTERAPEUTA      ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    
+    printf("Digite o CPF do massoterapeuta a atualizar: ");
+    scanf(" %19s", cpfBusca);
+    limparBuffer();
+
+    carregarMassoterapeutas(&massoterapeutas, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(massoterapeutas[i].cpf, cpfBusca) == 0 && massoterapeutas[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\n Massoterapeuta não encontrado ou inativo!\n");
+        free(massoterapeutas);
+        pausar();
+        return;
+    }
+
+    printf("\n Massoterapeuta encontrado. Digite os novos dados:\n\n");
+
+    printf("Digite o nome: ");
+    scanf(" %69[^\n]", massoterapeutas[indice].nome);
+    limparBuffer();
+
+    printf("Digite o telefone: ");
+    scanf(" %19s", massoterapeutas[indice].telefone);
+    limparBuffer();
+
+    printf("Digite o email: ");
+    scanf(" %69s", massoterapeutas[indice].email);
+    limparBuffer();
+
+    printf("Digite o CREFITO: ");
+    scanf(" %19s", massoterapeutas[indice].crefito);
+    limparBuffer();
+
+    printf("Digite a especialidade: ");
+    scanf(" %49[^\n]", massoterapeutas[indice].especialidade);
+    limparBuffer();
+
+    if (atualizarArquivoMassoterapeutas(massoterapeutas, quantidade)) {
+        printf("\n Massoterapeuta atualizado com sucesso!\n");
+    } else {
+        printf("\n Erro ao atualizar massoterapeuta!\n");
+    }
+
+    free(massoterapeutas);
+    pausar();
+}
+
 void massoterapeutas() {
     int opcao;
 
