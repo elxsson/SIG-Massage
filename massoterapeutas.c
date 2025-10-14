@@ -32,7 +32,12 @@ void menuMassoterapeutas() {
     printf("\n Digite a opção desejada: ");
 }
 
-
+int salvarMassoterapeuta(Massoterapeutas *m) {
+    FILE *arquivo = fopen(MASSOTERAPEUTAS_FILE, "ab");
+    size_t escrito = fwrite(m, sizeof(Massoterapeutas), 1, arquivo);
+    fclose(arquivo);
+    return (escrito == 1);
+}
 
 void massoterapeutas() {
     int opcao;
