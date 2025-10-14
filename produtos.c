@@ -179,6 +179,48 @@ void listarProdutos() {
     pausar();
 }
 
+void buscarProduto() {
+    Produto *produtos = NULL;
+    int quantidade = 0;
+    char codigoBusca[20];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║                BUSCAR PRODUTO                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite o código do produto: ");
+    scanf(" %19s", codigoBusca);
+    limparBuffer();
+
+    // converte para lowercase
+    for (int i = 0; codigoBusca[i]; i++) codigoBusca[i] = tolower(codigoBusca[i]);
+
+    carregarProdutos(&produtos, &quantidade);
+
+    int encontrado = 0;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(produtos[i].codigo, codigoBusca) == 0 && produtos[i].status == 1) {
+            printf("\n Produto encontrado:\n");
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", produtos[i].nome);
+            printf("Código: %s\n", produtos[i].codigo);
+            printf("Preço: R$ %.2f\n", produtos[i].preco);
+            printf("Estoque: %d\n", produtos[i].estoque);
+            printf("──────────────────────────────────────────────\n");
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("\n Produto não encontrado ou inativo!\n");
+    }
+
+    free(produtos);
+    pausar();
+}
+
 void produtos() {
     int opcao;
 
