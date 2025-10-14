@@ -73,6 +73,50 @@ int atualizarArquivoMassoterapeutas(Massoterapeutas *massoterapeutas, int quanti
     return (escritos == quantidade);
 }
 
+void cadastrarMassoterapeuta() {
+    Massoterapeutas *massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            CADASTRAR MASSOTERAPEUTA          ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    
+    printf("Digite o nome do massoterapeuta: ");
+    scanf(" %69[^\n]", massoterapeuta->nome);
+    limparBuffer();
+
+    printf("Digite o CPF do massoterapeuta: ");
+    scanf(" %19s", massoterapeuta->cpf);
+    limparBuffer();
+
+    printf("Digite o telefone do massoterapeuta: ");
+    scanf(" %19s", massoterapeuta->telefone);
+    limparBuffer();
+
+    printf("Digite o email do massoterapeuta: ");
+    scanf(" %69s", massoterapeuta->email);
+    limparBuffer();
+
+    printf("Digite o número do CREFITO: ");
+    scanf(" %19s", massoterapeuta->crefito);
+    limparBuffer();
+
+    printf("Digite a especialidade: ");
+    scanf(" %49[^\n]", massoterapeuta->especialidade);
+    limparBuffer();
+
+    massoterapeuta->status = 1;
+
+    if (salvarMassoterapeuta(massoterapeuta)) {
+        printf("\n Massoterapeuta cadastrado com sucesso!\n");
+    } else {
+        printf("\n Erro ao salvar massoterapeuta!\n");
+    }
+
+    free(massoterapeuta);
+    pausar();
+}
+
 void massoterapeutas() {
     int opcao;
 
