@@ -154,6 +154,53 @@ void buscarCliente() {
     pausar();
 }
 
+void atualizarCliente() {
+    Cliente *clientes = NULL;
+    int quantidade = 0;
+    char cpfBusca[20];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            ATUALIZAR CLIENTE                 ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite o CPF do cliente a atualizar: ");
+    scanf(" %19s", cpfBusca);
+    limparBuffer();
+
+    carregarClientes(&clientes, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(clientes[i].cpf, cpfBusca) == 0 && clientes[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\n Cliente não encontrado ou inativo!\n");
+        free(clientes);
+        pausar();
+        return;
+    }
+
+    printf("\n Cliente encontrado. Digite os novos dados:\n\n");
+
+    lerNome(clientes[indice].nome, sizeof(clientes[indice].nome));
+    lerTelefone(clientes[indice].telefone, sizeof(clientes[indice].telefone));
+    lerEmail(clientes[indice].email, sizeof(clientes[indice].email));
+
+    if (atualizarArquivoClientes(clientes, quantidade)) {
+        printf("\n Cliente atualizado com sucesso!\n");
+    } else {
+        printf("\n Erro ao atualizar cliente!\n");
+    }
+
+    free(clientes);
+    pausar();
+}
+
 void clientes() {
     int opcao;
 
