@@ -221,6 +221,75 @@ void buscarProduto() {
     pausar();
 }
 
+void atualizarProduto() {
+    Produto *produtos = NULL;
+    int quantidade = 0;
+    char codigoBusca[20];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            ATUALIZAR DADOS DO PRODUTO        ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite o código do produto a atualizar: ");
+    scanf(" %19s", codigoBusca);
+    limparBuffer();
+
+    // converte para lowercase
+    for (int i = 0; codigoBusca[i]; i++) codigoBusca[i] = tolower(codigoBusca[i]);
+
+    carregarProdutos(&produtos, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(produtos[i].codigo, codigoBusca) == 0 && produtos[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\n Produto não encontrado ou inativo!\n");
+        free(produtos);
+        pausar();
+        return;
+    }
+
+    printf("\n Produto encontrado. Digite os novos dados:\n\n");
+
+    printf("Digite o novo nome (atual: %s): ", produtos[indice].nome);
+    char novoNome[70];
+    if (scanf(" %69[^\n]", novoNome) == 1) {
+        strcpy(produtos[indice].nome, novoNome);
+        for (int i = 0; produtos[indice].nome[i]; i++) 
+            produtos[indice].nome[i] = tolower(produtos[indice].nome[i]);
+    }
+    limparBuffer();
+
+    printf("Digite o novo preço (atual: R$ %.2f): ", produtos[indice].preco);
+    float novoPreco;
+    if (scanf("%f", &novoPreco) == 1) {
+        produtos[indice].preco = novoPreco;
+    }
+    limparBuffer();
+
+    printf("Digite a nova quantidade em estoque (atual: %d): ", produtos[indice].estoque);
+    int novoEstoque;
+    if (scanf("%d", &novoEstoque) == 1) {
+        produtos[indice].estoque = novoEstoque;
+    }
+    limparBuffer();
+
+    if (atualizarArquivoProdutos(produtos, quantidade)) {
+        printf("\n Produto atualizado com sucesso!\n");
+    } else {
+        printf("\n Erro ao atualizar produto!\n");
+    }
+
+    free(produtos);
+    pausar();
+}
+
 void produtos() {
     int opcao;
 
