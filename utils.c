@@ -37,3 +37,10 @@ int lerCPF(char *cpf, int tamanho) {
     limparBuffer();
     return 1;
 }
+
+int lerTelefone(char *telefone, int tamanho) {
+    printf("Digite o telefone (ex: (84) 99999-9999): ");
+    scanf(" %19[^\n]", telefone);
+    limparBuffer();
+    return 1;
+}
