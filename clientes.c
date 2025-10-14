@@ -72,7 +72,48 @@ int atualizarArquivoClientes(Cliente *clientes, int quantidade) {
     return (escritos == quantidade);
 }
 
+void listarClientes() {
+    FILE *fp;
+    Cliente *cliente;
+    int clientesAtivos = 0;
 
+    cliente = (Cliente*)malloc(sizeof(Cliente));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            LISTAR CLIENTES                   ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    fp = fopen(ARQUIVO_CLIENTES, "rb");
+    if (fp == NULL) {
+        printf("Nenhum cliente cadastrado ainda.\n");
+        free(cliente);
+        pausar();
+        return;
+    }
+
+    while (fread(cliente, sizeof(Cliente), 1, fp)) {
+        if (cliente->status == 1) {
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", cliente->nome);
+            printf("CPF: %s\n", cliente->cpf);
+            printf("Telefone: %s\n", cliente->telefone);
+            printf("Email: %s\n", cliente->email);
+            clientesAtivos++;
+        }
+    }
+
+    if (clientesAtivos == 0) {
+        printf("Nenhum cliente ativo encontrado.\n");
+    } else {
+        printf("──────────────────────────────────────────────\n");
+        printf("\nTotal de clientes ativos: %d\n", clientesAtivos);
+    }
+
+    fclose(fp);
+    free(cliente);
+    pausar();
+}
 
 void clientes() {
     int opcao;
