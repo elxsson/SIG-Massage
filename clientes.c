@@ -38,6 +38,32 @@ int salvarCliente(Cliente *c) {
     return (escrito == 1);
 }
 
+int carregarClientes(Cliente **clientes, int *quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_CLIENTES, "rb");
+    if (arquivo == NULL) {
+        *clientes = NULL;
+        *quantidade = 0;
+        return 1;
+    }
+
+    fseek(arquivo, 0, SEEK_END);
+    long tamanho = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_SET);
+
+    *quantidade = tamanho / sizeof(Cliente);
+
+    if (*quantidade == 0) {
+        *clientes = NULL;
+        fclose(arquivo);
+        return 1;
+    }
+
+    *clientes = (Cliente*)malloc((*quantidade) * sizeof(Cliente));
+    size_t lidos = fread(*clientes, sizeof(Cliente), *quantidade, arquivo);
+    fclose(arquivo);
+
+    return (lidos == *quantidade);
+}
 
 void clientes() {
     int opcao;
