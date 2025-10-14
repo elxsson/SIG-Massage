@@ -266,6 +266,61 @@ void atualizarMassoterapeuta() {
     pausar();
 }
 
+void deletarMassoterapeuta() {
+    Massoterapeutas *massoterapeutas = NULL;
+    int quantidade = 0;
+    char cpfBusca[20];
+    char confirmacao;
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            EXCLUIR MASSOTERAPEUTA            ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o CPF do massoterapeuta a deletar: ");
+    scanf(" %19s", cpfBusca);
+    limparBuffer();
+
+    carregarMassoterapeutas(&massoterapeutas, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(massoterapeutas[i].cpf, cpfBusca) == 0 && massoterapeutas[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\n Massoterapeuta não encontrado ou já está inativo!\n");
+        free(massoterapeutas);
+        pausar();
+        return;
+    }
+
+    printf("\n Massoterapeuta encontrado:\n");
+    printf("Nome: %s\n", massoterapeutas[indice].nome);
+    printf("CPF: %s\n", massoterapeutas[indice].cpf);
+    printf("\nTem certeza que deseja deletar? (S/N): ");
+    scanf(" %c", &confirmacao);
+    limparBuffer();
+
+    if (confirmacao == 'S' || confirmacao == 's') {
+        massoterapeutas[indice].status = 0;
+
+        if (atualizarArquivoMassoterapeutas(massoterapeutas, quantidade)) {
+            printf("\n Massoterapeuta deletado com sucesso!\n");
+        } else {
+            printf("\n Erro ao deletar massoterapeuta!\n");
+        }
+    } else {
+        printf("\n Operação cancelada!\n");
+    }
+
+    free(massoterapeutas);
+    pausar();
+}
+
 void massoterapeutas() {
     int opcao;
 
