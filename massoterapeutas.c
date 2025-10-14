@@ -162,6 +162,47 @@ void listarMassoterapeutas() {
     pausar();
 }
 
+void buscarMassoterapeuta() {
+    Massoterapeutas *massoterapeutas = NULL;
+    int quantidade = 0;
+    char cpfBusca[20];
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            PROCURAR MASSOTERAPEUTA           ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+
+    printf("Digite o CPF do massoterapeuta: ");
+    scanf(" %19s", cpfBusca);
+    limparBuffer();
+
+    carregarMassoterapeutas(&massoterapeutas, &quantidade);
+
+    int encontrado = 0;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(massoterapeutas[i].cpf, cpfBusca) == 0 && massoterapeutas[i].status == 1) {
+            printf("\n Massoterapeuta encontrado:\n");
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", massoterapeutas[i].nome);
+            printf("CPF: %s\n", massoterapeutas[i].cpf);
+            printf("Telefone: %s\n", massoterapeutas[i].telefone);
+            printf("Email: %s\n", massoterapeutas[i].email);
+            printf("CREFITO: %s\n", massoterapeutas[i].crefito);
+            printf("Especialidade: %s\n", massoterapeutas[i].especialidade);
+            printf("──────────────────────────────────────────────\n");
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("\n Massoterapeuta não encontrado ou inativo!\n");
+    }
+
+    free(massoterapeutas);
+    pausar();
+}
+
 void massoterapeutas() {
     int opcao;
 
