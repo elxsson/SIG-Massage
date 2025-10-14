@@ -136,6 +136,49 @@ void cadastrarProduto() {
     pausar();
 }
 
+void listarProdutos() {
+    FILE *fp;
+    Produto *produto;
+    int produtosAtivos = 0;
+
+    produto = (Produto*)malloc(sizeof(Produto));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║               LISTAR PRODUTOS                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    fp = fopen(ARQUIVO_PRODUTOS, "rb");
+    if (fp == NULL) {
+        printf("Nenhum produto cadastrado ainda.\n");
+        free(produto);
+        pausar();
+        return;
+    }
+
+    while (fread(produto, sizeof(Produto), 1, fp)) {
+        if (produto->status == 1) {
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", produto->nome);
+            printf("Código: %s\n", produto->codigo);
+            printf("Preço: R$ %.2f\n", produto->preco);
+            printf("Estoque: %d\n", produto->estoque);
+            produtosAtivos++;
+        }
+    }
+
+    if (produtosAtivos == 0) {
+        printf("Nenhum produto ativo encontrado.\n");
+    } else {
+        printf("──────────────────────────────────────────────\n");
+        printf("\nTotal de produtos ativos: %d\n", produtosAtivos);
+    }
+
+    fclose(fp);
+    free(produto);
+    pausar();
+}
+
 void produtos() {
     int opcao;
 
