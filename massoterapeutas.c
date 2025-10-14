@@ -66,6 +66,13 @@ int carregarMassoterapeutas(Massoterapeutas **massoterapeutas, int *quantidade) 
     return (lidos == *quantidade);
 }
 
+int atualizarArquivoMassoterapeutas(Massoterapeutas *massoterapeutas, int quantidade) {
+    FILE *arquivo = fopen(MASSOTERAPEUTAS_FILE, "wb");
+    size_t escritos = fwrite(massoterapeutas, sizeof(Massoterapeutas), quantidade, arquivo);
+    fclose(arquivo);
+    return (escritos == quantidade);
+}
+
 void massoterapeutas() {
     int opcao;
 
