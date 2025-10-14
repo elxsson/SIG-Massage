@@ -72,6 +72,31 @@ int atualizarArquivoClientes(Cliente *clientes, int quantidade) {
     return (escritos == quantidade);
 }
 
+void cadastrarCliente() {
+    Cliente *cliente = (Cliente*)malloc(sizeof(Cliente));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            CADASTRAR CLIENTE                 ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    lerNome(cliente->nome, sizeof(cliente->nome));
+    lerCPF(cliente->cpf, sizeof(cliente->cpf));
+    lerTelefone(cliente->telefone, sizeof(cliente->telefone));
+    lerEmail(cliente->email, sizeof(cliente->email));
+
+    cliente->status = 1;
+
+    if (salvarCliente(cliente)) {
+        printf("\n Cliente cadastrado com sucesso!\n");
+    } else {
+        printf("\n Erro ao salvar cliente!\n");
+    }
+
+    free(cliente);
+    pausar();
+}
+
 void listarClientes() {
     FILE *fp;
     Cliente *cliente;
