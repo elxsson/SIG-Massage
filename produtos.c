@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "produtos.h"
 #include "utils.h"
 
@@ -138,7 +139,7 @@ void cadastrarProduto() {
 
 void listarProdutos() {
     FILE *fp;
-    Produto *produto;
+    Produto produto;
     int produtosAtivos = 0;
 
     produto = (Produto*)malloc(sizeof(Produto));
@@ -156,7 +157,7 @@ void listarProdutos() {
         return;
     }
 
-    while (fread(produto, sizeof(Produto), 1, fp)) {
+    while (fread(&produto, sizeof(Produto), 1, fp)) {
         if (produto->status == 1) {
             printf("──────────────────────────────────────────────\n");
             printf("Nome: %s\n", produto->nome);
@@ -175,7 +176,6 @@ void listarProdutos() {
     }
 
     fclose(fp);
-    free(produto);
     pausar();
 }
 
