@@ -290,6 +290,65 @@ void atualizarProduto() {
     pausar();
 }
 
+void deletarProduto() {
+    Produto *produtos = NULL;
+    int quantidade = 0;
+    char codigoBusca[20];
+    char confirmacao;
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║               EXCLUIR PRODUTO                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite o código do produto a deletar: ");
+    scanf(" %19s", codigoBusca);
+    limparBuffer();
+
+    // converte para lowercase
+    for (int i = 0; codigoBusca[i]; i++) codigoBusca[i] = tolower(codigoBusca[i]);
+
+    carregarProdutos(&produtos, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(produtos[i].codigo, codigoBusca) == 0 && produtos[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\n Produto não encontrado ou já está inativo!\n");
+        free(produtos);
+        pausar();
+        return;
+    }
+
+    printf("\n Produto encontrado:\n");
+    printf("Nome: %s\n", produtos[indice].nome);
+    printf("Código: %s\n", produtos[indice].codigo);
+    printf("Preço: R$ %.2f\n", produtos[indice].preco);
+    printf("\nTem certeza que deseja deletar? (S/N): ");
+    scanf(" %c", &confirmacao);
+    limparBuffer();
+
+    if (confirmacao == 'S' || confirmacao == 's') {
+        produtos[indice].status = 0;
+
+        if (atualizarArquivoProdutos(produtos, quantidade)) {
+            printf("\n Produto deletado com sucesso!\n");
+        } else {
+            printf("\n Erro ao deletar produto!\n");
+        }
+    } else {
+        printf("\n Operação cancelada!\n");
+    }
+
+    free(produtos);
+    pausar();
+}
+
 void produtos() {
     int opcao;
 
