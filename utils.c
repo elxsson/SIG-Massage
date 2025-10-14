@@ -23,3 +23,10 @@ void limparBuffer() {
 void limparTela() {
     system("clear || cls");
 }
+
+int lerNome(char *nome, int tamanho) {
+    printf("Digite o nome completo: ");
+    scanf(" %[^\n]", nome);
+    limparBuffer();
+    return 1;
+}
