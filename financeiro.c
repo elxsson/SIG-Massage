@@ -38,6 +38,38 @@ int salvarMovimentacao(Movimentacao *m) {
     return (escrito == 1);
 }
 
+int carregarMovimentacoes(Movimentacao **movimentacoes, int *quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_FINANCEIRO, "rb");
+    if (arquivo == NULL) {
+        *movimentacoes = NULL;
+        *quantidade = 0;
+        return 1;
+    }
+
+    fseek(arquivo, 0, SEEK_END);
+    long tamanho = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_SET);
+
+    *quantidade = tamanho / sizeof(Movimentacao);
+
+    if (*quantidade == 0) {
+        *movimentacoes = NULL;
+        fclose(arquivo);
+        return 1;
+    }
+
+    *movimentacoes = (Movimentacao*)malloc((*quantidade) * sizeof(Movimentacao));
+    if (*movimentacoes == NULL) {
+        fclose(arquivo);
+        return 0;
+    }
+
+    size_t lidos = fread(*movimentacoes, sizeof(Movimentacao), *quantidade, arquivo);
+    fclose(arquivo);
+
+    return (lidos == *quantidade);
+}
+
 void registrarEntrada() {
     float valor;
     char descricao[100];
