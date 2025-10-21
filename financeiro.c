@@ -122,43 +122,52 @@ void registrarEntrada() {
 }
 
 void registrarSaida() {
-    float valor;
-    char cpf[20];
+    Movimentacao *mov = (Movimentacao*)malloc(sizeof(Movimentacao));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║          REGISTRAR SAÍDA DE DINHEIRO         ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
     printf("Digite o valor do pagamento (R$): ");
-    if (scanf("%f", &valor) != 1) {
+    if (scanf("%f", &mov->valor) != 1) {
         printf("\n Erro: Valor inválido!\n");
         limparBuffer();
+        free(mov);
         pausar();
         return;
     }
 
+    limparBuffer();
     printf("Digite o CPF do massoterapeuta: ");
-    if (scanf(" %19s", cpf) != 1) {
+    if (scanf(" %19s", mov->cpf) != 1) {
         printf("\n Erro: CPF inválido!\n");
         limparBuffer();
+        free(mov);
         pausar();
         return;
     }
 
-    printf("\n Saída registrada com sucesso!\n");
-    printf("Valor: R$ %.2f | Pago ao massoterapeuta CPF: %s\n", valor, cpf);
-    pausar();
-}
+    limparBuffer();
+    printf("Digite a descrição (salário/pagamento): ");
+    if (scanf(" %99[^\n]", mov->descricao) != 1) {
+        printf("\n Erro: Descrição inválida!\n");
+        free(mov);
+        pausar();
+        return;
+    }
 
-void listarFinanceiro() {
-    limparTela();
-    printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║      LISTAR MOVIMENTAÇÕES FINANCEIRAS        ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    mov->tipo = 'S';
+    mov->status = 1;
 
-    printf("Nenhuma movimentação registrada ainda.\n");
-    printf("Use as opções de entrada ou saída para registrar.\n");
+    if (salvarMovimentacao(mov)) {
+        printf("\n Saída registrada com sucesso!\n");
+        printf("Valor: R$ %.2f | CPF: %s\n", mov->valor, mov->cpf);
+    } else {
+        printf("\n Erro ao salvar saída!\n");
+    }
+
+    free(mov);
     pausar();
 }
 
