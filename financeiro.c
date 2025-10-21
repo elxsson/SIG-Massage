@@ -81,32 +81,43 @@ int atualizarArquivoMovimentacoes(Movimentacao *movimentacoes, int quantidade) {
 }
 
 void registrarEntrada() {
-    float valor;
-    char descricao[100];
+    Movimentacao *mov = (Movimentacao*)malloc(sizeof(Movimentacao));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║         REGISTRAR ENTRADA DE DINHEIRO        ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
     printf("Digite o valor da entrada (R$): ");
-    if (scanf("%f", &valor) != 1) {
+    if (scanf("%f", &mov->valor) != 1) {
         printf("\n Erro: Valor inválido!\n");
         limparBuffer();
+        free(mov);
         pausar();
         return;
     }
 
     limparBuffer();
     printf("Digite a descrição da entrada (sessão/produto): ");
-    if (scanf(" %99[^\n]", descricao) != 1) {
+    if (scanf(" %99[^\n]", mov->descricao) != 1) {
         printf("\n Erro: Descrição inválida!\n");
+        free(mov);
         pausar();
         return;
     }
 
-    printf("\n Entrada registrada com sucesso!\n");
-    printf("Valor: R$ %.2f | Descrição: %s\n", valor, descricao);
+    mov->tipo = 'E';
+    strcpy(mov->cpf, "");
+    mov->status = 1;
+
+    if (salvarMovimentacao(mov)) {
+        printf("\n Entrada registrada com sucesso!\n");
+        printf("Valor: R$ %.2f | Descrição: %s\n", mov->valor, mov->descricao);
+    } else {
+        printf("\n Erro ao salvar entrada!\n");
+    }
+
+    free(mov);
     pausar();
 }
 
