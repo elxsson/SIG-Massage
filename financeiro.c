@@ -70,6 +70,16 @@ int carregarMovimentacoes(Movimentacao **movimentacoes, int *quantidade) {
     return (lidos == *quantidade);
 }
 
+int atualizarArquivoMovimentacoes(Movimentacao *movimentacoes, int quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_FINANCEIRO, "wb");
+    if (arquivo == NULL) {
+        return 0;
+    }
+    size_t escritos = fwrite(movimentacoes, sizeof(Movimentacao), quantidade, arquivo);
+    fclose(arquivo);
+    return (escritos == quantidade);
+}
+
 void registrarEntrada() {
     float valor;
     char descricao[100];
