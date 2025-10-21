@@ -7,8 +7,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "financeiro.h"
 #include "utils.h"
+
+#define ARQUIVO_FINANCEIRO "financeiro.dat"
 
 void menuFinanceiro() {
     limparTela();
@@ -23,6 +26,16 @@ void menuFinanceiro() {
     printf("║                                              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     printf("\n Digite a opção desejada: ");
+}
+
+int salvarMovimentacao(Movimentacao *m) {
+    FILE *arquivo = fopen(ARQUIVO_FINANCEIRO, "ab");
+    if (arquivo == NULL) {
+        return 0;
+    }
+    size_t escrito = fwrite(m, sizeof(Movimentacao), 1, arquivo);
+    fclose(arquivo);
+    return (escrito == 1);
 }
 
 void registrarEntrada() {
