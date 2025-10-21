@@ -171,6 +171,64 @@ void registrarSaida() {
     pausar();
 }
 
+void listarFinanceiro() {
+    FILE *fp;
+    Movimentacao *mov;
+    int movAtivas = 0;
+    float totalEntradas = 0.0;
+    float totalSaidas = 0.0;
+
+    mov = (Movimentacao*)malloc(sizeof(Movimentacao));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║      LISTAR MOVIMENTAÇÕES FINANCEIRAS        ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    fp = fopen(ARQUIVO_FINANCEIRO, "rb");
+    if (fp == NULL) {
+        printf("Nenhuma movimentação registrada ainda.\n");
+        printf("Use as opções de entrada ou saída para registrar.\n");
+        free(mov);
+        pausar();
+        return;
+    }
+
+    while (fread(mov, sizeof(Movimentacao), 1, fp)) {
+        if (mov->status == 1) {
+            printf("──────────────────────────────────────────────\n");
+            printf("Tipo: %s\n", mov->tipo == 'E' ? "ENTRADA" : "SAÍDA");
+            printf("Valor: R$ %.2f\n", mov->valor);
+            printf("Descrição: %s\n", mov->descricao);
+            if (mov->tipo == 'S') {
+                printf("CPF Massoterapeuta: %s\n", mov->cpf);
+            }
+            
+            if (mov->tipo == 'E') {
+                totalEntradas += mov->valor;
+            } else {
+                totalSaidas += mov->valor;
+            }
+            movAtivas++;
+        }
+    }
+
+    if (movAtivas == 0) {
+        printf("Nenhuma movimentação ativa encontrada.\n");
+    } else {
+        printf("──────────────────────────────────────────────\n");
+        printf("\n=== RESUMO FINANCEIRO ===\n");
+        printf("Total de Entradas: R$ %.2f\n", totalEntradas);
+        printf("Total de Saídas: R$ %.2f\n", totalSaidas);
+        printf("Saldo: R$ %.2f\n", totalEntradas - totalSaidas);
+        printf("\nTotal de movimentações: %d\n", movAtivas);
+    }
+
+    fclose(fp);
+    free(mov);
+    pausar();
+}
+
 void financeiro() {
     int opcao;
 
