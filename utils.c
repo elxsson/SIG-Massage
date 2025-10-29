@@ -45,10 +45,22 @@ int lerNome(char *nome, int tamanho) {
     return 1;
 }
 
+int validarCPF(char *cpf) {
+    int digitos = 0;
+    for (int i = 0; cpf[i] != '\0'; i++) {
+        if (isdigit(cpf[i])) digitos++;
+    }
+    return (digitos == 11);
+}
+
 int lerCPF(char *cpf, int tamanho) {
-    printf("Digite o CPF (apenas números ou com pontos/traços): ");
+    printf("Digite o CPF (11 dígitos): ");
     scanf(" %19s", cpf);
     limparBuffer();
+    if (!validarCPF(cpf)) {
+        printf(" Erro: CPF inválido! Deve conter 11 dígitos.\n");
+        return 0;
+    }
     return 1;
 }
 
