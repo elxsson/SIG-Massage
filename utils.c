@@ -166,3 +166,18 @@ int lerCodigo(char *codigo, int tamanho) {
     return 1;
 }
 
+int validarCrefito(char *crefito) {
+    return (strlen(crefito) >= 3);
+}
+
+int lerCrefito(char *crefito, int tamanho) {
+    printf("Digite o número do CREFITO: ");
+    scanf(" %19s", crefito);
+    limparBuffer();
+    if (!validarCrefito(crefito)) {
+        printf(" Erro: CREFITO inválido! Mínimo 3 caracteres.\n");
+        return 0;
+    }
+    return 1;
+}
+
