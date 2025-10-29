@@ -66,7 +66,7 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
 |--------|--------|-----------|
 | 🏠 **Menu Principal** | ✅ Concluído | Interface de navegação |
 | 👥 **Clientes** | ✅ Concluído | Cadastro e gestão de clientes |
-| 💆 **Massoterapeutas** | 🚧 Em desenvolvimento | Gestão de profissionais |
+| 💆 **Massoterapeutas** | ✅ Concluído | Gestão de profissionais |
 | 🛠️ **Produtos** | ✅ Concluído | Cadastro de produtos e controle de estoque |
 | 📅 **Agendamentos** | 🚧 Em desenvolvimento | Sistema de marcação |
 | 📊 **Relatórios** | 🚧 Em desenvolvimento | Análises e estatísticas |
