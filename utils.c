@@ -83,9 +83,32 @@ int lerTelefone(char *telefone, int tamanho) {
     return 1;
 }
 
+int validarEmail(char *email) {
+    int temArroba = 0, posArroba = -1, temPonto = 0;
+    for (int i = 0; email[i] != '\0'; i++) {
+        if (email[i] == '@') {
+            temArroba = 1;
+            posArroba = i;
+            break;
+        }
+    }
+    if (!temArroba) return 0;
+    for (int i = posArroba + 1; email[i] != '\0'; i++) {
+        if (email[i] == '.') {
+            temPonto = 1;
+            break;
+        }
+    }
+    return temPonto;
+}
+
 int lerEmail(char *email, int tamanho) {
     printf("Digite o email: ");
     scanf(" %69[^\n]", email);
     limparBuffer();
+    if (!validarEmail(email)) {
+        printf(" Erro: Email inválido! Deve ter @ e ponto.\n");
+        return 0;
+    }
     return 1;
 }
