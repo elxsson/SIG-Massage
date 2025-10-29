@@ -80,21 +80,29 @@ void cadastrarProduto() {
     printf("║              CADASTRAR PRODUTO               ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o nome do produto: ");
-    scanf(" %69[^\n]", produto->nome);
-    limparBuffer();
+    if (!lerNome(produto->nome, sizeof(produto->nome))) {
+        free(produto);
+        pausar();
+        return;
+    }
 
-    printf("Digite o código do produto: ");
-    scanf(" %19s", produto->codigo);
-    limparBuffer();
+    if (!lerCodigo(produto->codigo, sizeof(produto->codigo))) {
+        free(produto);
+        pausar();
+        return;
+    }
 
-    printf("Digite o preço do produto: ");
-    scanf("%f", &produto->preco);
-    limparBuffer();
+    if (!lerPreco(&produto->preco)) {
+        free(produto);
+        pausar();
+        return;
+    }
 
-    printf("Digite a quantidade em estoque: ");
-    scanf("%d", &produto->estoque);
-    limparBuffer();
+    if (!lerEstoque(&produto->estoque)) {
+        free(produto);
+        pausar();
+        return;
+    }
 
     produto->status = 1;
 
