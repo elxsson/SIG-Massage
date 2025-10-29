@@ -80,10 +80,29 @@ void cadastrarCliente() {
     printf("║            CADASTRAR CLIENTE                 ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
-    lerNome(cliente->nome, sizeof(cliente->nome));
-    lerCPF(cliente->cpf, sizeof(cliente->cpf));
-    lerTelefone(cliente->telefone, sizeof(cliente->telefone));
-    lerEmail(cliente->email, sizeof(cliente->email));
+    if (!lerNome(cliente->nome, sizeof(cliente->nome))) {
+        free(cliente);
+        pausar();
+        return;
+    }
+
+    if (!lerCPF(cliente->cpf, sizeof(cliente->cpf))) {
+        free(cliente);
+        pausar();
+        return;
+    }
+
+    if (!lerTelefone(cliente->telefone, sizeof(cliente->telefone))) {
+        free(cliente);
+        pausar();
+        return;
+    }
+
+    if (!lerEmail(cliente->email, sizeof(cliente->email))) {
+        free(cliente);
+        pausar();
+        return;
+    }
 
     cliente->status = 1;
 

@@ -88,19 +88,13 @@ void registrarEntrada() {
     printf("║         REGISTRAR ENTRADA DE DINHEIRO        ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o valor da entrada (R$): ");
-    if (scanf("%f", &mov->valor) != 1) {
-        printf("\n Erro: Valor inválido!\n");
-        limparBuffer();
+    if (!lerValor(&mov->valor)) {
         free(mov);
         pausar();
         return;
     }
 
-    limparBuffer();
-    printf("Digite a descrição da entrada (sessão/produto): ");
-    if (scanf(" %99[^\n]", mov->descricao) != 1) {
-        printf("\n Erro: Descrição inválida!\n");
+    if (!lerDescricao(mov->descricao, sizeof(mov->descricao))) {
         free(mov);
         pausar();
         return;
@@ -129,29 +123,19 @@ void registrarSaida() {
     printf("║          REGISTRAR SAÍDA DE DINHEIRO         ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o valor do pagamento (R$): ");
-    if (scanf("%f", &mov->valor) != 1) {
-        printf("\n Erro: Valor inválido!\n");
-        limparBuffer();
+    if (!lerValor(&mov->valor)) {
         free(mov);
         pausar();
         return;
     }
 
-    limparBuffer();
-    printf("Digite o CPF do massoterapeuta: ");
-    if (scanf(" %19s", mov->cpf) != 1) {
-        printf("\n Erro: CPF inválido!\n");
-        limparBuffer();
+    if (!lerCPF(mov->cpf, sizeof(mov->cpf))) {
         free(mov);
         pausar();
         return;
     }
 
-    limparBuffer();
-    printf("Digite a descrição (salário/pagamento): ");
-    if (scanf(" %99[^\n]", mov->descricao) != 1) {
-        printf("\n Erro: Descrição inválida!\n");
+    if (!lerDescricao(mov->descricao, sizeof(mov->descricao))) {
         free(mov);
         pausar();
         return;
