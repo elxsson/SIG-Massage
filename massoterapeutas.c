@@ -81,29 +81,41 @@ void cadastrarMassoterapeuta() {
     printf("║            CADASTRAR MASSOTERAPEUTA          ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
     
-    printf("Digite o nome do massoterapeuta: ");
-    scanf(" %69[^\n]", massoterapeuta->nome);
-    limparBuffer();
+    if (!lerNome(massoterapeuta->nome, sizeof(massoterapeuta->nome))) {
+        free(massoterapeuta);
+        pausar();
+        return;
+    }
 
-    printf("Digite o CPF do massoterapeuta: ");
-    scanf(" %19s", massoterapeuta->cpf);
-    limparBuffer();
+    if (!lerCPF(massoterapeuta->cpf, sizeof(massoterapeuta->cpf))) {
+        free(massoterapeuta);
+        pausar();
+        return;
+    }
 
-    printf("Digite o telefone do massoterapeuta: ");
-    scanf(" %19s", massoterapeuta->telefone);
-    limparBuffer();
+    if (!lerTelefone(massoterapeuta->telefone, sizeof(massoterapeuta->telefone))) {
+        free(massoterapeuta);
+        pausar();
+        return;
+    }
 
-    printf("Digite o email do massoterapeuta: ");
-    scanf(" %69s", massoterapeuta->email);
-    limparBuffer();
+    if (!lerEmail(massoterapeuta->email, sizeof(massoterapeuta->email))) {
+        free(massoterapeuta);
+        pausar();
+        return;
+    }
 
-    printf("Digite o número do CREFITO: ");
-    scanf(" %19s", massoterapeuta->crefito);
-    limparBuffer();
+    if (!lerCrefito(massoterapeuta->crefito, sizeof(massoterapeuta->crefito))) {
+        free(massoterapeuta);
+        pausar();
+        return;
+    }
 
-    printf("Digite a especialidade: ");
-    scanf(" %49[^\n]", massoterapeuta->especialidade);
-    limparBuffer();
+    if (!lerEspecialidade(massoterapeuta->especialidade, sizeof(massoterapeuta->especialidade))) {
+        free(massoterapeuta);
+        pausar();
+        return;
+    }
 
     massoterapeuta->status = 1;
 
