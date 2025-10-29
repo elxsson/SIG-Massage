@@ -196,3 +196,18 @@ int lerEspecialidade(char *especialidade, int tamanho) {
     return 1;
 }
 
+int validarDescricao(char *descricao) {
+    return (strlen(descricao) > 0);
+}
+
+int lerDescricao(char *descricao, int tamanho) {
+    printf("Digite a descrição: ");
+    scanf(" %99[^\n]", descricao);
+    limparBuffer();
+    if (!validarDescricao(descricao)) {
+        printf(" Erro: Descrição não pode estar vazia!\n");
+        return 0;
+    }
+    return 1;
+}
+
