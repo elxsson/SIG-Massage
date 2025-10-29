@@ -64,10 +64,22 @@ int lerCPF(char *cpf, int tamanho) {
     return 1;
 }
 
+int validarTelefone(char *telefone) {
+    int digitos = 0;
+    for (int i = 0; telefone[i] != '\0'; i++) {
+        if (isdigit(telefone[i])) digitos++;
+    }
+    return (digitos >= 10 && digitos <= 11);
+}
+
 int lerTelefone(char *telefone, int tamanho) {
-    printf("Digite o telefone (ex: (84) 99999-9999): ");
+    printf("Digite o telefone (10 ou 11 dígitos): ");
     scanf(" %19[^\n]", telefone);
     limparBuffer();
+    if (!validarTelefone(telefone)) {
+        printf(" Erro: Telefone inválido! Deve ter 10 ou 11 dígitos.\n");
+        return 0;
+    }
     return 1;
 }
 
