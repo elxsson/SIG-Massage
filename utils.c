@@ -113,20 +113,20 @@ int lerEmail(char *email, int tamanho) {
     return 1;
 }
 
-int validarPreco(float preco) {
-    return (preco > 0);
+int validarValor(float valor) {
+    return (valor > 0);
 }
 
-int lerPreco(float *preco) {
-    printf("Digite o preço (R$): ");
-    if (scanf("%f", preco) != 1) {
+int lerValor(float *valor) {
+    printf("Digite o valor (R$): ");
+    if (scanf("%f", valor) != 1) {
         limparBuffer();
         printf(" Erro: Valor inválido!\n");
         return 0;
     }
     limparBuffer();
-    if (!validarPreco(*preco)) {
-        printf(" Erro: Preço deve ser maior que zero!\n");
+    if (!validarValor(*valor)) {
+        printf(" Erro: Valor deve ser maior que zero!\n");
         return 0;
     }
     return 1;
