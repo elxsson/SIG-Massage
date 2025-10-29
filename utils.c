@@ -131,3 +131,23 @@ int lerPreco(float *preco) {
     }
     return 1;
 }
+
+int validarEstoque(int estoque) {
+    return (estoque >= 0);
+}
+
+int lerEstoque(int *estoque) {
+    printf("Digite a quantidade em estoque: ");
+    if (scanf("%d", estoque) != 1) {
+        limparBuffer();
+        printf(" Erro: Valor inválido!\n");
+        return 0;
+    }
+    limparBuffer();
+    if (!validarEstoque(*estoque)) {
+        printf(" Erro: Estoque não pode ser negativo!\n");
+        return 0;
+    }
+    return 1;
+}
+
