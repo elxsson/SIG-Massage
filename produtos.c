@@ -92,7 +92,7 @@ void cadastrarProduto() {
         return;
     }
 
-    if (!lerPreco(&produto->preco)) {
+    if (!lerValor(&produto->preco)) {
         free(produto);
         pausar();
         return;
