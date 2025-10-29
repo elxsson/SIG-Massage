@@ -151,3 +151,18 @@ int lerEstoque(int *estoque) {
     return 1;
 }
 
+int validarCodigo(char *codigo) {
+    return (strlen(codigo) > 0);
+}
+
+int lerCodigo(char *codigo, int tamanho) {
+    printf("Digite o código do produto: ");
+    scanf(" %19s", codigo);
+    limparBuffer();
+    if (!validarCodigo(codigo)) {
+        printf(" Erro: Código não pode estar vazio!\n");
+        return 0;
+    }
+    return 1;
+}
+
