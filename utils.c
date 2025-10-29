@@ -181,3 +181,18 @@ int lerCrefito(char *crefito, int tamanho) {
     return 1;
 }
 
+int validarEspecialidade(char *especialidade) {
+    return (strlen(especialidade) > 0);
+}
+
+int lerEspecialidade(char *especialidade, int tamanho) {
+    printf("Digite a especialidade: ");
+    scanf(" %49[^\n]", especialidade);
+    limparBuffer();
+    if (!validarEspecialidade(especialidade)) {
+        printf(" Erro: Especialidade não pode estar vazia!\n");
+        return 0;
+    }
+    return 1;
+}
+
