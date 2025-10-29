@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "utils.h"
 
 void pausar() {
@@ -24,10 +26,22 @@ void limparTela() {
     system("clear || cls");
 }
 
+int validarNome(char *nome) {
+    if (strlen(nome) == 0) return 0;
+    for (int i = 0; nome[i] != '\0'; i++) {
+        if (!isalpha(nome[i]) && nome[i] != ' ') return 0;
+    }
+    return 1;
+}
+
 int lerNome(char *nome, int tamanho) {
     printf("Digite o nome completo: ");
     scanf(" %[^\n]", nome);
     limparBuffer();
+    if (!validarNome(nome)) {
+        printf(" Erro: Nome inválido! Use apenas letras e espaços.\n");
+        return 0;
+    }
     return 1;
 }
 
