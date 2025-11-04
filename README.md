@@ -70,7 +70,7 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
 | 🛠️ **Produtos** | ✅ Concluído | Cadastro de produtos e controle de estoque |
 | 📅 **Agendamentos** | 🚧 Em desenvolvimento | Sistema de marcação |
 | 📊 **Relatórios** | 🚧 Em desenvolvimento | Análises e estatísticas |
-| 💰 **Financeiro** | 🚧 Em desenvolvimento | Controle de entrada e saída |
+| 💰 **Financeiro** | ✅ Concluído | Controle de entrada e saída |
 
 ## Próximos Passos:
 
