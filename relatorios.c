@@ -4,10 +4,12 @@
 #include "relatorios.h"
 #include "clientes.h"
 #include "massoterapeutas.h"
+#include "produtos.h"
 #include "utils.h"
 
 #define ARQUIVO_CLIENTES "clientes.dat"
 #define MASSOTERAPEUTAS_FILE "massoterapeutas.dat"
+#define ARQUIVO_PRODUTOS "produtos.dat"
 
 void menuRelatorios() {
     limparTela();
@@ -17,8 +19,8 @@ void menuRelatorios() {
     printf("║                                              ║\n");
     printf("║ 1. Listar Clientes                           ║\n");
     printf("║ 2. Listar Massoterapeutas                    ║\n");
-    printf("║ 3. Listar Agendamentos                       ║\n");
-    printf("║ 4. Listar Produto                            ║\n");
+    printf("║ 3. Listar Produto                            ║\n");
+    printf("║ 4. Listar Agendamentos                       ║\n");
     printf("║ 5. Listar Financeiro                         ║\n");
     printf("║ 0. Voltar ao Menu Principal                  ║\n");
     printf("║                                              ║\n");
@@ -96,8 +98,39 @@ void listarMassoterapeutasGeral() {
     free(massoterapeuta);
     pausar();
 }
+void listarProdutosGeral() {
+    FILE *fp;
+    Produto *produto;
 
+    produto = (Produto*)malloc(sizeof(Produto));
 
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║               LISTAR PRODUTOS                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    fp = fopen(ARQUIVO_PRODUTOS, "rb");
+    if (fp == NULL) {
+        printf("Nenhum produto cadastrado ainda.\n");
+        free(produto);
+        pausar();
+        return;
+    }
+
+    while (fread(produto, sizeof(Produto), 1, fp)) {
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", produto->nome);
+            printf("Código: %s\n", produto->codigo);
+            printf("Preço: R$ %.2f\n", produto->preco);
+            printf("Estoque: %d\n", produto->estoque);
+            printf("Status: %d\n", produto->status);
+    }
+    printf("──────────────────────────────────────────────\n");
+
+    fclose(fp);
+    free(produto);
+    pausar();
+}
 
 void relatorios() {
     int opcao;
@@ -119,13 +152,13 @@ void relatorios() {
                 listarMassoterapeutasGeral();
                 break;
             case 3: 
-                //listarMassoterapeutas(); 
+                listarProdutosGeral();
                 break;
             case 4: 
-                //listarProdutos(); 
+                //listarAgendamentosGeral(); 
                 break;
             case 5: 
-                //listarFinanceiro(); 
+                //listarFinanceiroGeral(); 
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
