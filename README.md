@@ -103,5 +103,11 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
       </a><br />
       <sub><b>Helena Dantas</b></sub>
     </td>
+    <td align="center">
+      <a href="https://github.com/edunogueiraa" target="_blank">
+        <img src="https://github.com/edunogueiraa.png" width="100px;" alt="Eduardo Nogueira" style="border-radius:50%;"/>
+      </a><br />
+      <sub><b>Eduardo Nogueira</b></sub>
+    </td>
   </tr>
 </table>

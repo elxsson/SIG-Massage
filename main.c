@@ -12,6 +12,7 @@
 #include "agendamentos.h"
 #include "produtos.h"
 #include "financeiro.h"
+#include "relatorios.h"
 #include "utils.h"
 
 int main() {
@@ -61,18 +62,7 @@ int main() {
                 break;      
                 
             case 6:
-                limparTela();
-                printf("\n╔══════════════════════════════════════════════════╗\n");
-                printf("║ MÓDULO EM DESENVOLVIMENTO                        ║\n");
-                printf("╠══════════════════════════════════════════════════╣\n");
-                printf("║                                                  ║\n");
-                printf("║ O módulo RELATÓRIOS está em desenvolvimento      ║\n");
-                printf("║ e estará disponível em breve!                    ║\n");
-                printf("║                                                  ║\n");
-                printf("║ Aguarde as próximas atualizações do sistema.     ║\n");
-                printf("║                                                  ║\n");
-                printf("╚══════════════════════════════════════════════════╝\n");
-                pausar();
+                relatorios();
                 break;
             
             case 7:
