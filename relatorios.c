@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "relatorios.h"
+#include "clientes.h"
 #include "utils.h"
+
+#define ARQUIVO_CLIENTES "clientes.dat"
 
 void menuRelatorios() {
     limparTela();
@@ -21,6 +24,40 @@ void menuRelatorios() {
     printf("\n Digite a opção desejada: ");
 }
 
+void listarClientesGeral() {
+    FILE *fp;
+    Cliente *cliente;
+
+    cliente = (Cliente*)malloc(sizeof(Cliente));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            LISTAR CLIENTES                   ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    fp = fopen(ARQUIVO_CLIENTES, "rb");
+    if (fp == NULL) {
+        printf("Nenhum cliente cadastrado ainda.\n");
+        free(cliente);
+        pausar();
+        return;
+    }
+
+    while (fread(cliente, sizeof(Cliente), 1, fp)) {
+            printf("──────────────────────────────────────────────\n");
+            printf("Nome: %s\n", cliente->nome);
+            printf("CPF: %s\n", cliente->cpf);
+            printf("Telefone: %s\n", cliente->telefone);
+            printf("Email: %s\n", cliente->email);
+
+    }
+    printf("──────────────────────────────────────────────\n");
+
+    fclose(fp);
+    free(cliente);
+    pausar();
+}
+
 void relatorios() {
     int opcao;
 
@@ -35,7 +72,7 @@ void relatorios() {
 
         switch(opcao) {
             case 1: 
-                //listarClientes(); 
+                listarClientesGeral(); 
                 break;
             case 2: 
                 //listarAgendamentos(); 
