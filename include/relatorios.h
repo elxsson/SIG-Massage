@@ -3,6 +3,7 @@
 
 void menuRelatorios();
 void listarClientesGeral();
+void listarMassoterapeutasGeral();
 void relatorios(); 
 
 #endif
