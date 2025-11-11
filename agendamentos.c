@@ -17,9 +17,9 @@ void menuAgendamentos() {
     printf("║              MODULO AGENDAMENTOS             ║\n");
     printf("╠══════════════════════════════════════════════╣\n");
     printf("║                                              ║\n");
-    printf("║ 1. novo agendamento                          ║\n");
+    printf("║ 1. Novo agendamento                          ║\n");
     printf("║ 2. Listar Agendamentos                       ║\n");
-    printf("║ 3. buscar Agendamento                        ║\n");
+    printf("║ 3. Buscar Agendamento                        ║\n");
     printf("║ 4. Atualizar Agendamento                     ║\n");
     printf("║ 5. Excluir Agendamento                       ║\n");
     printf("║ 0. Voltar ao Menu Principal                  ║\n");

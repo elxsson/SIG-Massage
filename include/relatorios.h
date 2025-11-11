@@ -5,6 +5,7 @@ void menuRelatorios();
 void listarClientesGeral();
 void listarMassoterapeutasGeral();
 void listarProdutosGeral();
+void listarFinanceiroGeral();
 void relatorios(); 
 
 #endif
