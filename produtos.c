@@ -136,21 +136,26 @@ void listarProdutos() {
         return;
     }
 
+    printf("==========================================================================\n");
+    printf("Nome                     Código       Preço       Estoque\n");
+    printf("==========================================================================\n");
+
     while (fread(produto, sizeof(Produto), 1, fp)) {
         if (produto->status == 1) {
-            printf("──────────────────────────────────────────────\n");
-            printf("Nome: %s\n", produto->nome);
-            printf("Código: %s\n", produto->codigo);
-            printf("Preço: R$ %.2f\n", produto->preco);
-            printf("Estoque: %d\n", produto->estoque);
+            printf("%-24s %-12s R$ %-9.2f %d\n",
+                   produto->nome,
+                   produto->codigo,
+                   produto->preco,
+                   produto->estoque);
             produtosAtivos++;
         }
     }
+    
+    printf("==========================================================================\n");
 
     if (produtosAtivos == 0) {
         printf("Nenhum produto ativo encontrado.\n");
     } else {
-        printf("──────────────────────────────────────────────\n");
         printf("\nTotal de produtos ativos: %d\n", produtosAtivos);
     }
 
