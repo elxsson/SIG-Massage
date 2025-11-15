@@ -136,21 +136,26 @@ void listarClientes() {
         return;
     }
 
+    printf("====================================================================================\n");
+    printf("Nome                     CPF              Telefone       Email\n");
+    printf("====================================================================================\n");
+
     while (fread(cliente, sizeof(Cliente), 1, fp)) {
         if (cliente->status == 1) {
-            printf("──────────────────────────────────────────────\n");
-            printf("Nome: %s\n", cliente->nome);
-            printf("CPF: %s\n", cliente->cpf);
-            printf("Telefone: %s\n", cliente->telefone);
-            printf("Email: %s\n", cliente->email);
+            printf("%-24s %-16s %-14s %s\n",
+                   cliente->nome,
+                   cliente->cpf,
+                   cliente->telefone,
+                   cliente->email);
             clientesAtivos++;
         }
     }
+    
+    printf("====================================================================================\n");
 
     if (clientesAtivos == 0) {
         printf("Nenhum cliente ativo encontrado.\n");
     } else {
-        printf("──────────────────────────────────────────────\n");
         printf("\nTotal de clientes ativos: %d\n", clientesAtivos);
     }
 

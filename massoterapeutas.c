@@ -149,23 +149,28 @@ void listarMassoterapeutas() {
         return;
     }
 
+     printf("==============================================================================================================\n");
+    printf("Nome                     CPF              Telefone       Email                  CREFITO       Especialidade\n");
+    printf("==============================================================================================================\n");
+
     while (fread(massoterapeuta, sizeof(Massoterapeutas), 1, fp)) {
         if (massoterapeuta->status == 1) {
-            printf("──────────────────────────────────────────────\n");
-            printf("Nome: %s\n", massoterapeuta->nome);
-            printf("CPF: %s\n", massoterapeuta->cpf);
-            printf("Telefone: %s\n", massoterapeuta->telefone);
-            printf("Email: %s\n", massoterapeuta->email);
-            printf("CREFITO: %s\n", massoterapeuta->crefito);
-            printf("Especialidade: %s\n", massoterapeuta->especialidade);
+            printf("%-24s %-16s %-14s %-22s %-12s %s\n",
+                   massoterapeuta->nome,
+                   massoterapeuta->cpf,
+                   massoterapeuta->telefone,
+                   massoterapeuta->email,
+                   massoterapeuta->crefito,
+                   massoterapeuta->especialidade);
             massoterapeutasAtivos++;
         }
     }
+    
+    printf("==============================================================================================================\n");
 
     if (massoterapeutasAtivos == 0) {
         printf("Nenhum massoterapeuta ativo encontrado.\n");
     } else {
-        printf("──────────────────────────────────────────────\n");
         printf("\nTotal de massoterapeutas ativos: %d\n", massoterapeutasAtivos);
     }
 

@@ -178,15 +178,26 @@ void listarFinanceiro() {
         return;
     }
 
+    printf("========================================================================================\n");
+    printf("Tipo         Valor        Descrição                                  CPF Massoterapeuta\n");
+    printf("========================================================================================\n");
+
     while (fread(mov, sizeof(Movimentacao), 1, fp)) {
         if (mov->status == 1) {
-            printf("──────────────────────────────────────────────\n");
-            printf("Tipo: %s\n", mov->tipo == 'E' ? "ENTRADA" : "SAÍDA");
-            printf("Valor: R$ %.2f\n", mov->valor);
-            printf("Descrição: %s\n", mov->descricao);
-            if (mov->tipo == 'S') {
-                printf("CPF Massoterapeuta: %s\n", mov->cpf);
+            char *tipo = mov->tipo == 'E' ? "ENTRADA" : "SAÍDA";
+            char sinal = mov->tipo == 'E' ? '+' : '-';
+            char cpfDisplay[20] = "-";
+            
+            if (mov->tipo == 'S' && strlen(mov->cpf) > 0) {
+                strcpy(cpfDisplay, mov->cpf);
             }
+            
+            printf("%-12s %cR$ %-9.2f %-40s %s\n",
+                   tipo,
+                   sinal,
+                   mov->valor,
+                   mov->descricao,
+                   cpfDisplay);
             
             if (mov->tipo == 'E') {
                 totalEntradas += mov->valor;
@@ -196,11 +207,12 @@ void listarFinanceiro() {
             movAtivas++;
         }
     }
+    
+    printf("========================================================================================\n");
 
     if (movAtivas == 0) {
         printf("Nenhuma movimentação ativa encontrada.\n");
     } else {
-        printf("──────────────────────────────────────────────\n");
         printf("\n=== RESUMO FINANCEIRO ===\n");
         printf("Total de Entradas: R$ %.2f\n", totalEntradas);
         printf("Total de Saídas: R$ %.2f\n", totalSaidas);
