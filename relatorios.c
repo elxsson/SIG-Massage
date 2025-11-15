@@ -34,6 +34,7 @@ void menuRelatorios() {
 void listarClientesGeral() {
     FILE *fp;
     Cliente *cliente;
+    int count = 0;
 
     cliente = (Cliente*)malloc(sizeof(Cliente));
 
@@ -50,24 +51,33 @@ void listarClientesGeral() {
         return;
     }
 
-    while (fread(cliente, sizeof(Cliente), 1, fp)) {
-            printf("──────────────────────────────────────────────\n");
-            printf("Nome: %s\n", cliente->nome);
-            printf("CPF: %s\n", cliente->cpf);
-            printf("Telefone: %s\n", cliente->telefone);
-            printf("Email: %s\n", cliente->email);
-            printf("Status: %d\n", cliente->status);
+    printf("====================================================================================\n");
+    printf("Nome                     CPF              Telefone       Email\n");
+    printf("====================================================================================\n");
 
+    while (fread(cliente, sizeof(Cliente), 1, fp)) {
+        if (cliente->status == 1) {
+            printf("%-24s %-16s %-14s %s\n",
+                   cliente->nome,
+                   cliente->cpf,
+                   cliente->telefone,
+                   cliente->email);
+            count++;
+        }
     }
-    printf("──────────────────────────────────────────────\n");
+
+    printf("====================================================================================\n");
+    printf("Total: %d clientes ativos\n", count);
 
     fclose(fp);
     free(cliente);
     pausar();
 }
+
 void listarMassoterapeutasGeral() {
     FILE *fp;
     Massoterapeutas *massoterapeuta;
+    int count = 0;
 
     massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
 
@@ -84,17 +94,24 @@ void listarMassoterapeutasGeral() {
         return;
     }
 
+    printf("========================================================================================================\n");
+    printf("Nome                     CPF              Telefone       Email                  CREFITO\n");
+    printf("========================================================================================================\n");
+
     while (fread(massoterapeuta, sizeof(Massoterapeutas), 1, fp)) {
-            printf("──────────────────────────────────────────────\n");
-            printf("Nome: %s\n", massoterapeuta->nome);
-            printf("CPF: %s\n", massoterapeuta->cpf);
-            printf("Telefone: %s\n", massoterapeuta->telefone);
-            printf("Email: %s\n", massoterapeuta->email);
-            printf("CREFITO: %s\n", massoterapeuta->crefito);
-            printf("Especialidade: %s\n", massoterapeuta->especialidade);
-            printf("Status: %d\n", massoterapeuta->status);
+        if (massoterapeuta->status == 1) {
+            printf("%-24s %-16s %-14s %-22s %s\n",
+                   massoterapeuta->nome,
+                   massoterapeuta->cpf,
+                   massoterapeuta->telefone,
+                   massoterapeuta->email,
+                   massoterapeuta->crefito);
+            count++;
+        }
     }
-    printf("──────────────────────────────────────────────\n");
+    
+    printf("========================================================================================================\n");
+    printf("Total: %d massoterapeutas ativos\n", count);
 
     fclose(fp);
     free(massoterapeuta);
@@ -103,6 +120,7 @@ void listarMassoterapeutasGeral() {
 void listarProdutosGeral() {
     FILE *fp;
     Produto *produto;
+    int count = 0;
 
     produto = (Produto*)malloc(sizeof(Produto));
 
@@ -119,23 +137,34 @@ void listarProdutosGeral() {
         return;
     }
 
+    printf("==========================================================================\n");
+    printf("Nome                     Código       Preço       Estoque\n");
+    printf("==========================================================================\n");
+
     while (fread(produto, sizeof(Produto), 1, fp)) {
-            printf("──────────────────────────────────────────────\n");
-            printf("Nome: %s\n", produto->nome);
-            printf("Código: %s\n", produto->codigo);
-            printf("Preço: R$ %.2f\n", produto->preco);
-            printf("Estoque: %d\n", produto->estoque);
-            printf("Status: %d\n", produto->status);
+        if (produto->status == 1) {
+            printf("%-24s %-12s R$ %-9.2f %d\n",
+                   produto->nome,
+                   produto->codigo,
+                   produto->preco,
+                   produto->estoque);
+            count++;
+        }
     }
-    printf("──────────────────────────────────────────────\n");
+    
+    printf("==========================================================================\n");
+    printf("Total: %d produtos ativos\n", count);
 
     fclose(fp);
     free(produto);
     pausar();
 }
+
 void listarFinanceiroGeral() {
     FILE *fp;
     Movimentacao *mov;
+    int count = 0;
+    float saldo = 0;
 
     mov = (Movimentacao*)malloc(sizeof(Movimentacao));
 
@@ -153,14 +182,32 @@ void listarFinanceiroGeral() {
         return;
     }
 
+    printf("================================================================================\n");
+    printf("Tipo         Valor        Descrição\n");
+    printf("================================================================================\n");
+
     while (fread(mov, sizeof(Movimentacao), 1, fp)) {
-        printf("──────────────────────────────────────────────\n");
-        printf("Tipo: %s\n", mov->tipo == 'E' ? "ENTRADA" : "SAÍDA");
-        printf("Valor: R$ %.2f\n", mov->valor);
-        printf("Descrição: %s\n", mov->descricao);
-        printf("Status: %d\n", mov->status);
+        if (mov->status == 1) {
+            char *tipo = mov->tipo == 'E' ? "ENTRADA" : "SAÍDA";
+            char sinal = mov->tipo == 'E' ? '+' : '-';
+            
+            printf("%-12s %cR$ %-9.2f %s\n",
+                   tipo,
+                   sinal,
+                   mov->valor,
+                   mov->descricao);
+            count++;
+            
+            if (mov->tipo == 'E') {
+                saldo += mov->valor;
+            } else {
+                saldo -= mov->valor;
+            }
+        }
     }
-    printf("──────────────────────────────────────────────\n");
+    
+    printf("================================================================================\n");
+    printf("Total: %d movimentações | Saldo: R$ %.2f\n", count, saldo);
 
     fclose(fp);
     free(mov);
