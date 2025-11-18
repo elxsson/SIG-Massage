@@ -25,6 +25,7 @@ void menuRelatorios() {
     printf("║ 4. Listar Agendamentos                       ║\n");
     printf("║ 5. Listar Financeiro                         ║\n");
     printf("║ 6. Filtrar Clientes por Letra                ║\n");
+    printf("║ 7. Filtrar Produtos por Faixa de Preço       ║\n");
     printf("║ 0. Voltar ao Menu Principal                  ║\n");
     printf("║                                              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
@@ -272,6 +273,79 @@ void filtrarClientesPorLetra() {
     pausar();
 }
 
+void filtrarProdutosPorPreco() {
+    FILE *fp;
+    Produto *produto;
+    int count = 0;
+    float precoMin, precoMax;
+
+    produto = (Produto*)malloc(sizeof(Produto));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║         FILTRAR PRODUTOS POR PREÇO          ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite o preço mínimo: R$ ");
+    scanf("%f", &precoMin);
+    printf("Digite o preço máximo: R$ ");
+    scanf("%f", &precoMax);
+    limparBuffer();
+
+    if (precoMin < 0 || precoMax < 0) {
+        printf("Erro: Preços não podem ser negativos!\n");
+        free(produto);
+        pausar();
+        return;
+    }
+
+    if (precoMin > precoMax) {
+        printf("Erro: Preço mínimo não pode ser maior que preço máximo!\n");
+        free(produto);
+        pausar();
+        return;
+    }
+
+    fp = fopen(ARQUIVO_PRODUTOS, "rb");
+    if (fp == NULL) {
+        printf("Nenhum produto cadastrado ainda.\n");
+        free(produto);
+        pausar();
+        return;
+    }
+
+    printf("\n==========================================================================\n");
+    printf("Produtos entre R$ %.2f e R$ %.2f\n", precoMin, precoMax);
+    printf("==========================================================================\n");
+    printf("Nome                     Código       Preço       Estoque\n");
+    printf("==========================================================================\n");
+
+    while (fread(produto, sizeof(Produto), 1, fp)) {
+        if (produto->status == 1 && 
+            produto->preco >= precoMin && 
+            produto->preco <= precoMax) {
+            printf("%-24s %-12s R$ %-9.2f %d\n",
+                   produto->nome,
+                   produto->codigo,
+                   produto->preco,
+                   produto->estoque);
+            count++;
+        }
+    }
+
+    printf("==========================================================================\n");
+    
+    if (count == 0) {
+        printf("Nenhum produto encontrado na faixa de R$ %.2f a R$ %.2f.\n", precoMin, precoMax);
+    } else {
+        printf("Total: %d produto(s) na faixa de preço\n", count);
+    }
+
+    fclose(fp);
+    free(produto);
+    pausar();
+}
+
 void relatorios() {
     int opcao;
 
@@ -302,6 +376,9 @@ void relatorios() {
                 break;
             case 6:
                 filtrarClientesPorLetra();
+                break;
+            case 7:
+                filtrarProdutosPorPreco();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 

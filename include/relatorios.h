@@ -8,5 +8,6 @@ void listarProdutosGeral();
 void listarFinanceiroGeral();
 void relatorios(); 
 void filtrarClientesPorLetra();
+void filtrarProdutosPorPreco();
 
 #endif
