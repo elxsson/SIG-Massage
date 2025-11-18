@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "relatorios.h"
 #include "clientes.h"
 #include "massoterapeutas.h"
@@ -16,19 +17,20 @@
 void menuRelatorios() {
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║                MODULO RELATORIOS             ║\n");
-    printf("╠══════════════════════════════════════════════╣\n");
-    printf("║                                              ║\n");
-    printf("║ 1. Listar Clientes                           ║\n");
-    printf("║ 2. Listar Massoterapeutas                    ║\n");
-    printf("║ 3. Listar Produto                            ║\n");
-    printf("║ 4. Listar Agendamentos                       ║\n");
-    printf("║ 5. Listar Financeiro                         ║\n");
-    printf("║ 6. Filtrar Clientes por Letra                ║\n");
-    printf("║ 7. Filtrar Produtos por Faixa de Preço       ║\n");
-    printf("║ 0. Voltar ao Menu Principal                  ║\n");
-    printf("║                                              ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("║                MODULO RELATORIOS               ║\n");
+    printf("╠════════════════════════════════════════════════╣\n");
+    printf("║                                                ║\n");
+    printf("║ 1. Listar Clientes                             ║\n");
+    printf("║ 2. Listar Massoterapeutas                      ║\n");
+    printf("║ 3. Listar Produto                              ║\n");
+    printf("║ 4. Listar Agendamentos                         ║\n");
+    printf("║ 5. Listar Financeiro                           ║\n");
+    printf("║ 6. Filtrar Clientes por Letra                  ║\n");
+    printf("║ 7. Filtrar Produtos por Faixa de Preço         ║\n");
+    printf("║ 8. Filtrar Por Especialidade de Massoterapeuta ║\n");
+    printf("║ 0. Voltar ao Menu Principal                    ║\n");
+    printf("║                                                ║\n");
+    printf("╚════════════════════════════════════════════════╝\n");
     printf("\n Digite a opção desejada: ");
 }
 
@@ -346,6 +348,94 @@ void filtrarProdutosPorPreco() {
     pausar();
 }
 
+void filtrarMassoterapeutasPorEspecialidade() {
+    FILE *fp;
+    Massoterapeutas *massoterapeuta;
+    char especialidade;
+    int encontrou = 0;
+
+    printf("\n╔══════════════════════════════════╗\n");
+    printf("║   TIPOS DE MASSOTERAPEUTAS       ║\n");
+    printf("╠══════════════════════════════════╣\n");
+    printf("║  R  -  Massagem Relaxante        ║\n");
+    printf("║  T  -  Massagem Terapêutica      ║\n");
+    printf("║  E  -  Massagem Esportiva        ║\n");
+    printf("║  Q  -  Massagem Quiroprática     ║\n");
+    printf("║  A  -  Massagem Ayurvédica       ║\n");
+    printf("╚══════════════════════════════════╝\n");
+
+    printf("Digite a letra inicial para filtrar: ");
+    scanf(" %c", &especialidade);
+    limparBuffer();
+
+    especialidade = toupper(especialidade);
+
+    char nomeEspecialidade[30];
+    switch(especialidade) {
+        case 'R': 
+            strcpy(nomeEspecialidade, "Relaxante"); 
+            break;
+        case 'T': 
+            strcpy(nomeEspecialidade, "Terapêutica"); 
+            break;
+        case 'E': 
+            strcpy(nomeEspecialidade, "Esportiva"); 
+            break;
+        case 'Q': 
+            strcpy(nomeEspecialidade, "Quiroprática"); 
+            break;
+        case 'A': 
+            strcpy(nomeEspecialidade, "Ayurvédica"); 
+            break;
+        default: 
+            printf("Especialidade Inválida"); 
+            break;
+    }
+
+    massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════════════════════════════╗\n");
+    printf("║          LISTAGEM DE MASSOTERAPEUTAS - ESPECIALIDADE: %-12s   ║\n", nomeEspecialidade);
+    printf("╚══════════════════════════════════════════════════════════════════════╝\n");
+
+    fp = fopen(MASSOTERAPEUTAS_FILE, "rb");
+    if (fp == NULL) {
+        printf("Nenhum massoterapeuta cadastrado ainda.\n");
+        free(massoterapeuta);
+        pausar();
+        return;
+    }
+
+    printf("═══════════════════════════════════════════════════════════════════════════════════════════\n");
+    printf("Nome                     Telefone       Email                  CREFITO      Especialidade\n");
+    printf("═══════════════════════════════════════════════════════════════════════════════════════════\n");
+
+    while (fread(massoterapeuta, sizeof(Massoterapeutas), 1, fp)) {
+        if (massoterapeuta->status == 1) {
+            if (toupper(massoterapeuta->especialidade[0]) == especialidade) {
+                printf("%-24s %-14s %-22s %-12s %s\n",
+                       massoterapeuta->nome,
+                       massoterapeuta->telefone,
+                       massoterapeuta->email,
+                       massoterapeuta->crefito,
+                       massoterapeuta->especialidade);
+                encontrou = 1;
+            }
+        }
+    }
+    
+    printf("═══════════════════════════════════════════════════════════════════════════════════════════\n");
+
+    if (!encontrou) {
+        printf("\nNenhum massoterapeuta encontrado para a especialidade '%s'.\n", nomeEspecialidade);
+    }
+
+    fclose(fp);
+    free(massoterapeuta);
+    pausar();
+}
+
 void relatorios() {
     int opcao;
 
@@ -379,6 +469,9 @@ void relatorios() {
                 break;
             case 7:
                 filtrarProdutosPorPreco();
+                break;
+            case 8:
+                filtrarMassoterapeutasPorEspecialidade();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
