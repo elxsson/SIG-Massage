@@ -9,5 +9,6 @@ void listarFinanceiroGeral();
 void relatorios(); 
 void filtrarClientesPorLetra();
 void filtrarProdutosPorPreco();
+void filtrarMassoterapeutasPorEspecialidade();
 
 #endif
