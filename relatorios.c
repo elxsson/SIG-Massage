@@ -24,6 +24,7 @@ void menuRelatorios() {
     printf("║ 3. Listar Produto                            ║\n");
     printf("║ 4. Listar Agendamentos                       ║\n");
     printf("║ 5. Listar Financeiro                         ║\n");
+    printf("║ 6. Filtrar Clientes por Letra                ║\n");
     printf("║ 0. Voltar ao Menu Principal                  ║\n");
     printf("║                                              ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
@@ -214,6 +215,63 @@ void listarFinanceiroGeral() {
     pausar();
 }
 
+// Funções de Filtragem
+
+void filtrarClientesPorLetra() {
+    FILE *fp;
+    Cliente *cliente;
+    int count = 0;
+    char letra;
+
+    cliente = (Cliente*)malloc(sizeof(Cliente));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║        FILTRAR CLIENTES POR LETRA INICIAL    ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    printf("Digite a letra inicial para filtrar: ");
+    scanf(" %c", &letra);
+    limparBuffer();
+
+    fp = fopen(ARQUIVO_CLIENTES, "rb");
+    if (fp == NULL) {
+        printf("Nenhum cliente cadastrado ainda.\n");
+        free(cliente);
+        pausar();
+        return;
+    }
+
+    printf("\n====================================================================================\n");
+    printf("Clientes que começam com '%c'\n", letra);
+    printf("====================================================================================\n");
+    printf("Nome                     CPF              Telefone       Email\n");
+    printf("====================================================================================\n");
+
+    while (fread(cliente, sizeof(Cliente), 1, fp)) {
+        if (cliente->status == 1 && cliente->nome[0] == letra) {
+            printf("%-24s %-16s %-14s %s\n",
+                   cliente->nome,
+                   cliente->cpf,
+                   cliente->telefone,
+                   cliente->email);
+            count++;
+        }
+    }
+
+    printf("====================================================================================\n");
+    
+    if (count == 0) {
+        printf("Nenhum cliente encontrado com a letra '%c'.\n", letra);
+    } else {
+        printf("Total: %d cliente(s) com a letra '%c'\n", count, letra);
+    }
+
+    fclose(fp);
+    free(cliente);
+    pausar();
+}
+
 void relatorios() {
     int opcao;
 
@@ -241,6 +299,9 @@ void relatorios() {
                 break;
             case 5: 
                 listarFinanceiroGeral(); 
+                break;
+            case 6:
+                filtrarClientesPorLetra();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
