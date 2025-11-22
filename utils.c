@@ -228,6 +228,7 @@ int lerDescricao(char *descricao, int tamanho) {
 }
 
 char* atribuirData() {
+
     static char data[11];
     
     time_t agora;
@@ -236,4 +237,17 @@ char* atribuirData() {
     info_data = localtime(&agora);
     strftime(data, sizeof(data), "%d/%m/%Y", info_data);
     return data;
+}
+
+int atribuirId(const char *nomeArquivo, int tamanhoRegistro) {
+    FILE *arquivo = fopen(nomeArquivo, "rb");
+    if (arquivo == NULL) {
+        return 1;
+    }
+    
+    int quantidadeExistente = verificaItensArquivo(arquivo, tamanhoRegistro);
+    fclose(arquivo);
+    int novoId = quantidadeExistente + 1;
+    
+    return novoId;
 }

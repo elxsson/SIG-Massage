@@ -32,5 +32,6 @@ int validarValor(float valor);
 int lerTipoMassagem(char *tipoMassagem, int tamanho);
 int validarTipoMassagem(char *tipoMassagem);
 char* atribuirData();
+int atribuirId(const char *nomeArquivo, int tamanhoRegistro);
 
 #endif

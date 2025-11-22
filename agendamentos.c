@@ -40,6 +40,9 @@ void cadastrarAgendamento() {
     printf("║            CADASTRAR AGENDAMENTO             ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
+    int idInteiro = atribuirId("agendamentos.dat", sizeof(Agendamento));
+    sprintf(agendamento->id, "%d", idInteiro); // Converte int para string
+
     if (!lerCPF(agendamento->cpfCliente, sizeof(agendamento->cpfCliente))) {
         free(agendamento);
         pausar();
@@ -51,6 +54,11 @@ void cadastrarAgendamento() {
         pausar();
         return;
     }
+
+    char hora[10];
+    printf("Digite a hora para agendar: EX(HH:MM)");
+    scanf(" %10[^\n]", hora);
+    strcpy(agendamento->hora, hora);
 
     char data[11];
     printf("Digite a data para agendar: EX(DD/MM/AAAA)");
@@ -68,71 +76,48 @@ void cadastrarAgendamento() {
 
     free(agendamento);
     pausar();
-
-
-//     int diaSemana, hora, tipoMassagem;
-//     limparTela();
-//     printf("\n╔══════════════════════════════════════════════╗\n");
-//     printf("║              NOVO AGENDAMENTO                ║\n");
-//     printf("╠══════════════════════════════════════════════╣\n");
-//     printf("║              TIPOS DE MASSAGEM               ║\n");
-//     printf("╠══════════════════════════════════════════════╣\n");
-//     printf("║  1) Relaxante        5) Ayurvédica           ║\n");
-//     printf("║  2) Terapêutica      6) Reflexologia         ║\n");
-//     printf("║  3) Esportiva        7) Pedras Quentes       ║\n");
-//     printf("║  4) Shiatsu          8) Drenagem Linfática   ║\n");
-//     printf("║  9) Massagem Facial                          ║\n");
-//     printf("╚══════════════════════════════════════════════╝\n");
-//     printf("Escolha uma opção: ");
-//     if (scanf("%d", &tipoMassagem) != 1 || tipoMassagem < 1 || tipoMassagem > 9) {
-//         printf("\n Erro: Tipo de massagem inválido!\n");
-//         limparBuffer();
-//         pausar();
-//         return;
-//     }
-
-//     printf("Hora     Segunda     Terca     Quarta     Quinta     Sexta     Sabado\n");
-//     printf("--------------------------------------------------------------------\n");
-//     printf("08h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("09h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("10h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("11h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("12h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("13h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("14h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("15h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("16h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("17h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("18h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-//     printf("====================================================================\n");
-
-//     printf("escolha o dia da semana (1-6): ");
-//     if (scanf("%d", &diaSemana) != 1 || diaSemana < 1 || diaSemana > 6) {
-//         printf("\n Erro: Dia da semana inválido!\n");
-//         limparBuffer();
-//         pausar();
-//         return;
-//     }
-
-//     printf("Escolha a hora (8-18): ");
-//     if (scanf("%d", &hora) != 1 || hora < 8 || hora > 18) {
-//         printf("\n Erro: Hora inválida!\n");
-//         limparBuffer();
-//         pausar();
-//         return;
-//     }
-
-//     printf("\n Agendamento criado com sucesso para o dia %d às %dh!\n", diaSemana, hora);
-//     pausar();
 }
 
 void listarAgendamentos() {
+
+    FILE *fp;
+    Agendamento *agendamentos;
+
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║              LISTAR AGENDAMENTOS             ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("║            LISTAMGEM DE AGENDAMENTOS         ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Nenhum agendamento encontrado.\n");
+    fp = fopen(ARQUIVO_AGENDAMENTOS, "rb");
+    if (fp == NULL) {
+        printf("Nenhum agendamento cadastrado ainda.\n");
+        free(agendamento);
+        pausar();
+        return;
+    }
+
+    printf("====================================================================================\n");
+    printf("id                  CPFClientel         tipo da massagem           hora           data do agendamento          \n");
+    printf("====================================================================================\n");
+
+    while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
+        if (agendamento->status == 1) {
+            printf("%-24d %-16s %-14s %s\n",
+                    agendamento->id,
+                    agendamento->cpfCliente,
+                    agendamento->tipoMassagem,
+                    agendamento->hora,
+                    agendamento->dataDoAgendamento,
+                    agendamento->status);
+        }
+    }
+    
+    printf("====================================================================================\n");
+
+    fclose(fp);
+    free(agendamento);
     pausar();
 }
 
