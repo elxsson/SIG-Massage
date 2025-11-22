@@ -4,12 +4,9 @@
 | CRUD para a gestao de clientes do sistema SIG-MASSAGE       |
 |=============================================================|
 */
-
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "utils.h"
 #include "agendamentos.h"
+
+#define ARQUIVO_AGENDAMENTOS "agendamentos.dat"
 
 void menuAgendamentos() {
     limparTela();
@@ -17,7 +14,7 @@ void menuAgendamentos() {
     printf("║              MODULO AGENDAMENTOS             ║\n");
     printf("╠══════════════════════════════════════════════╣\n");
     printf("║                                              ║\n");
-    printf("║ 1. Novo agendamento                          ║\n");
+    printf("║ 1. Cadastrar Agendamento                     ║\n");
     printf("║ 2. Listar Agendamentos                       ║\n");
     printf("║ 3. Buscar Agendamento                        ║\n");
     printf("║ 4. Atualizar Agendamento                     ║\n");
@@ -28,63 +25,105 @@ void menuAgendamentos() {
     printf("\n Digite a opção desejada: ");
 }
 
+int salvarAgendamento(Agendamento *a) {
+    FILE *arquivo = fopen(ARQUIVO_AGENDAMENTOS, "ab");
+    size_t escrito = fwrite(a, sizeof(Agendamento), 1, arquivo);
+    fclose(arquivo);
+    return (escrito == 1);
+}
+
 void cadastrarAgendamento() {
-    int diaSemana, hora, tipoMassagem;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║              NOVO AGENDAMENTO                ║\n");
-    printf("╠══════════════════════════════════════════════╣\n");
-    printf("║              TIPOS DE MASSAGEM               ║\n");
-    printf("╠══════════════════════════════════════════════╣\n");
-    printf("║  1) Relaxante        5) Ayurvédica           ║\n");
-    printf("║  2) Terapêutica      6) Reflexologia         ║\n");
-    printf("║  3) Esportiva        7) Pedras Quentes       ║\n");
-    printf("║  4) Shiatsu          8) Drenagem Linfática   ║\n");
-    printf("║  9) Massagem Facial                          ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
-    printf("Escolha uma opção: ");
-    if (scanf("%d", &tipoMassagem) != 1 || tipoMassagem < 1 || tipoMassagem > 9) {
-        printf("\n Erro: Tipo de massagem inválido!\n");
-        limparBuffer();
+    printf("║            CADASTRAR AGENDAMENTO             ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    if (!lerCPF(agendamento->cpfCliente, sizeof(agendamento->cpfCliente))) {
+        free(agendamento);
         pausar();
         return;
     }
 
-    printf("Hora     Segunda     Terca     Quarta     Quinta     Sexta     Sabado\n");
-    printf("--------------------------------------------------------------------\n");
-    printf("08h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("09h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("10h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("11h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("12h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("13h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("14h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("15h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("16h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("17h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("18h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
-    printf("====================================================================\n");
-
-    printf("escolha o dia da semana (1-6): ");
-    if (scanf("%d", &diaSemana) != 1 || diaSemana < 1 || diaSemana > 6) {
-        printf("\n Erro: Dia da semana inválido!\n");
-        limparBuffer();
+    if (!lerTipoMassagem(agendamento->tipoMassagem, sizeof(agendamento->tipoMassagem))) {
+        free(agendamento);
         pausar();
         return;
     }
 
-    printf("Escolha a hora (8-18): ");
-    if (scanf("%d", &hora) != 1 || hora < 8 || hora > 18) {
-        printf("\n Erro: Hora inválida!\n");
-        limparBuffer();
-        pausar();
-        return;
+    char data[11];
+    printf("Digite a data para agendar: EX(DD/MM/AAAA)");
+    scanf(" %11[^\n]", data);
+    strcpy(agendamento->dataAgendada, data);
+
+    strcpy(agendamento->dataDoAgendamento, atribuirData());
+    agendamento->status = 1;
+
+    if (salvarAgendamento(agendamento)) {
+        printf("\n Agendamento cadastrado com sucesso!\n");
+    } else {
+        printf("\n Erro ao salvar Agendamento!\n");
     }
 
-
-
-    printf("\n Agendamento criado com sucesso para o dia %d às %dh!\n", diaSemana, hora);
+    free(agendamento);
     pausar();
+
+
+//     int diaSemana, hora, tipoMassagem;
+//     limparTela();
+//     printf("\n╔══════════════════════════════════════════════╗\n");
+//     printf("║              NOVO AGENDAMENTO                ║\n");
+//     printf("╠══════════════════════════════════════════════╣\n");
+//     printf("║              TIPOS DE MASSAGEM               ║\n");
+//     printf("╠══════════════════════════════════════════════╣\n");
+//     printf("║  1) Relaxante        5) Ayurvédica           ║\n");
+//     printf("║  2) Terapêutica      6) Reflexologia         ║\n");
+//     printf("║  3) Esportiva        7) Pedras Quentes       ║\n");
+//     printf("║  4) Shiatsu          8) Drenagem Linfática   ║\n");
+//     printf("║  9) Massagem Facial                          ║\n");
+//     printf("╚══════════════════════════════════════════════╝\n");
+//     printf("Escolha uma opção: ");
+//     if (scanf("%d", &tipoMassagem) != 1 || tipoMassagem < 1 || tipoMassagem > 9) {
+//         printf("\n Erro: Tipo de massagem inválido!\n");
+//         limparBuffer();
+//         pausar();
+//         return;
+//     }
+
+//     printf("Hora     Segunda     Terca     Quarta     Quinta     Sexta     Sabado\n");
+//     printf("--------------------------------------------------------------------\n");
+//     printf("08h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("09h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("10h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("11h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("12h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("13h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("14h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("15h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("16h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("17h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("18h      [   ]       [   ]     [   ]      [   ]      [   ]     [   ]\n");
+//     printf("====================================================================\n");
+
+//     printf("escolha o dia da semana (1-6): ");
+//     if (scanf("%d", &diaSemana) != 1 || diaSemana < 1 || diaSemana > 6) {
+//         printf("\n Erro: Dia da semana inválido!\n");
+//         limparBuffer();
+//         pausar();
+//         return;
+//     }
+
+//     printf("Escolha a hora (8-18): ");
+//     if (scanf("%d", &hora) != 1 || hora < 8 || hora > 18) {
+//         printf("\n Erro: Hora inválida!\n");
+//         limparBuffer();
+//         pausar();
+//         return;
+//     }
+
+//     printf("\n Agendamento criado com sucesso para o dia %d às %dh!\n", diaSemana, hora);
+//     pausar();
 }
 
 void listarAgendamentos() {

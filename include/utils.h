@@ -29,5 +29,8 @@ int validarCrefito(char *crefito);
 int validarEspecialidade(char *especialidade);
 int validarDescricao(char *descricao);
 int validarValor(float valor);
+int lerTipoMassagem(char *tipoMassagem, int tamanho);
+int validarTipoMassagem(char *tipoMassagem);
+char* atribuirData();
 
 #endif

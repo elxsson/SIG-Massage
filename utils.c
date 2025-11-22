@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 #include "utils.h"
 
 void pausar() {
@@ -196,6 +197,21 @@ int lerEspecialidade(char *especialidade, int tamanho) {
     return 1;
 }
 
+int lerTipoMassagem(char *tipoMassagem, int tamanho) {
+    printf("Digite a especialidade: ");
+    scanf(" %49[^\n]", tipoMassagem);
+    limparBuffer();
+    if (!validarTipoMassagem(tipoMassagem)) {
+        printf(" Erro: Tipo de massagem não pode ser vazio!\n");
+        return 0;
+    }
+    return 1;
+}
+
+int validarTipoMassagem(char *tipoMassagem) {
+    return (strlen(tipoMassagem) > 0);
+}
+
 int validarDescricao(char *descricao) {
     return (strlen(descricao) > 0);
 }
@@ -211,3 +227,13 @@ int lerDescricao(char *descricao, int tamanho) {
     return 1;
 }
 
+char* atribuirData() {
+    static char data[11];
+    
+    time_t agora;
+    struct tm *info_data;
+    time(&agora);
+    info_data = localtime(&agora);
+    strftime(data, sizeof(data), "%d/%m/%Y", info_data);
+    return data;
+}
