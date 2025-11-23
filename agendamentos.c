@@ -55,15 +55,15 @@ void cadastrarAgendamento() {
         return;
     }
 
-    char hora[10];
-    printf("Digite a hora para agendar: EX(HH:MM)");
-    scanf(" %10[^\n]", hora);
-    strcpy(agendamento->hora, hora);
-
     char data[11];
-    printf("Digite a data para agendar: EX(DD/MM/AAAA)");
+    printf("Digite a data para agendar EX(DD/MM/AAAA): ");
     scanf(" %11[^\n]", data);
     strcpy(agendamento->dataAgendada, data);
+
+    char hora[10];
+    printf("Digite a hora para agendar EX(HH:MM): ");
+    scanf(" %10[^\n]", hora);
+    strcpy(agendamento->hora, hora);
 
     strcpy(agendamento->dataDoAgendamento, atribuirData());
     agendamento->status = 1;
@@ -81,8 +81,6 @@ void cadastrarAgendamento() {
 void listarAgendamentos() {
 
     FILE *fp;
-    Agendamento *agendamentos;
-
     Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
 
     limparTela();
@@ -98,24 +96,22 @@ void listarAgendamentos() {
         return;
     }
 
-    printf("====================================================================================\n");
-    printf("id                  CPFClientel         tipo da massagem           hora           data do agendamento          \n");
-    printf("====================================================================================\n");
+printf("===================================================================\n");
+printf("ID   CPF Cliente     Tipo Massagem        Data Agendada   Hora\n");
+printf("===================================================================\n");
 
-    while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
-        if (agendamento->status == 1) {
-            printf("%-24d %-16s %-14s %s\n",
-                    agendamento->id,
-                    agendamento->cpfCliente,
-                    agendamento->tipoMassagem,
-                    agendamento->hora,
-                    agendamento->dataDoAgendamento,
-                    agendamento->status);
-        }
+while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
+    if (agendamento->status == 1) {
+        printf("%-3s  %-12s   %-18s   %-11s   %-4s\n",
+               agendamento->id,
+               agendamento->cpfCliente,
+               agendamento->tipoMassagem,
+               agendamento->dataAgendada,
+               agendamento->hora);
     }
-    
-    printf("====================================================================================\n");
+}
 
+printf("===================================================================\n");
     fclose(fp);
     free(agendamento);
     pausar();

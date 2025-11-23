@@ -244,10 +244,13 @@ int atribuirId(const char *nomeArquivo, int tamanhoRegistro) {
     if (arquivo == NULL) {
         return 1;
     }
-    
-    int quantidadeExistente = verificaItensArquivo(arquivo, tamanhoRegistro);
-    fclose(arquivo);
+
+    // Adaptado da geração automática da IA do Google
+    fseek(arquivo, 0, SEEK_END);
+    long int bytes = ftell(arquivo);
+    int quantidadeExistente = bytes / tamanhoRegistro;
     int novoId = quantidadeExistente + 1;
-    
+    fclose(arquivo);
+
     return novoId;
 }

@@ -8,7 +8,7 @@
 #include "utils.h"
 
 typedef struct {
-    int id[50];
+    char id[50];
     char cpfCliente[20];
     char tipoMassagem[30];
     char hora[6];
