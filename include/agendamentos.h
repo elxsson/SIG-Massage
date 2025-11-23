@@ -10,7 +10,7 @@
 typedef struct {
     char id[50];
     char cpfCliente[20];
-    char tipoMassagem[30];
+    char crefitoMassoterapeuta[30];
     char hora[6];
     char dataAgendada[11];
     char dataDoAgendamento[11];

@@ -49,7 +49,7 @@ void cadastrarAgendamento() {
         return;
     }
 
-    if (!lerTipoMassagem(agendamento->tipoMassagem, sizeof(agendamento->tipoMassagem))) {
+    if (!lerCrefito(agendamento->crefitoMassoterapeuta, sizeof(agendamento->crefitoMassoterapeuta))) {
         free(agendamento);
         pausar();
         return;
@@ -96,22 +96,22 @@ void listarAgendamentos() {
         return;
     }
 
-printf("===================================================================\n");
-printf("ID   CPF Cliente     Tipo Massagem        Data Agendada   Hora\n");
-printf("===================================================================\n");
+printf("===============================================================================\n");
+printf("ID   CPF Cliente      Cod Massoterapeuta     Data Agendada   Hora\n");
+printf("===============================================================================\n");
 
 while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
     if (agendamento->status == 1) {
-        printf("%-3s  %-12s   %-18s   %-11s   %-4s\n",
+        printf("%-4s %-17s %-21s %-15s %-5s\n",
                agendamento->id,
                agendamento->cpfCliente,
-               agendamento->tipoMassagem,
+               agendamento->crefitoMassoterapeuta,
                agendamento->dataAgendada,
                agendamento->hora);
     }
 }
 
-printf("===================================================================\n");
+printf("===============================================================================\n");
     fclose(fp);
     free(agendamento);
     pausar();
