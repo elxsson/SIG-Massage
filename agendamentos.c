@@ -96,25 +96,25 @@ void listarAgendamentos() {
         return;
     }
 
-printf("===============================================================================\n");
-printf("ID   CPF Cliente      Cod Massoterapeuta     Data Agendada   Hora\n");
-printf("===============================================================================\n");
+    printf("===============================================================================\n");
+    printf("ID   CPF Cliente      Cod Massoterapeuta     Data Agendada   Hora\n");
+    printf("===============================================================================\n");
 
-while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
-    if (agendamento->status == 1) {
-        printf("%-4s %-17s %-21s %-15s %-5s\n",
-               agendamento->id,
-               agendamento->cpfCliente,
-               agendamento->crefitoMassoterapeuta,
-               agendamento->dataAgendada,
-               agendamento->hora);
+    while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
+        if (agendamento->status == 1) {
+            printf("%-4s %-17s %-21s %-15s %-5s\n",
+                agendamento->id,
+                agendamento->cpfCliente,
+                agendamento->crefitoMassoterapeuta,
+                agendamento->dataAgendada,
+                agendamento->hora);
+        }
     }
-}
 
-printf("===============================================================================\n");
-    fclose(fp);
-    free(agendamento);
-    pausar();
+    printf("===============================================================================\n");
+        fclose(fp);
+        free(agendamento);
+        pausar();
 }
 
 void buscarAgendamento() {
