@@ -7,12 +7,14 @@
 #include "massoterapeutas.h"
 #include "produtos.h"
 #include "financeiro.h"
+#include "agendamentos.h"
 #include "utils.h"
 
 #define ARQUIVO_CLIENTES "clientes.dat"
 #define MASSOTERAPEUTAS_FILE "massoterapeutas.dat"
 #define ARQUIVO_PRODUTOS "produtos.dat"
 #define ARQUIVO_FINANCEIRO "financeiro.dat"
+#define ARQUIVO_AGENDAMENTOS "agendamentos.dat"
 
 void menuRelatorios() {
     limparTela();
@@ -28,6 +30,7 @@ void menuRelatorios() {
     printf("║ 6. Filtrar Clientes por Letra                  ║\n");
     printf("║ 7. Filtrar Produtos por Faixa de Preço         ║\n");
     printf("║ 8. Filtrar Por Especialidade de Massoterapeuta ║\n");
+    printf("║ 9. Filtrar Agendamentos com Nomes              ║\n");
     printf("║ 0. Voltar ao Menu Principal                    ║\n");
     printf("║                                                ║\n");
     printf("╚════════════════════════════════════════════════╝\n");
@@ -121,6 +124,7 @@ void listarMassoterapeutasGeral() {
     free(massoterapeuta);
     pausar();
 }
+
 void listarProdutosGeral() {
     FILE *fp;
     Produto *produto;
@@ -436,6 +440,52 @@ void filtrarMassoterapeutasPorEspecialidade() {
     pausar();
 }
 
+// Relatórios com dados de várias fontes
+
+void agendamentoListandoNomes(){
+    FILE *fp;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+
+    fp = fopen(ARQUIVO_AGENDAMENTOS, "rb");
+    if (fp == NULL) {
+        printf("Nenhum agendamento cadastrado ainda.\n");
+        free(agendamento);
+        pausar();
+        return;
+    }
+
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+    printf("║                             AGENDAMENTOS COM NOMES                             ║\n");
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+    printf("ID   Nome Cliente      Nome Massoterapeuta   Tipo Massagem     Data      Hora\n");
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+
+    while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
+        if (agendamento->status == 1) {
+            char* nomeCliente = getNomeClientePorCPF(agendamento->cpfCliente);
+            char* nomeMassoterapeuta = getNomeMassoterapeutaPorCrefito(agendamento->crefitoMassoterapeuta);
+            char* tipoMassagem = getTipoMassagemPorCrefito(agendamento->crefitoMassoterapeuta);
+            
+            printf("%-4s %-18s %-21s %-15s %-11s %-5s\n",
+                agendamento->id,
+                nomeCliente,
+                nomeMassoterapeuta,
+                tipoMassagem,
+                agendamento->dataAgendada,
+                agendamento->hora);
+            
+            free(nomeCliente);
+            free(nomeMassoterapeuta);
+            free(tipoMassagem);
+        }
+    }
+
+    printf("===============================================================================\n");
+    fclose(fp);
+    free(agendamento);
+    pausar();
+}
+
 void relatorios() {
     int opcao;
 
@@ -473,6 +523,8 @@ void relatorios() {
             case 8:
                 filtrarMassoterapeutasPorEspecialidade();
                 break;
+            case 9:
+                agendamentoListandoNomes();
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
                 break;
