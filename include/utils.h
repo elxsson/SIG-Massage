@@ -36,5 +36,6 @@ int atribuirId(const char *nomeArquivo, int tamanhoRegistro);
 char* getNomeClientePorCPF(const char* cpf);
 char* getNomeMassoterapeutaPorCrefito(const char* crefito);
 char* getTipoMassagemPorCrefito(const char* crefito);
+char* getNomeMassoterapeutaPorCpf(const char* cpf);
 
 #endif

@@ -100,8 +100,13 @@ void registrarEntrada() {
         return;
     }
 
+    if (!lerCPF(mov->cpf, sizeof(mov->cpf))) {
+        free(mov);
+        pausar();
+        return;
+    }
+
     mov->tipo = 'E';
-    strcpy(mov->cpf, "");
     mov->status = 1;
 
     if (salvarMovimentacao(mov)) {
@@ -179,25 +184,20 @@ void listarFinanceiro() {
     }
 
     printf("========================================================================================\n");
-    printf("Tipo         Valor        Descrição                                  CPF Massoterapeuta\n");
+    printf("Tipo         Valor        Descrição                                CPF Massoterapeuta\n");
     printf("========================================================================================\n");
 
     while (fread(mov, sizeof(Movimentacao), 1, fp)) {
         if (mov->status == 1) {
             char *tipo = mov->tipo == 'E' ? "ENTRADA" : "SAÍDA";
             char sinal = mov->tipo == 'E' ? '+' : '-';
-            char cpfDisplay[20] = "-";
-            
-            if (mov->tipo == 'S' && strlen(mov->cpf) > 0) {
-                strcpy(cpfDisplay, mov->cpf);
-            }
             
             printf("%-12s %cR$ %-9.2f %-40s %s\n",
                    tipo,
                    sinal,
                    mov->valor,
                    mov->descricao,
-                   cpfDisplay);
+                   mov->cpf);
             
             if (mov->tipo == 'E') {
                 totalEntradas += mov->valor;

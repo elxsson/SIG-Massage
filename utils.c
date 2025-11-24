@@ -330,3 +330,26 @@ char* getTipoMassagemPorCrefito(const char* crefito){
     
     return tipo;
 }
+
+char* getNomeMassoterapeutaPorCpf(const char* cpf){
+    FILE *fp;
+    Massoterapeutas *massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
+    char *nome = malloc(70);
+    
+    fp = fopen(ARQUIVO_MASSOTERAPEUTAS, "rb");
+    if (fp == NULL) {
+        return("Nenhum Massoterapeuta cadastrado.\n");
+    }
+    
+    while (fread(massoterapeuta, sizeof(Massoterapeutas), 1, fp)) {
+        if (massoterapeuta->status == 1 && strcmp(massoterapeuta->cpf, cpf) == 0) {
+            strcpy(nome, massoterapeuta->nome);
+            break;
+        }
+    }
+    
+    fclose(fp);
+    free(massoterapeuta);
+    
+    return nome;
+}

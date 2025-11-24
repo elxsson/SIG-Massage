@@ -10,5 +10,7 @@ void relatorios();
 void filtrarClientesPorLetra();
 void filtrarProdutosPorPreco();
 void filtrarMassoterapeutasPorEspecialidade();
+void agendamentoListandoNomes();
+void financeiroListandoNomes();
 
 #endif
