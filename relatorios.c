@@ -31,6 +31,7 @@ void menuRelatorios() {
     printf("║ 7. Filtrar Produtos por Faixa de Preço         ║\n");
     printf("║ 8. Filtrar Por Especialidade de Massoterapeuta ║\n");
     printf("║ 9. Filtrar Agendamentos com Nomes              ║\n");
+    printf("║ 10. Filtrar Financeiro com Nomes               ║\n");
     printf("║ 0. Voltar ao Menu Principal                    ║\n");
     printf("║                                                ║\n");
     printf("╚════════════════════════════════════════════════╝\n");
@@ -486,6 +487,50 @@ void agendamentoListandoNomes(){
     pausar();
 }
 
+void financeiroListandoNomes() {
+    FILE *fp;
+    Movimentacao *mov = (Movimentacao*)malloc(sizeof(Movimentacao));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║      LISTAR MOVIMENTAÇÕES FINANCEIRAS        ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    fp = fopen(ARQUIVO_FINANCEIRO, "rb");
+    if (fp == NULL) {
+        printf("Nenhuma movimentação registrada ainda.\n");
+        printf("Use as opções de entrada ou saída para registrar.\n");
+        free(mov);
+        pausar();
+        return;
+    }
+
+    printf("════════════════════════════════════════════════════════════════════════════════════════\n");
+    printf("Tipo         Valor        Descrição                                Massoterapeuta\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════════\n");
+
+    while (fread(mov, sizeof(Movimentacao), 1, fp)) {
+        if (mov->status == 1) {
+            char *tipo = mov->tipo == 'E' ? "ENTRADA" : "SAÍDA";
+            char sinal = mov->tipo == 'E' ? '+' : '-';
+            char *nomeMassoterapeuta = getNomeMassoterapeutaPorCpf(mov->cpf);
+            
+            printf("%-12s %cR$ %-9.2f %-40s %s\n",
+                   tipo,
+                   sinal,
+                   mov->valor,
+                   mov->descricao,
+                   nomeMassoterapeuta);
+        }
+    }
+    
+    printf("════════════════════════════════════════════════════════════════════════════════════════\n");
+
+    fclose(fp);
+    free(mov);
+    pausar();
+}
+
 void relatorios() {
     int opcao;
 
@@ -525,10 +570,13 @@ void relatorios() {
                 break;
             case 9:
                 agendamentoListandoNomes();
+                break;
+            case 10:
+                financeiroListandoNomes();
+                break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
                 break;
-        
             default:
                 printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
                 pausar();
