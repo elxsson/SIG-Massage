@@ -22,12 +22,13 @@ void menuRelatorios() {
     printf("║                MODULO RELATORIOS               ║\n");
     printf("╠════════════════════════════════════════════════╣\n");
     printf("║                                                ║\n");
-    printf("║ 1. Listar Relatorios                           ║\n");
+    printf("║ 1. Relatorios Simples                          ║\n");
     printf("║ 2. Filtrar Clientes por Letra                  ║\n");
     printf("║ 3. Filtrar Produtos por Faixa de Preço         ║\n");
     printf("║ 4. Filtrar Por Especialidade de Massoterapeuta ║\n");
     printf("║ 5. Filtrar Agendamentos com Nomes              ║\n");
     printf("║ 6. Filtrar Financeiro com Nomes                ║\n");
+    printf("║ 7. Listagem inversa Agendamentos               ║\n");
     printf("║ 0. Voltar ao Menu Principal                    ║\n");
     printf("║                                                ║\n");
     printf("╚════════════════════════════════════════════════╝\n");
@@ -37,7 +38,7 @@ void menuRelatorios() {
 void menuRelatoriosListar() {
     limparTela();
     printf("\n╔════════════════════════════════════════════════╗\n");
-    printf("║                LISTAR RELATORIOS               ║\n");
+    printf("║                RELATORIOS SIMPLES              ║\n");
     printf("╠════════════════════════════════════════════════╣\n");
     printf("║                                                ║\n");
     printf("║ 1. Listar Clientes                             ║\n");
@@ -543,6 +544,55 @@ void financeiroListandoNomes() {
     pausar();
 }
 
+//Listas dinamicas
+
+void ListagemInversaAgendamentos(){
+    FILE *fp;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+    Elemento *lista;
+    Elemento *novo, *aux;
+
+    fp = fopen(ARQUIVO_AGENDAMENTOS, "rb");
+    if (fp == NULL) {
+        printf("Nenhum agendamento cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+	lista = NULL;
+	while(fread(agendamento, sizeof(Agendamento), 1, fp) == 1){
+        novo = (Elemento*) malloc(sizeof(Elemento));
+        //
+        lista = novo;
+	}
+	fclose(fp);
+
+    printf("Listagem: ");
+    aux = lista;
+    while (aux != NULL) {
+        printf("%-4s %-17s %-21s %-15s %-5s\n",
+            aux->dados.id,
+            aux->dados.cpfCliente,
+            aux->dados.crefitoMassoterapeuta,
+            aux->dados.dataAgendada,
+            aux->dados.hora
+        );
+        aux = aux->prox;
+    }
+
+    // Liberação de memória
+    while (lista != NULL) {
+        aux = lista;
+        lista = lista->prox;
+        free(aux);
+    }
+
+}
+
+void ListagemOrdenadaCliente(){
+    
+}
+
 void relatorios() {
     int opcao;
 
@@ -608,6 +658,9 @@ void relatorios() {
                 break;
             case 6:
                 financeiroListandoNomes();
+                break;
+            case 7:
+                ListagemInversaAgendamentos();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
