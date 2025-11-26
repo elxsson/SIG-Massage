@@ -18,8 +18,26 @@
 
 void menuRelatorios() {
     limparTela();
-    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("\n╔════════════════════════════════════════════════╗\n");
     printf("║                MODULO RELATORIOS               ║\n");
+    printf("╠════════════════════════════════════════════════╣\n");
+    printf("║                                                ║\n");
+    printf("║ 1. Listar Relatorios                           ║\n");
+    printf("║ 2. Filtrar Clientes por Letra                  ║\n");
+    printf("║ 3. Filtrar Produtos por Faixa de Preço         ║\n");
+    printf("║ 4. Filtrar Por Especialidade de Massoterapeuta ║\n");
+    printf("║ 5. Filtrar Agendamentos com Nomes              ║\n");
+    printf("║ 6. Filtrar Financeiro com Nomes                ║\n");
+    printf("║ 0. Voltar ao Menu Principal                    ║\n");
+    printf("║                                                ║\n");
+    printf("╚════════════════════════════════════════════════╝\n");
+    printf("\n Digite a opção desejada: ");
+}
+
+void menuRelatoriosListar() {
+    limparTela();
+    printf("\n╔════════════════════════════════════════════════╗\n");
+    printf("║                LISTAR RELATORIOS               ║\n");
     printf("╠════════════════════════════════════════════════╣\n");
     printf("║                                                ║\n");
     printf("║ 1. Listar Clientes                             ║\n");
@@ -27,12 +45,7 @@ void menuRelatorios() {
     printf("║ 3. Listar Produto                              ║\n");
     printf("║ 4. Listar Agendamentos                         ║\n");
     printf("║ 5. Listar Financeiro                           ║\n");
-    printf("║ 6. Filtrar Clientes por Letra                  ║\n");
-    printf("║ 7. Filtrar Produtos por Faixa de Preço         ║\n");
-    printf("║ 8. Filtrar Por Especialidade de Massoterapeuta ║\n");
-    printf("║ 9. Filtrar Agendamentos com Nomes              ║\n");
-    printf("║ 10. Filtrar Financeiro com Nomes               ║\n");
-    printf("║ 0. Voltar ao Menu Principal                    ║\n");
+    printf("║ 0. Voltar ao Menu Relatorios                   ║\n");
     printf("║                                                ║\n");
     printf("╚════════════════════════════════════════════════╝\n");
     printf("\n Digite a opção desejada: ");
@@ -41,14 +54,11 @@ void menuRelatorios() {
 // Funções de listagem
 void listarClientesGeral() {
     FILE *fp;
-    Cliente *cliente;
-    int count = 0;
-
-    cliente = (Cliente*)malloc(sizeof(Cliente));
+    Cliente *cliente = (Cliente*)malloc(sizeof(Cliente));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║            LISTAR CLIENTES                   ║\n");
+    printf("║            LISTAGEM DE CLIENTES              ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
     fp = fopen(ARQUIVO_CLIENTES, "rb");
@@ -59,9 +69,9 @@ void listarClientesGeral() {
         return;
     }
 
-    printf("====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
     printf("Nome                     CPF              Telefone       Email\n");
-    printf("====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(cliente, sizeof(Cliente), 1, fp)) {
         if (cliente->status == 1) {
@@ -70,12 +80,10 @@ void listarClientesGeral() {
                    cliente->cpf,
                    cliente->telefone,
                    cliente->email);
-            count++;
         }
     }
 
-    printf("====================================================================================\n");
-    printf("Total: %d clientes ativos\n", count);
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
 
     fclose(fp);
     free(cliente);
@@ -84,14 +92,11 @@ void listarClientesGeral() {
 
 void listarMassoterapeutasGeral() {
     FILE *fp;
-    Massoterapeutas *massoterapeuta;
-    int count = 0;
-
-    massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
+    Massoterapeutas *massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║             LISTAR MASSOTERAPEUTAS           ║\n");
+    printf("║             LISTAGEM DE MASSOTERAPEUTAS      ║\n");
     printf("╚══════════════════════════════════════════════╝\n");
 
     fp = fopen(MASSOTERAPEUTAS_FILE, "rb");
@@ -102,9 +107,9 @@ void listarMassoterapeutasGeral() {
         return;
     }
 
-    printf("========================================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════════════════════════\n");
     printf("Nome                     CPF              Telefone       Email                  CREFITO\n");
-    printf("========================================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(massoterapeuta, sizeof(Massoterapeutas), 1, fp)) {
         if (massoterapeuta->status == 1) {
@@ -114,12 +119,9 @@ void listarMassoterapeutasGeral() {
                    massoterapeuta->telefone,
                    massoterapeuta->email,
                    massoterapeuta->crefito);
-            count++;
         }
     }
-    
-    printf("========================================================================================================\n");
-    printf("Total: %d massoterapeutas ativos\n", count);
+    printf("════════════════════════════════════════════════════════════════════════════════════════════════════════\n");
 
     fclose(fp);
     free(massoterapeuta);
@@ -128,14 +130,11 @@ void listarMassoterapeutasGeral() {
 
 void listarProdutosGeral() {
     FILE *fp;
-    Produto *produto;
-    int count = 0;
-
-    produto = (Produto*)malloc(sizeof(Produto));
+    Produto *produto = (Produto*)malloc(sizeof(Produto));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║               LISTAR PRODUTOS                ║\n");
+    printf("║               LISTAGEM DE PRODUTOS           ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
     fp = fopen(ARQUIVO_PRODUTOS, "rb");
@@ -146,10 +145,9 @@ void listarProdutosGeral() {
         return;
     }
 
-    printf("==========================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════\n");
     printf("Nome                     Código       Preço       Estoque\n");
-    printf("==========================================================================\n");
-
+    printf("══════════════════════════════════════════════════════════════════════════\n");
     while (fread(produto, sizeof(Produto), 1, fp)) {
         if (produto->status == 1) {
             printf("%-24s %-12s R$ %-9.2f %d\n",
@@ -157,25 +155,57 @@ void listarProdutosGeral() {
                    produto->codigo,
                    produto->preco,
                    produto->estoque);
-            count++;
         }
     }
-    
-    printf("==========================================================================\n");
-    printf("Total: %d produtos ativos\n", count);
+    printf("══════════════════════════════════════════════════════════════════════════\n");
 
     fclose(fp);
     free(produto);
     pausar();
 }
 
+void listarAgendamentosGeral() {
+    FILE *fp;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║            LISTAMGEM DE AGENDAMENTOS         ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
+
+    fp = fopen(ARQUIVO_AGENDAMENTOS, "rb");
+    if (fp == NULL) {
+        printf("Nenhum agendamento cadastrado ainda.\n");
+        free(agendamento);
+        pausar();
+        return;
+    }
+
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
+    printf("ID   CPF Cliente      Cod Massoterapeuta     Data Agendada   Hora\n");
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
+
+    while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
+        if (agendamento->status == 1) {
+            printf("%-4s %-17s %-21s %-15s %-5s\n",
+                agendamento->id,
+                agendamento->cpfCliente,
+                agendamento->crefitoMassoterapeuta,
+                agendamento->dataAgendada,
+                agendamento->hora);
+        }
+    }
+
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
+    
+    fclose(fp);
+    free(agendamento);    
+    pausar();
+}
+
 void listarFinanceiroGeral() {
     FILE *fp;
-    Movimentacao *mov;
-    int count = 0;
-    float saldo = 0;
-
-    mov = (Movimentacao*)malloc(sizeof(Movimentacao));
+    Movimentacao *mov = (Movimentacao*)malloc(sizeof(Movimentacao));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -191,9 +221,9 @@ void listarFinanceiroGeral() {
         return;
     }
 
-    printf("================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════\n");
     printf("Tipo         Valor        Descrição\n");
-    printf("================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(mov, sizeof(Movimentacao), 1, fp)) {
         if (mov->status == 1) {
@@ -205,18 +235,10 @@ void listarFinanceiroGeral() {
                    sinal,
                    mov->valor,
                    mov->descricao);
-            count++;
-            
-            if (mov->tipo == 'E') {
-                saldo += mov->valor;
-            } else {
-                saldo -= mov->valor;
-            }
         }
     }
     
-    printf("================================================================================\n");
-    printf("Total: %d movimentações | Saldo: R$ %.2f\n", count, saldo);
+    printf("════════════════════════════════════════════════════════════════════════════════\n");
 
     fclose(fp);
     free(mov);
@@ -227,11 +249,9 @@ void listarFinanceiroGeral() {
 
 void filtrarClientesPorLetra() {
     FILE *fp;
-    Cliente *cliente;
+    Cliente *cliente = (Cliente*)malloc(sizeof(Cliente));
     int count = 0;
     char letra;
-
-    cliente = (Cliente*)malloc(sizeof(Cliente));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
@@ -250,11 +270,11 @@ void filtrarClientesPorLetra() {
         return;
     }
 
-    printf("\n====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
     printf("Clientes que começam com '%c'\n", letra);
-    printf("====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
     printf("Nome                     CPF              Telefone       Email\n");
-    printf("====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(cliente, sizeof(Cliente), 1, fp)) {
         if (cliente->status == 1 && cliente->nome[0] == letra) {
@@ -267,12 +287,10 @@ void filtrarClientesPorLetra() {
         }
     }
 
-    printf("====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
     
     if (count == 0) {
         printf("Nenhum cliente encontrado com a letra '%c'.\n", letra);
-    } else {
-        printf("Total: %d cliente(s) com a letra '%c'\n", count, letra);
     }
 
     fclose(fp);
@@ -282,15 +300,13 @@ void filtrarClientesPorLetra() {
 
 void filtrarProdutosPorPreco() {
     FILE *fp;
-    Produto *produto;
+    Produto *produto = (Produto*)malloc(sizeof(Produto));
     int count = 0;
     float precoMin, precoMax;
 
-    produto = (Produto*)malloc(sizeof(Produto));
-
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║         FILTRAR PRODUTOS POR PREÇO          ║\n");
+    printf("║         FILTRAR PRODUTOS POR PREÇO           ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
     printf("Digite o preço mínimo: R$ ");
@@ -321,11 +337,11 @@ void filtrarProdutosPorPreco() {
         return;
     }
 
-    printf("\n==========================================================================\n");
+    printf("\n═════════════════════════════════════════════════════════════════════════\n");
     printf("Produtos entre R$ %.2f e R$ %.2f\n", precoMin, precoMax);
-    printf("==========================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════\n");
     printf("Nome                     Código       Preço       Estoque\n");
-    printf("==========================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(produto, sizeof(Produto), 1, fp)) {
         if (produto->status == 1 && 
@@ -340,12 +356,10 @@ void filtrarProdutosPorPreco() {
         }
     }
 
-    printf("==========================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════\n");
     
     if (count == 0) {
         printf("Nenhum produto encontrado na faixa de R$ %.2f a R$ %.2f.\n", precoMin, precoMax);
-    } else {
-        printf("Total: %d produto(s) na faixa de preço\n", count);
     }
 
     fclose(fp);
@@ -355,7 +369,7 @@ void filtrarProdutosPorPreco() {
 
 void filtrarMassoterapeutasPorEspecialidade() {
     FILE *fp;
-    Massoterapeutas *massoterapeuta;
+    Massoterapeutas *massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
     char especialidade;
     int encontrou = 0;
 
@@ -396,8 +410,6 @@ void filtrarMassoterapeutasPorEspecialidade() {
             printf("Especialidade Inválida"); 
             break;
     }
-
-    massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════════════════════════════╗\n");
@@ -456,7 +468,7 @@ void agendamentoListandoNomes(){
     }
 
     printf("══════════════════════════════════════════════════════════════════════════════════\n");
-    printf("║                             AGENDAMENTOS COM NOMES                             ║\n");
+    printf("                              AGENDAMENTOS COM NOMES                              \n");
     printf("══════════════════════════════════════════════════════════════════════════════════\n");
     printf("ID   Nome Cliente      Nome Massoterapeuta   Tipo Massagem     Data      Hora\n");
     printf("══════════════════════════════════════════════════════════════════════════════════\n");
@@ -481,7 +493,7 @@ void agendamentoListandoNomes(){
         }
     }
 
-    printf("===============================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
     fclose(fp);
     free(agendamento);
     pausar();
@@ -545,43 +557,65 @@ void relatorios() {
 
         switch(opcao) {
             case 1: 
-                listarClientesGeral(); 
+                int opcaoListar;
+                do {
+                    menuRelatoriosListar(); 
+                    if (scanf("%d", &opcaoListar) != 1) {
+                        printf("\n Erro: Digite apenas números!\n");
+                        limparBuffer();
+                        pausar();
+                        continue;
+                    }
+
+                    switch (opcaoListar){
+                    case 1:
+                        listarClientesGeral();
+                        break;
+                    case 2:
+                        listarMassoterapeutasGeral();
+                        break;
+                    case 3:
+                        listarProdutosGeral();
+                        break;
+                    case 4:
+                        listarAgendamentosGeral();
+                        break;
+                    case 5:
+                        listarFinanceiroGeral();
+                        break;
+                    case 0:
+                        printf("\n Retornando...\n"); 
+                        break;
+                    default:
+                        printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
+                        pausar();
+                        break;
+                    }
+                } while(opcaoListar != 0);
                 break;
+
             case 2: 
-                listarMassoterapeutasGeral();
-                break;
-            case 3: 
-                listarProdutosGeral();
-                break;
-            case 4: 
-                //listarAgendamentosGeral(); 
-                break;
-            case 5: 
-                listarFinanceiroGeral(); 
-                break;
-            case 6:
                 filtrarClientesPorLetra();
                 break;
-            case 7:
+            case 3: 
                 filtrarProdutosPorPreco();
                 break;
-            case 8:
-                filtrarMassoterapeutasPorEspecialidade();
+            case 4: 
+                filtrarMassoterapeutasPorEspecialidade(); 
                 break;
-            case 9:
-                agendamentoListandoNomes();
+            case 5: 
+                agendamentoListandoNomes(); 
                 break;
-            case 10:
+            case 6:
                 financeiroListandoNomes();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
                 break;
             default:
-                printf("\n Opção inválida! Digite um número entre 0 e 5.\n");
+                printf("\n Opção inválida! Digite um número entre 0 e 6.\n");
                 pausar();
                 break;
         }
- 
     } while(opcao != 0);
 }
