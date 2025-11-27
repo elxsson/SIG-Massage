@@ -274,13 +274,13 @@ void deletarAgendamento() {
     }
 
     if (indice == -1) {
-        printf("\n Agendamento não encontrado ou já está inativo!\n");
+        printf("\nAgendamento não encontrado ou já está inativo!\n");
         free(agendamento);
         pausar();
         return;
     }
 
-    printf("\n Agendamento encontrado:\n");
+    printf("\nAgendamento encontrado:\n");
     printf("===============================================================================\n");
     printf("ID   CPF Cliente      Cod Massoterapeuta     Data Agendada   Hora\n");
     printf("===============================================================================\n");
