@@ -32,6 +32,40 @@ int salvarAgendamento(Agendamento *a) {
     return (escrito == 1);
 }
 
+int carregarAgendamentos(Agendamento **agendamento, int *quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_AGENDAMENTOS, "rb");
+    if (arquivo == NULL) {
+        *agendamento = NULL;
+        *quantidade = 0;
+        return 1;
+    }
+
+    fseek(arquivo, 0, SEEK_END);
+    long tamanho = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_SET);
+
+    *quantidade = tamanho / sizeof(Agendamento);
+
+    if (*quantidade == 0) {
+        *agendamento = NULL;
+        fclose(arquivo);
+        return 1;
+    }
+
+    *agendamento = (Agendamento*)malloc((*quantidade) * sizeof(Agendamento));
+    size_t lidos = fread(*agendamento, sizeof(Agendamento), *quantidade, arquivo);
+    fclose(arquivo);
+
+    return (lidos == *quantidade);
+}
+
+int atualizarArquivoAgendamentos(Agendamento *agendamento, int quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_AGENDAMENTOS, "wb");
+    size_t escritos = fwrite(agendamento, sizeof(Agendamento), quantidade, arquivo);
+    fclose(arquivo);
+    return (escritos == quantidade);
+}
+
 void cadastrarAgendamento() {
     Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
 
@@ -55,15 +89,17 @@ void cadastrarAgendamento() {
         return;
     }
 
-    char data[11];
-    printf("Digite a data para agendar EX(DD/MM/AAAA): ");
-    scanf(" %11[^\n]", data);
-    strcpy(agendamento->dataAgendada, data);
+    if (!lerData(agendamento->dataAgendada, sizeof(agendamento->dataAgendada))) {
+        free(agendamento);
+        pausar();
+        return;
+    }
 
-    char hora[10];
-    printf("Digite a hora para agendar EX(HH:MM): ");
-    scanf(" %10[^\n]", hora);
-    strcpy(agendamento->hora, hora);
+    if (!lerHora(agendamento->hora, sizeof(agendamento->hora))) {
+        free(agendamento);
+        pausar();
+        return;
+    }
 
     strcpy(agendamento->dataDoAgendamento, atribuirData());
     agendamento->status = 1;
@@ -137,22 +173,56 @@ void buscarAgendamento() {
 }
 
 void atualizarAgendamento() {
-    int id;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+    int quantidade = 0;
+    char IdBusca[20];
+
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║            ATUALIZAR AGENDAMENTO             ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("║            ATUALIZAR AGENDAMENTOS            ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o ID do agendamento a ser atualizado: ");
-    if (scanf("%d", &id) != 1 || id <= 0) {
-        printf("\n Erro: ID inválido!\n");
-        limparBuffer();
+    listarAgendamentos();
+
+    printf("Digite o ID do agendamento a atualizar: ");
+    scanf(" %19s", IdBusca);
+    limparBuffer();
+
+    carregarAgendamentos(&agendamento, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(agendamento[i].id, IdBusca) == 0 && agendamento[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\n Agendamento não encontrado ou inativo!\n");
+        free(agendamento);
         pausar();
         return;
     }
 
-    printf("\n Agendamento com ID %d atualizado com sucesso!\n", id);
+    printf("\n Agendamento encontrado. Digite os novos dados:\n\n");
+
+
+    lerCPF(agendamento[indice].cpfCliente, sizeof(agendamento[indice].cpfCliente));
+    lerCrefito(agendamento[indice].crefitoMassoterapeuta, sizeof(agendamento[indice].crefitoMassoterapeuta));
+    lerData(agendamento[indice].dataAgendada, sizeof(agendamento[indice].dataAgendada));
+    lerHora(agendamento[indice].hora, sizeof(agendamento[indice].hora));
+
+
+    if (atualizarArquivoAgendamentos(agendamento, quantidade)) {
+        printf("\n Agendamento atualizado com sucesso!\n");
+    } else {
+        printf("\n Erro ao atualizar agendamento!\n");
+    }
+
+    free(agendamento);
     pausar();
+
 }
 
 void deletarAgendamento() {
