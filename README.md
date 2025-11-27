@@ -72,15 +72,6 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
 | 📊 **Relatórios** | ✅ Concluído | Análises e estatísticas |
 | 💰 **Financeiro** | ✅ Concluído | Controle de entrada e saída |
 
-## Próximos Passos:
-
-- Ajustar estrutura do projeto
-- Persistência em arquivos texto
-- Tipos abstratos de dados
-- Persistência em arquivos binários
-- Exclusão lógica e física de dados
-- Validação dos dados de entrada
-
 ## Desenvolvedores
 
 <table>
