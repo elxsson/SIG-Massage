@@ -17,6 +17,11 @@ typedef struct {
     int status;
 } Agendamento;
 
+typedef struct Elemento {
+    Agendamento dados;
+    struct Elemento *prox;
+} Elemento;
+
 void agendamentos();
 void menuAgendamentos();
 void cadastrarAgendamento();

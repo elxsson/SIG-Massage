@@ -91,6 +91,74 @@ int lerTelefone(char *telefone, int tamanho) {
     return 1;
 }
 
+int validarData(char *data) {
+
+    if (strlen(data) != 10) {
+        return 0;
+    }
+    
+    if (data[2] != '/' || data[5] != '/') {
+        return 0;
+    }
+    
+    for (int i = 0; i < 10; i++) {
+
+        if (i == 2 || i == 5) continue;
+        
+        if (data[i] < '0' || data[i] > '9') {
+            return 0;
+        }
+    }
+    
+    return 1;
+}
+
+int lerData(char *data, int tamanho) {
+    printf("Digite a data (DD/MM/AAAA): ");
+    scanf(" %19[^\n]", data);
+    limparBuffer();
+    if (!validarData(data)) {
+        printf(" Erro: Data inválida!\n");
+        return 0;
+    }
+    return 1;
+}
+
+int validarHora(char *hora) {
+
+    if (strlen(hora) != 5) {
+        return 0;
+    }
+    
+    if (hora[2] != ':') {
+        return 0;
+    }
+    
+    for (int i = 0; i < 5; i++) {
+
+        if (i == 2) continue;
+        
+        if (hora[i] < '0' || hora[i] > '9') {
+            return 0;
+        }
+    }
+    
+    return 1;
+}
+
+int lerHora(char *hora, int tamanho) {
+    printf("Digite a hora para agendar (HH:MM): ");
+    scanf(" %19[^\n]", hora);
+    limparBuffer();
+    if (!validarHora(hora)) {
+        printf(" Erro: Hora inválida!\n");
+        return 0;
+    }
+    return 1;
+}
+
+
+
 int validarEmail(char *email) {
     int temArroba = 0, posArroba = -1, temPonto = 0;
     for (int i = 0; email[i] != '\0'; i++) {

@@ -32,6 +32,40 @@ int salvarAgendamento(Agendamento *a) {
     return (escrito == 1);
 }
 
+int carregarAgendamentos(Agendamento **agendamento, int *quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_AGENDAMENTOS, "rb");
+    if (arquivo == NULL) {
+        *agendamento = NULL;
+        *quantidade = 0;
+        return 1;
+    }
+
+    fseek(arquivo, 0, SEEK_END);
+    long tamanho = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_SET);
+
+    *quantidade = tamanho / sizeof(Agendamento);
+
+    if (*quantidade == 0) {
+        *agendamento = NULL;
+        fclose(arquivo);
+        return 1;
+    }
+
+    *agendamento = (Agendamento*)malloc((*quantidade) * sizeof(Agendamento));
+    size_t lidos = fread(*agendamento, sizeof(Agendamento), *quantidade, arquivo);
+    fclose(arquivo);
+
+    return (lidos == *quantidade);
+}
+
+int atualizarArquivoAgendamentos(Agendamento *agendamento, int quantidade) {
+    FILE *arquivo = fopen(ARQUIVO_AGENDAMENTOS, "wb");
+    size_t escritos = fwrite(agendamento, sizeof(Agendamento), quantidade, arquivo);
+    fclose(arquivo);
+    return (escritos == quantidade);
+}
+
 void cadastrarAgendamento() {
     Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
 
@@ -55,15 +89,17 @@ void cadastrarAgendamento() {
         return;
     }
 
-    char data[11];
-    printf("Digite a data para agendar EX(DD/MM/AAAA): ");
-    scanf(" %11[^\n]", data);
-    strcpy(agendamento->dataAgendada, data);
+    if (!lerData(agendamento->dataAgendada, sizeof(agendamento->dataAgendada))) {
+        free(agendamento);
+        pausar();
+        return;
+    }
 
-    char hora[10];
-    printf("Digite a hora para agendar EX(HH:MM): ");
-    scanf(" %10[^\n]", hora);
-    strcpy(agendamento->hora, hora);
+    if (!lerHora(agendamento->hora, sizeof(agendamento->hora))) {
+        free(agendamento);
+        pausar();
+        return;
+    }
 
     strcpy(agendamento->dataDoAgendamento, atribuirData());
     agendamento->status = 1;
@@ -118,70 +154,160 @@ void listarAgendamentos() {
 }
 
 void buscarAgendamento() {
-    int id;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+    int quantidade = 0;
+    char IdBusca[20];
+
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║              BUSCAR AGENDAMENTO              ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("║            BUSCAR AGENDAMENTO                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o ID do agendamento a ser buscado: ");
-    if (scanf("%d", &id) != 1 || id <= 0) {
-        printf("\n Erro: ID inválido!\n");
-        limparBuffer();
-        pausar();
-        return;
+    printf("Digite o id do agendamento: ");
+    scanf(" %19s", IdBusca);
+    limparBuffer();
+
+    carregarAgendamentos(&agendamento, &quantidade);
+
+    int encontrado = 0;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(agendamento[i].id, IdBusca) == 0 && agendamento[i].status == 1) {
+            printf("\n Agendamento encontrado:\n");
+            printf("──────────────────────────────────────────────\n");
+            printf("ID: %s\n", agendamento[i].id);
+            printf("CPF do Cliente: %s\n", agendamento[i].cpfCliente);
+            printf("Crefito do Massoterapeuta: %s\n", agendamento[i].crefitoMassoterapeuta);
+            printf("Data agendada: %s\n", agendamento[i].dataAgendada);
+            printf("Hora agendada: %s\n", agendamento[i].hora);
+            printf("──────────────────────────────────────────────\n");
+            encontrado = 1;
+            break;
+        }
     }
 
-    printf("\n Nenhum agendamento encontrado com o ID %d.\n", id);
+    if (!encontrado) {
+        printf("\n Agendamento não encontrado ou inativo!\n");
+    }
+
+    free(agendamento);
     pausar();
 }
 
 void atualizarAgendamento() {
-    int id;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+    int quantidade = 0;
+    char IdBusca[20];
+
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║            ATUALIZAR AGENDAMENTO             ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o ID do agendamento a ser atualizado: ");
-    if (scanf("%d", &id) != 1 || id <= 0) {
-        printf("\n Erro: ID inválido!\n");
-        limparBuffer();
+    listarAgendamentos();
+
+    printf("Digite o ID do agendamento a atualizar: ");
+    scanf(" %19s", IdBusca);
+    limparBuffer();
+
+    carregarAgendamentos(&agendamento, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(agendamento[i].id, IdBusca) == 0 && agendamento[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\n Agendamento não encontrado ou inativo!\n");
+        free(agendamento);
         pausar();
         return;
     }
 
-    printf("\n Agendamento com ID %d atualizado com sucesso!\n", id);
+    printf("\n Agendamento encontrado. Digite os novos dados:\n\n");
+
+
+    lerCPF(agendamento[indice].cpfCliente, sizeof(agendamento[indice].cpfCliente));
+    lerCrefito(agendamento[indice].crefitoMassoterapeuta, sizeof(agendamento[indice].crefitoMassoterapeuta));
+    lerData(agendamento[indice].dataAgendada, sizeof(agendamento[indice].dataAgendada));
+    lerHora(agendamento[indice].hora, sizeof(agendamento[indice].hora));
+
+
+    if (atualizarArquivoAgendamentos(agendamento, quantidade)) {
+        printf("\n Agendamento atualizado com sucesso!\n");
+    } else {
+        printf("\n Erro ao atualizar agendamento!\n");
+    }
+
+    free(agendamento);
     pausar();
+
 }
 
 void deletarAgendamento() {
-    int id;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+    int quantidade = 0;
+    char IdBusca[20];
     char confirmacao;
+
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║             EXCLUIR AGENDAMENTO              ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("║            DELETAR AGENDAMENTO               ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o ID do agendamento a ser excluído: ");
-    if (scanf("%d", &id) != 1 || id <= 0) {
-        printf("\n Erro: ID inválido!\n");
-        limparBuffer();
+    listarAgendamentos();
+
+    printf("Digite o id do agendamento a deletar: ");
+    scanf(" %19s", IdBusca);
+    limparBuffer();
+
+    carregarAgendamentos(&agendamento, &quantidade);
+
+    int indice = -1;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(agendamento[i].id, IdBusca) == 0 && agendamento[i].status == 1) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("\nAgendamento não encontrado ou já está inativo!\n");
+        free(agendamento);
         pausar();
         return;
     }
 
-    printf("Tem certeza que deseja excluir? (s/N): ");
+    printf("\nAgendamento encontrado:\n");
+    printf("===============================================================================\n");
+    printf("ID   CPF Cliente      Cod Massoterapeuta     Data Agendada   Hora\n");
+    printf("===============================================================================\n");
+            printf("%-4s %-17s %-21s %-15s %-5s\n",
+                agendamento[indice].id,
+                agendamento[indice].cpfCliente,
+                agendamento[indice].crefitoMassoterapeuta,
+                agendamento[indice].dataAgendada,
+                agendamento[indice].hora);
+    printf("===============================================================================\n");
+    printf("\nTem certeza que deseja deletar? (S/N): ");
+    scanf(" %c", &confirmacao);
     limparBuffer();
-    scanf("%c", &confirmacao);
-    
-    if (confirmacao == 's' || confirmacao == 'S') {
-        printf("\n Função de exclusão de agendamento ainda não implementada.\n");
-        printf("ID que seria excluído: %i\n",id);
-    } else {    
-        printf("\n Operação cancelada pelo usuário.\n");   
+
+    if (confirmacao == 'S' || confirmacao == 's') {
+        agendamento[indice].status = 0;
+
+        if (atualizarArquivoAgendamentos(agendamento, quantidade)) {
+            printf("\n Agendamnto deletado com sucesso!\n");
+        } else {
+            printf("\n Erro ao deletar agendamento!\n");
+        }
+    } else {
+        printf("\n Operação cancelada!\n");
     }
-    
+
+    free(agendamento);
     pausar();
 
 }

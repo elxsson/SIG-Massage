@@ -68,18 +68,9 @@ O sistema apresenta uma interface em ASCII com navegação por menus:
 | 👥 **Clientes** | ✅ Concluído | Cadastro e gestão de clientes |
 | 💆 **Massoterapeutas** | ✅ Concluído | Gestão de profissionais |
 | 🛠️ **Produtos** | ✅ Concluído | Cadastro de produtos e controle de estoque |
-| 📅 **Agendamentos** | 🚧 Em desenvolvimento | Sistema de marcação |
-| 📊 **Relatórios** | 🚧 Em desenvolvimento | Análises e estatísticas |
+| 📅 **Agendamentos** | ✅ Concluído | Sistema de marcação |
+| 📊 **Relatórios** | ✅ Concluído | Análises e estatísticas |
 | 💰 **Financeiro** | ✅ Concluído | Controle de entrada e saída |
-
-## Próximos Passos:
-
-- Ajustar estrutura do projeto
-- Persistência em arquivos texto
-- Tipos abstratos de dados
-- Persistência em arquivos binários
-- Exclusão lógica e física de dados
-- Validação dos dados de entrada
 
 ## Desenvolvedores
 
