@@ -154,21 +154,42 @@ void listarAgendamentos() {
 }
 
 void buscarAgendamento() {
-    int id;
+    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
+    int quantidade = 0;
+    char IdBusca[20];
+
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║              BUSCAR AGENDAMENTO              ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("║            BUSCAR AGENDAMENTO                ║\n");
+    printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o ID do agendamento a ser buscado: ");
-    if (scanf("%d", &id) != 1 || id <= 0) {
-        printf("\n Erro: ID inválido!\n");
-        limparBuffer();
-        pausar();
-        return;
+    printf("Digite o id do agendamento: ");
+    scanf(" %19s", IdBusca);
+    limparBuffer();
+
+    carregarAgendamentos(&agendamento, &quantidade);
+
+    int encontrado = 0;
+    for (int i = 0; i < quantidade; i++) {
+        if (strcmp(agendamento[i].id, IdBusca) == 0 && agendamento[i].status == 1) {
+            printf("\n Agendamento encontrado:\n");
+            printf("──────────────────────────────────────────────\n");
+            printf("ID: %s\n", agendamento[i].id);
+            printf("CPF do Cliente: %s\n", agendamento[i].cpfCliente);
+            printf("Crefito do Massoterapeuta: %s\n", agendamento[i].crefitoMassoterapeuta);
+            printf("Data agendada: %s\n", agendamento[i].dataAgendada);
+            printf("Hora agendada: %s\n", agendamento[i].hora);
+            printf("──────────────────────────────────────────────\n");
+            encontrado = 1;
+            break;
+        }
     }
 
-    printf("\n Nenhum agendamento encontrado com o ID %d.\n", id);
+    if (!encontrado) {
+        printf("\n Agendamento não encontrado ou inativo!\n");
+    }
+
+    free(agendamento);
     pausar();
 }
 
