@@ -371,45 +371,45 @@ void filtrarProdutosPorPreco() {
 void filtrarMassoterapeutasPorEspecialidade() {
     FILE *fp;
     Massoterapeutas *massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
-    char especialidade;
+    int opcao;
     int encontrou = 0;
 
     printf("\n╔══════════════════════════════════╗\n");
     printf("║   TIPOS DE MASSOTERAPEUTAS       ║\n");
     printf("╠══════════════════════════════════╣\n");
-    printf("║  R  -  Massagem Relaxante        ║\n");
-    printf("║  T  -  Massagem Terapêutica      ║\n");
-    printf("║  E  -  Massagem Esportiva        ║\n");
-    printf("║  Q  -  Massagem Quiroprática     ║\n");
-    printf("║  A  -  Massagem Ayurvédica       ║\n");
+    printf("║  1  -  Massagem Relaxante        ║\n");
+    printf("║  2  -  Massagem Terapêutica      ║\n");
+    printf("║  3  -  Massagem Esportiva        ║\n");
+    printf("║  4  -  Massagem Quiroprática     ║\n");
+    printf("║  5  -  Massagem Ayurvédica       ║\n");
     printf("╚══════════════════════════════════╝\n");
 
-    printf("Digite a letra inicial para filtrar: ");
-    scanf(" %c", &especialidade);
+    printf("Digite o número da especialidade: ");
+    scanf("%d", &opcao);
     limparBuffer();
 
-    especialidade = toupper(especialidade);
-
     char nomeEspecialidade[30];
-    switch(especialidade) {
-        case 'R': 
-            strcpy(nomeEspecialidade, "Relaxante"); 
+    switch(opcao) {
+        case Relaxante:
+            strcpy(nomeEspecialidade, "Relaxante");
             break;
-        case 'T': 
-            strcpy(nomeEspecialidade, "Terapêutica"); 
+        case Terapeutica:
+            strcpy(nomeEspecialidade, "Terapêutica");
             break;
-        case 'E': 
-            strcpy(nomeEspecialidade, "Esportiva"); 
+        case Esportiva:
+            strcpy(nomeEspecialidade, "Esportiva");
             break;
-        case 'Q': 
-            strcpy(nomeEspecialidade, "Quiroprática"); 
+        case Quiropratica:
+            strcpy(nomeEspecialidade, "Quiroprática");
             break;
-        case 'A': 
-            strcpy(nomeEspecialidade, "Ayurvédica"); 
+        case Ayurvedica:
+            strcpy(nomeEspecialidade, "Ayurvédica");
             break;
-        default: 
-            printf("Especialidade Inválida"); 
-            break;
+        default:
+            printf("Especialidade Inválida! Digite um número entre 1 e 5.\n");
+            free(massoterapeuta);
+            pausar();
+            return;
     }
 
     limparTela();
@@ -431,7 +431,8 @@ void filtrarMassoterapeutasPorEspecialidade() {
 
     while (fread(massoterapeuta, sizeof(Massoterapeutas), 1, fp)) {
         if (massoterapeuta->status == 1) {
-            if (toupper(massoterapeuta->especialidade[0]) == especialidade) {
+            // Compara o nome completo da especialidade
+            if (strcmp(massoterapeuta->especialidade, nomeEspecialidade) == 0) {
                 printf("%-24s %-14s %-22s %-12s %s\n",
                        massoterapeuta->nome,
                        massoterapeuta->telefone,

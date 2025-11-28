@@ -157,8 +157,6 @@ int lerHora(char *hora, int tamanho) {
     return 1;
 }
 
-
-
 int validarEmail(char *email) {
     int temArroba = 0, posArroba = -1, temPonto = 0;
     for (int i = 0; email[i] != '\0'; i++) {
@@ -243,15 +241,25 @@ int lerCodigo(char *codigo, int tamanho) {
 }
 
 int validarCrefito(char *crefito) {
-    return (strlen(crefito) >= 3);
+
+    if (strlen(crefito) != 5) {
+        return 0;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        if (!isdigit(crefito[i])) {
+            return 0;
+        }
+    }
+    return 1;
 }
 
 int lerCrefito(char *crefito, int tamanho) {
-    printf("Digite o número do CREFITO: ");
+    printf("Digite o número do CREFITO (5 digitos): ");
     scanf(" %19s", crefito);
     limparBuffer();
     if (!validarCrefito(crefito)) {
-        printf(" Erro: CREFITO inválido! Mínimo 3 caracteres.\n");
+        printf(" Erro: CREFITO inválido!\n");
         return 0;
     }
     return 1;
@@ -262,13 +270,49 @@ int validarEspecialidade(char *especialidade) {
 }
 
 int lerEspecialidade(char *especialidade, int tamanho) {
-    printf("Digite a especialidade: ");
-    scanf(" %49[^\n]", especialidade);
+    int opcao;
+
+    printf("\n╔══════════════════════════════════╗\n");
+    printf("║   TIPOS DE MASSOTERAPEUTAS       ║\n");
+    printf("╠══════════════════════════════════╣\n");
+    printf("║  1  -  Massagem Relaxante        ║\n");
+    printf("║  2  -  Massagem Terapêutica      ║\n");
+    printf("║  3  -  Massagem Esportiva        ║\n");
+    printf("║  4  -  Massagem Quiroprática     ║\n");
+    printf("║  5  -  Massagem Ayurvédica       ║\n");
+    printf("╚══════════════════════════════════╝\n\n");
+
+    printf("Digite o número da especialidade: ");
+    scanf("%d", &opcao);
     limparBuffer();
+
+    switch(opcao) {
+        case Relaxante:
+            strcpy(especialidade, "Relaxante");
+            break;
+        case Terapeutica:
+            strcpy(especialidade, "Terapêutica");
+            break;
+        case Esportiva:
+            strcpy(especialidade, "Esportiva");
+            break;
+        case Quiropratica:
+            strcpy(especialidade, "Quiroprática");
+            break;
+        case Ayurvedica:
+            strcpy(especialidade, "Ayurvédica");
+            break;
+        default:
+            printf("Opção inválida! Digite um número entre %d e %d.\n", Relaxante, Ayurvedica);
+            return 0;
+    }
+
+    // Validação após a seleção
     if (!validarEspecialidade(especialidade)) {
-        printf(" Erro: Especialidade não pode estar vazia!\n");
+        printf("Erro: Especialidade não pode estar vazia!\n");
         return 0;
     }
+    
     return 1;
 }
 

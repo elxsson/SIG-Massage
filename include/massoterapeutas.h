@@ -11,6 +11,14 @@ typedef struct {
     int status;
 } Massoterapeutas;
 
+typedef enum {
+    Relaxante = 1,
+    Terapeutica = 2,
+    Esportiva = 3,
+    Quiropratica = 4,
+    Ayurvedica = 5
+} Especialidade;
+
 void massoterapeutas();
 void menuMassoterapeutas();
 void cadastrarMassoterapeuta();
