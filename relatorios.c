@@ -28,7 +28,7 @@ void menuRelatorios() {
     printf("║ 4. Filtrar Por Especialidade de Massoterapeuta ║\n");
     printf("║ 5. Filtrar Agendamentos com Nomes              ║\n");
     printf("║ 6. Filtrar Financeiro com Nomes                ║\n");
-    printf("║ 7. Listagem inversa Agendamentos               ║\n");
+    printf("║ 7. Listagem de Agendamentos Recentes           ║\n");
     printf("║ 0. Voltar ao Menu Principal                    ║\n");
     printf("║                                                ║\n");
     printf("╚════════════════════════════════════════════════╝\n");
@@ -371,45 +371,45 @@ void filtrarProdutosPorPreco() {
 void filtrarMassoterapeutasPorEspecialidade() {
     FILE *fp;
     Massoterapeutas *massoterapeuta = (Massoterapeutas*)malloc(sizeof(Massoterapeutas));
-    char especialidade;
+    int opcao;
     int encontrou = 0;
 
     printf("\n╔══════════════════════════════════╗\n");
     printf("║   TIPOS DE MASSOTERAPEUTAS       ║\n");
     printf("╠══════════════════════════════════╣\n");
-    printf("║  R  -  Massagem Relaxante        ║\n");
-    printf("║  T  -  Massagem Terapêutica      ║\n");
-    printf("║  E  -  Massagem Esportiva        ║\n");
-    printf("║  Q  -  Massagem Quiroprática     ║\n");
-    printf("║  A  -  Massagem Ayurvédica       ║\n");
+    printf("║  1  -  Massagem Relaxante        ║\n");
+    printf("║  2  -  Massagem Terapêutica      ║\n");
+    printf("║  3  -  Massagem Esportiva        ║\n");
+    printf("║  4  -  Massagem Quiroprática     ║\n");
+    printf("║  5  -  Massagem Ayurvédica       ║\n");
     printf("╚══════════════════════════════════╝\n");
 
-    printf("Digite a letra inicial para filtrar: ");
-    scanf(" %c", &especialidade);
+    printf("Digite o número da especialidade: ");
+    scanf("%d", &opcao);
     limparBuffer();
 
-    especialidade = toupper(especialidade);
-
     char nomeEspecialidade[30];
-    switch(especialidade) {
-        case 'R': 
-            strcpy(nomeEspecialidade, "Relaxante"); 
+    switch(opcao) {
+        case Relaxante:
+            strcpy(nomeEspecialidade, "Relaxante");
             break;
-        case 'T': 
-            strcpy(nomeEspecialidade, "Terapêutica"); 
+        case Terapeutica:
+            strcpy(nomeEspecialidade, "Terapêutica");
             break;
-        case 'E': 
-            strcpy(nomeEspecialidade, "Esportiva"); 
+        case Esportiva:
+            strcpy(nomeEspecialidade, "Esportiva");
             break;
-        case 'Q': 
-            strcpy(nomeEspecialidade, "Quiroprática"); 
+        case Quiropratica:
+            strcpy(nomeEspecialidade, "Quiroprática");
             break;
-        case 'A': 
-            strcpy(nomeEspecialidade, "Ayurvédica"); 
+        case Ayurvedica:
+            strcpy(nomeEspecialidade, "Ayurvédica");
             break;
-        default: 
-            printf("Especialidade Inválida"); 
-            break;
+        default:
+            printf("Especialidade Inválida! Digite um número entre 1 e 5.\n");
+            free(massoterapeuta);
+            pausar();
+            return;
     }
 
     limparTela();
@@ -431,7 +431,8 @@ void filtrarMassoterapeutasPorEspecialidade() {
 
     while (fread(massoterapeuta, sizeof(Massoterapeutas), 1, fp)) {
         if (massoterapeuta->status == 1) {
-            if (toupper(massoterapeuta->especialidade[0]) == especialidade) {
+            // Compara o nome completo da especialidade
+            if (strcmp(massoterapeuta->especialidade, nomeEspecialidade) == 0) {
                 printf("%-24s %-14s %-22s %-12s %s\n",
                        massoterapeuta->nome,
                        massoterapeuta->telefone,
@@ -546,55 +547,67 @@ void financeiroListandoNomes() {
 
 //Listas dinamicas
 
-void ListagemInversaAgendamentos(){
+void listagemInversaAgendamentos(){
     FILE *fp;
-    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
-    Elemento *lista;
-    Elemento *novo, *aux;
-
-    fp = fopen(ARQUIVO_AGENDAMENTOS, "rb");
+    Agendamento registroLido;
+    NoAgendamento *lista = NULL; 
+    
+    fp = fopen(ARQUIVO_AGENDAMENTOS, "rb"); 
+    
     if (fp == NULL) {
         printf("Nenhum agendamento cadastrado ainda.\n");
         pausar();
         return;
     }
 
-	lista = NULL;
-	while(fread(agendamento, sizeof(Agendamento), 1, fp) == 1){
-        novo = (Elemento*) malloc(sizeof(Elemento));
-        //
-        lista = novo;
-	}
-	fclose(fp);
+    while (fread(&registroLido, sizeof(Agendamento), 1, fp) == 1) {
+        
+        NoAgendamento* novoNo = (NoAgendamento*) malloc(sizeof(NoAgendamento));
 
-    printf("Listagem: ");
-    aux = lista;
-    while (aux != NULL) {
-        printf("%-4s %-17s %-21s %-15s %-5s\n",
-            aux->dados.id,
-            aux->dados.cpfCliente,
-            aux->dados.crefitoMassoterapeuta,
-            aux->dados.dataAgendada,
-            aux->dados.hora
-        );
-        aux = aux->prox;
+        novoNo->dados = registroLido; 
+        novoNo->prox = lista;
+        lista = novoNo;
+    }
+    
+    fclose(fp);
+
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+    printf("                              AGENDAMENTOS RECENTES                               \n");
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+    printf("ID   CPF Cliente      Crefito Massoterapeuta     Data de criação    Hora\n");
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+    
+    NoAgendamento* auxiliar = lista;
+    while (auxiliar != NULL) {
+        if (auxiliar->dados.status == 1) {
+            printf("%-3s %-17s %-30s %-13s %-2s\n",
+                auxiliar->dados.id,
+                auxiliar->dados.cpfCliente,
+                auxiliar->dados.crefitoMassoterapeuta,
+                auxiliar->dados.dataDoAgendamento,
+                auxiliar->dados.hora);
+        }
+        auxiliar = auxiliar->prox;
     }
 
-    // Liberação de memória
+    //Limpando memoria
+    auxiliar = lista;    
     while (lista != NULL) {
-        aux = lista;
         lista = lista->prox;
-        free(aux);
+        free(auxiliar); 
+        auxiliar = lista;
     }
 
+    pausar();
 }
 
-void ListagemOrdenadaCliente(){
+void listagemOrdenadaCliente(){
     
 }
 
 void relatorios() {
     int opcao;
+    int opcaoListar;
 
     do {
         menuRelatorios();
@@ -607,7 +620,6 @@ void relatorios() {
 
         switch(opcao) {
             case 1: 
-                int opcaoListar;
                 do {
                     menuRelatoriosListar(); 
                     if (scanf("%d", &opcaoListar) != 1) {
@@ -660,13 +672,13 @@ void relatorios() {
                 financeiroListandoNomes();
                 break;
             case 7:
-                ListagemInversaAgendamentos();
+                listagemInversaAgendamentos();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
                 break;
             default:
-                printf("\n Opção inválida! Digite um número entre 0 e 6.\n");
+                printf("\n Opção inválida! Digite um número entre 0 e 7.\n");
                 pausar();
                 break;
         }
