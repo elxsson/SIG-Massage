@@ -17,10 +17,12 @@ typedef struct {
     int status;
 } Agendamento;
 
-typedef struct Elemento {
-    Agendamento dados;
-    struct Elemento *prox;
-} Elemento;
+typedef struct noAgendamento NoAgendamento;
+
+struct noAgendamento {
+    Agendamento dados;     
+    NoAgendamento* prox;     
+};
 
 void agendamentos();
 void menuAgendamentos();

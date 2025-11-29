@@ -12,6 +12,6 @@ void filtrarProdutosPorPreco();
 void filtrarMassoterapeutasPorEspecialidade();
 void agendamentoListandoNomes();
 void financeiroListandoNomes();
-void ListagemInversaAgendamentos();
+void listagemInversaAgendamentos();
 
 #endif

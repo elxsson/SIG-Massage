@@ -28,7 +28,7 @@ void menuRelatorios() {
     printf("║ 4. Filtrar Por Especialidade de Massoterapeuta ║\n");
     printf("║ 5. Filtrar Agendamentos com Nomes              ║\n");
     printf("║ 6. Filtrar Financeiro com Nomes                ║\n");
-    printf("║ 7. Listagem inversa Agendamentos               ║\n");
+    printf("║ 7. Listagem de Agendamentos Recentes           ║\n");
     printf("║ 0. Voltar ao Menu Principal                    ║\n");
     printf("║                                                ║\n");
     printf("╚════════════════════════════════════════════════╝\n");
@@ -547,55 +547,67 @@ void financeiroListandoNomes() {
 
 //Listas dinamicas
 
-void ListagemInversaAgendamentos(){
+void listagemInversaAgendamentos(){
     FILE *fp;
-    Agendamento *agendamento = (Agendamento*)malloc(sizeof(Agendamento));
-    Elemento *lista;
-    Elemento *novo, *aux;
-
-    fp = fopen(ARQUIVO_AGENDAMENTOS, "rb");
+    Agendamento registroLido;
+    NoAgendamento *lista = NULL; 
+    
+    fp = fopen(ARQUIVO_AGENDAMENTOS, "rb"); 
+    
     if (fp == NULL) {
         printf("Nenhum agendamento cadastrado ainda.\n");
         pausar();
         return;
     }
 
-	lista = NULL;
-	while(fread(agendamento, sizeof(Agendamento), 1, fp) == 1){
-        novo = (Elemento*) malloc(sizeof(Elemento));
-        //
-        lista = novo;
-	}
-	fclose(fp);
+    while (fread(&registroLido, sizeof(Agendamento), 1, fp) == 1) {
+        
+        NoAgendamento* novoNo = (NoAgendamento*) malloc(sizeof(NoAgendamento));
 
-    printf("Listagem: ");
-    aux = lista;
-    while (aux != NULL) {
-        printf("%-4s %-17s %-21s %-15s %-5s\n",
-            aux->dados.id,
-            aux->dados.cpfCliente,
-            aux->dados.crefitoMassoterapeuta,
-            aux->dados.dataAgendada,
-            aux->dados.hora
-        );
-        aux = aux->prox;
+        novoNo->dados = registroLido; 
+        novoNo->prox = lista;
+        lista = novoNo;
+    }
+    
+    fclose(fp);
+
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+    printf("                              AGENDAMENTOS RECENTES                               \n");
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+    printf("ID   CPF Cliente      Crefito Massoterapeuta     Data de criação    Hora\n");
+    printf("══════════════════════════════════════════════════════════════════════════════════\n");
+    
+    NoAgendamento* auxiliar = lista;
+    while (auxiliar != NULL) {
+        if (auxiliar->dados.status == 1) {
+            printf("%-3s %-17s %-30s %-13s %-2s\n",
+                auxiliar->dados.id,
+                auxiliar->dados.cpfCliente,
+                auxiliar->dados.crefitoMassoterapeuta,
+                auxiliar->dados.dataDoAgendamento,
+                auxiliar->dados.hora);
+        }
+        auxiliar = auxiliar->prox;
     }
 
-    // Liberação de memória
+    //Limpando memoria
+    auxiliar = lista;    
     while (lista != NULL) {
-        aux = lista;
         lista = lista->prox;
-        free(aux);
+        free(auxiliar); 
+        auxiliar = lista;
     }
 
+    pausar();
 }
 
-void ListagemOrdenadaCliente(){
+void listagemOrdenadaCliente(){
     
 }
 
 void relatorios() {
     int opcao;
+    int opcaoListar;
 
     do {
         menuRelatorios();
@@ -608,7 +620,6 @@ void relatorios() {
 
         switch(opcao) {
             case 1: 
-                int opcaoListar;
                 do {
                     menuRelatoriosListar(); 
                     if (scanf("%d", &opcaoListar) != 1) {
@@ -661,13 +672,13 @@ void relatorios() {
                 financeiroListandoNomes();
                 break;
             case 7:
-                ListagemInversaAgendamentos();
+                listagemInversaAgendamentos();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
                 break;
             default:
-                printf("\n Opção inválida! Digite um número entre 0 e 6.\n");
+                printf("\n Opção inválida! Digite um número entre 0 e 7.\n");
                 pausar();
                 break;
         }
