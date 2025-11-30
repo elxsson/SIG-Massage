@@ -13,6 +13,7 @@ void filtrarMassoterapeutasPorEspecialidade();
 void agendamentoListandoNomes();
 void financeiroListandoNomes();
 void listagemInversaAgendamentos();
-void listagemDiretaCliente();
+void listagemDiretaClientePorLetra();
+void listagemOrdenadaCliente();
 
 #endif
