@@ -9,6 +9,13 @@ typedef struct {
     int status; // 1 = ativo, 0 = inativo
 } Cliente;
 
+typedef struct noCliente NoCliente;
+
+struct noCliente{
+    Cliente dados;
+    NoCliente* prox;
+};
+
 void clientes();
 void menuClientes();
 void cadastrarCliente();

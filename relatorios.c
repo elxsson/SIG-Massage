@@ -29,6 +29,7 @@ void menuRelatorios() {
     printf("║ 5. Filtrar Agendamentos com Nomes              ║\n");
     printf("║ 6. Filtrar Financeiro com Nomes                ║\n");
     printf("║ 7. Listagem de Agendamentos Recentes           ║\n");
+    printf("║ 8. Listagem Direta Clientes                    ║\n");
     printf("║ 0. Voltar ao Menu Principal                    ║\n");
     printf("║                                                ║\n");
     printf("╚════════════════════════════════════════════════╝\n");
@@ -601,8 +602,59 @@ void listagemInversaAgendamentos(){
     pausar();
 }
 
-void listagemOrdenadaCliente(){
+void listagemDiretaCliente(){
+    FILE *fp;
+    Cliente registroLido;
+    NoCliente* lista = NULL;
+    NoCliente* ultimo = NULL;
+
+    fp = fopen(ARQUIVO_CLIENTES,"rb");
     
+    if (fp == NULL) {
+        printf("Nenhum Cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    while(fread(&registroLido, sizeof(Cliente), 1, fp) == 1){
+
+        NoCliente *novoNo = (NoCliente*) malloc(sizeof(NoCliente));
+
+        novoNo->dados = registroLido;
+        novoNo->prox = NULL; 
+        if (lista == NULL) {
+            lista = novoNo;
+        } else {
+            ultimo->prox = novoNo;
+        }
+        ultimo = novoNo;
+
+    }
+    fclose(fp);
+
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
+    printf("Nome                     CPF              Telefone       Email\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
+    
+    NoCliente* auxiliar = lista;
+    while (auxiliar != NULL) {
+        if (auxiliar->dados.status == 1) {
+            printf("%-24s %-16s %-14s %s\n",
+                    auxiliar->dados.nome,
+                    auxiliar->dados.cpf,
+                    auxiliar->dados.telefone,
+                    auxiliar->dados.email);
+        }
+        auxiliar = auxiliar->prox;
+    }
+
+    auxiliar = lista;
+    while (lista != NULL) {
+        lista = lista->prox;
+        free(auxiliar);
+        auxiliar = lista;
+    }
+    pausar();
 }
 
 void relatorios() {
@@ -674,11 +726,14 @@ void relatorios() {
             case 7:
                 listagemInversaAgendamentos();
                 break;
+            case 8:
+                listagemDiretaCliente();
+                break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
                 break;
             default:
-                printf("\n Opção inválida! Digite um número entre 0 e 7.\n");
+                printf("\n Opção inválida! Digite um número entre 0 e 8.\n");
                 pausar();
                 break;
         }
