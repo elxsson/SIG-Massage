@@ -30,6 +30,7 @@ void menuRelatorios() {
     printf("║ 6. Filtrar Financeiro com Nomes                ║\n");
     printf("║ 7. Listagem de Agendamentos Recentes           ║\n");
     printf("║ 8. Listagem Direta Clientes                    ║\n");
+    printf("║ 9. Listagem Ordenada Clientes                  ║\n");
     printf("║ 0. Voltar ao Menu Principal                    ║\n");
     printf("║                                                ║\n");
     printf("╚════════════════════════════════════════════════╝\n");
@@ -656,6 +657,73 @@ void listagemDiretaCliente(){
     }
     pausar();
 }
+void listagemOrdenadaCliente() {
+    FILE *fp;
+    Cliente registroLido;
+    NoCliente *lista = NULL;
+    NoCliente *novoNo, *anter, *atual;
+
+    fp = fopen(ARQUIVO_CLIENTES, "rb");
+    
+    if (fp == NULL) {
+        printf("Nenhum Cliente cadastrado ainda.\n");
+        pausar();
+        return;
+    }
+
+    while(fread(&registroLido, sizeof(Cliente), 1, fp) == 1) {
+        if (registroLido.status != 1) {
+            continue;
+        }
+
+        novoNo = (NoCliente*) malloc(sizeof(NoCliente));
+        novoNo->dados = registroLido;
+        
+        if (lista == NULL) {
+            lista = novoNo;
+            novoNo->prox = NULL;
+        } else if (strcasecmp(novoNo->dados.nome, lista->dados.nome) < 0) {
+            novoNo->prox = lista;
+            lista = novoNo;
+        } else {
+            anter = lista;
+            atual = lista->prox;
+            
+            while ((atual != NULL) && strcasecmp(atual->dados.nome, novoNo->dados.nome) < 0) {
+                anter = atual;
+                atual = atual->prox;
+            }
+            
+            anter->prox = novoNo;
+            novoNo->prox = atual;
+        }
+    }
+    fclose(fp);
+
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
+    printf("                  CLIENTES CADASTRADOS (ORDEM ALFABÉTICA)                         \n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
+    printf("Nome                     CPF              Telefone       Email\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
+    
+    NoCliente* auxiliar = lista;
+    while (auxiliar != NULL) {
+        printf("%-24s %-16s %-14s %s\n",
+                auxiliar->dados.nome,
+                auxiliar->dados.cpf,
+                auxiliar->dados.telefone,
+                auxiliar->dados.email);
+        auxiliar = auxiliar->prox;
+    }
+
+    auxiliar = lista;
+    while (lista != NULL) {
+        lista = lista->prox;
+        free(auxiliar);
+        auxiliar = lista;
+    }
+    pausar();
+}
 
 void relatorios() {
     int opcao;
@@ -728,6 +796,9 @@ void relatorios() {
                 break;
             case 8:
                 listagemDiretaCliente();
+                break;
+            case 9:
+                listagemOrdenadaCliente();
                 break;
             case 0:
                 printf("\n Retornando ao menu principal...\n"); 
