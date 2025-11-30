@@ -9,6 +9,13 @@ typedef struct {
     int status;
 } Produto;
 
+typedef struct noProduto NoProduto;
+
+struct noProduto{
+    Produto dados;
+    NoProduto* prox;
+};
+
 void produtos();
 void menuProdutos();
 void cadastrarProduto();
