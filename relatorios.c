@@ -29,7 +29,7 @@ void menuRelatorios() {
     printf("║ 5. Filtrar Agendamentos com Nomes              ║\n");
     printf("║ 6. Filtrar Financeiro com Nomes                ║\n");
     printf("║ 7. Listagem de Agendamentos Recentes           ║\n");
-    printf("║ 8. Listagem Direta Clientes                    ║\n");
+    printf("║ 8. Listagem Direta Clientes Por Letra          ║\n");
     printf("║ 9. Listagem Ordenada Clientes                  ║\n");
     printf("║ 0. Voltar ao Menu Principal                    ║\n");
     printf("║                                                ║\n");
@@ -603,11 +603,16 @@ void listagemInversaAgendamentos(){
     pausar();
 }
 
-void listagemDiretaCliente(){
+void listagemDiretaClientePorLetra(){
     FILE *fp;
     Cliente registroLido;
     NoCliente* lista = NULL;
     NoCliente* ultimo = NULL;
+
+    char letraFiltro;
+    printf("\nDigite a letra para filtrar: ");
+    scanf(" %c", &letraFiltro);
+    getchar(); // Limpa o buffer do teclado
 
     fp = fopen(ARQUIVO_CLIENTES,"rb");
     
@@ -634,12 +639,14 @@ void listagemDiretaCliente(){
     fclose(fp);
 
     printf("════════════════════════════════════════════════════════════════════════════════════\n");
+    printf("                          Nomes começando com '%c'\n", letraFiltro);
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
     printf("Nome                     CPF              Telefone       Email\n");
     printf("════════════════════════════════════════════════════════════════════════════════════\n");
     
     NoCliente* auxiliar = lista;
     while (auxiliar != NULL) {
-        if (auxiliar->dados.status == 1) {
+        if (auxiliar->dados.status == 1 && toupper(auxiliar->dados.nome[0]) == toupper(letraFiltro)) {
             printf("%-24s %-16s %-14s %s\n",
                     auxiliar->dados.nome,
                     auxiliar->dados.cpf,
@@ -657,6 +664,7 @@ void listagemDiretaCliente(){
     }
     pausar();
 }
+
 void listagemOrdenadaCliente() {
     FILE *fp;
     Cliente registroLido;
@@ -795,7 +803,7 @@ void relatorios() {
                 listagemInversaAgendamentos();
                 break;
             case 8:
-                listagemDiretaCliente();
+                listagemDiretaClientePorLetra();
                 break;
             case 9:
                 listagemOrdenadaCliente();
