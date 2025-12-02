@@ -681,30 +681,29 @@ void listagemOrdenadaCliente() {
     }
 
     while(fread(&registroLido, sizeof(Cliente), 1, fp) == 1) {
-        if (registroLido.status != 1) {
-            continue;
-        }
-
-        novoNo = (NoCliente*) malloc(sizeof(NoCliente));
-        novoNo->dados = registroLido;
+    
+        if (registroLido.status == 1) {
+            novoNo = (NoCliente*) malloc(sizeof(NoCliente));
+            novoNo->dados = registroLido;
+            
+            if (lista == NULL) {
+                lista = novoNo;
+                novoNo->prox = NULL;
+            } else if (strcasecmp(novoNo->dados.nome, lista->dados.nome) < 0) {
+                novoNo->prox = lista;
+                lista = novoNo;
+            } else {
+                anter = lista;
+                atual = lista->prox;
+                
+                while ((atual != NULL) && strcasecmp(atual->dados.nome, novoNo->dados.nome) < 0) {
+                    anter = atual;
+                    atual = atual->prox;
+                }
         
-        if (lista == NULL) {
-            lista = novoNo;
-            novoNo->prox = NULL;
-        } else if (strcasecmp(novoNo->dados.nome, lista->dados.nome) < 0) {
-            novoNo->prox = lista;
-            lista = novoNo;
-        } else {
-            anter = lista;
-            atual = lista->prox;
-            
-            while ((atual != NULL) && strcasecmp(atual->dados.nome, novoNo->dados.nome) < 0) {
-                anter = atual;
-                atual = atual->prox;
+                anter->prox = novoNo;
+                novoNo->prox = atual;
             }
-            
-            anter->prox = novoNo;
-            novoNo->prox = atual;
         }
     }
     fclose(fp);
