@@ -1,12 +1,17 @@
 #ifndef CLIENTES_H
 #define CLIENTES_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "utils.h"
+
 typedef struct {
     char nome[70];
     char cpf[20];
     char telefone[20];
     char email[70];
-    int status; // 1 = ativo, 0 = inativo
+    int status;
 } Cliente;
 
 typedef struct noCliente NoCliente;
@@ -23,8 +28,6 @@ void listarClientes();
 void buscarCliente();
 void atualizarCliente();
 void deletarCliente();
-
-// funcoes auxiliares
 int salvarCliente(Cliente *c);
 int carregarClientes(Cliente **clientes, int *quantidade);
 int atualizarArquivoClientes(Cliente *clientes, int quantidade);
