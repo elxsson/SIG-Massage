@@ -1,19 +1,6 @@
-/*
-|=============================================================|
-|                  MODULO MASSOTERAPEUTA                      |
-| CRUD para a gestao de massoterapeutas do sistema SIG-MASSAGE|
-|=============================================================|
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 #include "massoterapeutas.h"
-#include "utils.h"
 
 #define MASSOTERAPEUTAS_FILE "massoterapeutas.dat"
-
 
 void menuMassoterapeutas() {
     limparTela();
@@ -149,9 +136,9 @@ void listarMassoterapeutas() {
         return;
     }
 
-     printf("==============================================================================================================\n");
-    printf("Nome                     CPF              Telefone       Email                  CREFITO       Especialidade\n");
-    printf("==============================================================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════════════════════════════════════════\n");
+    printf("Nome                     CPF              Telefone       Email                  CREFITO       Especialidade   \n");
+    printf("══════════════════════════════════════════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(massoterapeuta, sizeof(Massoterapeutas), 1, fp)) {
         if (massoterapeuta->status == 1) {
@@ -166,7 +153,7 @@ void listarMassoterapeutas() {
         }
     }
     
-    printf("==============================================================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════════════════════════════════════════\n");
 
     if (massoterapeutasAtivos == 0) {
         printf("Nenhum massoterapeuta ativo encontrado.\n");
@@ -198,15 +185,15 @@ void buscarMassoterapeuta() {
     int encontrado = 0;
     for (int i = 0; i < quantidade; i++) {
         if (strcmp(massoterapeutas[i].cpf, cpfBusca) == 0 && massoterapeutas[i].status == 1) {
-            printf("\n Massoterapeuta encontrado:\n");
-            printf("──────────────────────────────────────────────\n");
+            printf("\n       Massoterapeuta encontrado \n");
+            printf("═══════════════════════════════════════════════\n");
             printf("Nome: %s\n", massoterapeutas[i].nome);
             printf("CPF: %s\n", massoterapeutas[i].cpf);
             printf("Telefone: %s\n", massoterapeutas[i].telefone);
             printf("Email: %s\n", massoterapeutas[i].email);
             printf("CREFITO: %s\n", massoterapeutas[i].crefito);
             printf("Especialidade: %s\n", massoterapeutas[i].especialidade);
-            printf("──────────────────────────────────────────────\n");
+            printf("═══════════════════════════════════════════════\n");
             encontrado = 1;
             break;
         }
