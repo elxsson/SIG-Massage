@@ -1,6 +1,11 @@
 #ifndef FINANCEIRO_H
 #define FINANCEIRO_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "utils.h"
+
 typedef struct {
     char tipo;          // 'E' = entrada, 'S' = saida
     float valor;
