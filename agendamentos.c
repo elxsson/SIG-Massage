@@ -1,9 +1,3 @@
-/*
-|=============================================================|
-|                    MODULO AGENDAMENTOS                      |
-| CRUD para a gestao de clientes do sistema SIG-MASSAGE       |
-|=============================================================|
-*/
 #include "agendamentos.h"
 
 #define ARQUIVO_AGENDAMENTOS "agendamentos.dat"
@@ -132,9 +126,9 @@ void listarAgendamentos() {
         return;
     }
 
-    printf("===============================================================================\n");
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
     printf("ID   CPF Cliente      Cod Massoterapeuta     Data Agendada   Hora\n");
-    printf("===============================================================================\n");
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(agendamento, sizeof(Agendamento), 1, fp)) {
         if (agendamento->status == 1) {
@@ -147,7 +141,7 @@ void listarAgendamentos() {
         }
     }
 
-    printf("===============================================================================\n");
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
         fclose(fp);
         free(agendamento);
         pausar();
@@ -163,7 +157,9 @@ void buscarAgendamento() {
     printf("║            BUSCAR AGENDAMENTO                ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
-    printf("Digite o id do agendamento: ");
+    listarAgendamentos();
+
+    printf("Digite o id do agendamento que deseja buscar: ");
     scanf(" %19s", IdBusca);
     limparBuffer();
 
@@ -172,14 +168,14 @@ void buscarAgendamento() {
     int encontrado = 0;
     for (int i = 0; i < quantidade; i++) {
         if (strcmp(agendamento[i].id, IdBusca) == 0 && agendamento[i].status == 1) {
-            printf("\n Agendamento encontrado:\n");
-            printf("──────────────────────────────────────────────\n");
+            printf("\n         Agendamento encontrado\n");
+            printf("══════════════════════════════════════════════\n");
             printf("ID: %s\n", agendamento[i].id);
             printf("CPF do Cliente: %s\n", agendamento[i].cpfCliente);
             printf("Crefito do Massoterapeuta: %s\n", agendamento[i].crefitoMassoterapeuta);
             printf("Data agendada: %s\n", agendamento[i].dataAgendada);
             printf("Hora agendada: %s\n", agendamento[i].hora);
-            printf("──────────────────────────────────────────────\n");
+            printf("══════════════════════════════════════════════\n");
             encontrado = 1;
             break;
         }
@@ -280,17 +276,17 @@ void deletarAgendamento() {
         return;
     }
 
-    printf("\nAgendamento encontrado:\n");
-    printf("===============================================================================\n");
+    printf("\n                         Agendamento encontrado\n");
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
     printf("ID   CPF Cliente      Cod Massoterapeuta     Data Agendada   Hora\n");
-    printf("===============================================================================\n");
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
             printf("%-4s %-17s %-21s %-15s %-5s\n",
                 agendamento[indice].id,
                 agendamento[indice].cpfCliente,
                 agendamento[indice].crefitoMassoterapeuta,
                 agendamento[indice].dataAgendada,
                 agendamento[indice].hora);
-    printf("===============================================================================\n");
+    printf("═══════════════════════════════════════════════════════════════════════════════\n");
     printf("\nTem certeza que deseja deletar? (S/N): ");
     scanf(" %c", &confirmacao);
     limparBuffer();

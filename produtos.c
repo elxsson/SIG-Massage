@@ -1,16 +1,4 @@
-/*
-|=============================================================|
-|                      MODULO PRODUTOS                        |
-| CRUD para a gestão de produtos do sistema SIG-MASSAGE        |
-|=============================================================|
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 #include "produtos.h"
-#include "utils.h"
 
 #define ARQUIVO_PRODUTOS "produtos.dat"
 
@@ -136,9 +124,9 @@ void listarProdutos() {
         return;
     }
 
-    printf("==========================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════\n");
     printf("Nome                     Código       Preço       Estoque\n");
-    printf("==========================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(produto, sizeof(Produto), 1, fp)) {
         if (produto->status == 1) {
@@ -151,7 +139,7 @@ void listarProdutos() {
         }
     }
     
-    printf("==========================================================================\n");
+    printf("══════════════════════════════════════════════════════════════════════════\n");
 
     if (produtosAtivos == 0) {
         printf("Nenhum produto ativo encontrado.\n");
@@ -183,13 +171,13 @@ void buscarProduto() {
     int encontrado = 0;
     for (int i = 0; i < quantidade; i++) {
         if (strcmp(produtos[i].codigo, codigoBusca) == 0 && produtos[i].status == 1) {
-            printf("\n Produto encontrado:\n");
-            printf("──────────────────────────────────────────────\n");
+            printf("\n            Produto encontrado\n");
+            printf("══════════════════════════════════════════════\n");
             printf("Nome: %s\n", produtos[i].nome);
             printf("Código: %s\n", produtos[i].codigo);
             printf("Preço: R$ %.2f\n", produtos[i].preco);
             printf("Estoque: %d\n", produtos[i].estoque);
-            printf("──────────────────────────────────────────────\n");
+            printf("══════════════════════════════════════════════\n");
             encontrado = 1;
             break;
         }

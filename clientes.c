@@ -1,34 +1,22 @@
-/*
-|=============================================================|
-|                    MODULO CLIENTE                           |
-| CRUD para a gestao de clientes do sistema SIG-MASSAGE       |
-|=============================================================|
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "clientes.h"
-#include "utils.h"
 
 #define ARQUIVO_CLIENTES "clientes.dat"
 
-
 void menuClientes() {
-        limparTela();
-        printf("\n╔══════════════════════════════════════════════╗\n");
-        printf("║                 MODULO CLIENTE               ║\n");
-        printf("╠══════════════════════════════════════════════╣\n");
-        printf("║                                              ║\n");
-        printf("║ 1. Cadastrar Cliente                         ║\n");
-        printf("║ 2. Listar Clientes                           ║\n");
-        printf("║ 3. procurar Cliente                          ║\n");
-        printf("║ 4. Atualizar Dados do Cliente                ║\n");
-        printf("║ 5. exluir Cliente                            ║\n");
-        printf("║ 0. Voltar ao Menu Principal                  ║\n");
-        printf("║                                              ║\n");
-        printf("╚══════════════════════════════════════════════╝\n");
-        printf("\n Digite a opção desejada: ");
+    limparTela();
+    printf("\n╔══════════════════════════════════════════════╗\n");
+    printf("║                 MODULO CLIENTE               ║\n");
+    printf("╠══════════════════════════════════════════════╣\n");
+    printf("║                                              ║\n");
+    printf("║ 1. Cadastrar Cliente                         ║\n");
+    printf("║ 2. Listar Clientes                           ║\n");
+    printf("║ 3. Procurar Cliente                          ║\n");
+    printf("║ 4. Atualizar Dados do Cliente                ║\n");
+    printf("║ 5. Exluir Cliente                            ║\n");
+    printf("║ 0. Voltar ao Menu Principal                  ║\n");
+    printf("║                                              ║\n");
+    printf("╚══════════════════════════════════════════════╝\n");
+    printf("\n Digite a opção desejada: ");
 }
 
 int salvarCliente(Cliente *c) {
@@ -136,9 +124,9 @@ void listarClientes() {
         return;
     }
 
-    printf("====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
     printf("Nome                     CPF              Telefone       Email\n");
-    printf("====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(cliente, sizeof(Cliente), 1, fp)) {
         if (cliente->status == 1) {
@@ -151,7 +139,7 @@ void listarClientes() {
         }
     }
     
-    printf("====================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════\n");
 
     if (clientesAtivos == 0) {
         printf("Nenhum cliente ativo encontrado.\n");
@@ -171,7 +159,7 @@ void buscarCliente() {
 
     limparTela();
     printf("\n╔══════════════════════════════════════════════╗\n");
-    printf("║            BUSCAR CLIENTE                    ║\n");
+    printf("║                BUSCAR CLIENTE                ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
 
     printf("Digite o CPF do cliente: ");
@@ -183,13 +171,13 @@ void buscarCliente() {
     int encontrado = 0;
     for (int i = 0; i < quantidade; i++) {
         if (strcmp(clientes[i].cpf, cpfBusca) == 0 && clientes[i].status == 1) {
-            printf("\n Cliente encontrado:\n");
-            printf("──────────────────────────────────────────────\n");
+            printf("\n           Cliente encontrado\n");
+            printf("══════════════════════════════════════════════\n");
             printf("Nome: %s\n", clientes[i].nome);
             printf("CPF: %s\n", clientes[i].cpf);
             printf("Telefone: %s\n", clientes[i].telefone);
             printf("Email: %s\n", clientes[i].email);
-            printf("──────────────────────────────────────────────\n");
+            printf("══════════════════════════════════════════════\n");
             encontrado = 1;
             break;
         }
@@ -212,6 +200,8 @@ void atualizarCliente() {
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║            ATUALIZAR CLIENTE                 ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
+
+    listarClientes();
 
     printf("Digite o CPF do cliente a atualizar: ");
     scanf(" %19s", cpfBusca);
@@ -260,6 +250,8 @@ void deletarCliente() {
     printf("\n╔══════════════════════════════════════════════╗\n");
     printf("║            DELETAR CLIENTE                   ║\n");
     printf("╚══════════════════════════════════════════════╝\n\n");
+
+    listarClientes();
 
     printf("Digite o CPF do cliente a deletar: ");
     scanf(" %19s", cpfBusca);

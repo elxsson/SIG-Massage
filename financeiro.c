@@ -1,15 +1,4 @@
-/*
-|=============================================================|
-|                    MODULO FINANCEIRO                        |
-| Controle de entradas (sessões/produtos) e saídas (salários) |
-|=============================================================|
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "financeiro.h"
-#include "utils.h"
 
 #define ARQUIVO_FINANCEIRO "financeiro.dat"
 
@@ -183,9 +172,9 @@ void listarFinanceiro() {
         return;
     }
 
-    printf("========================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════════\n");
     printf("Tipo         Valor        Descrição                                CPF Massoterapeuta\n");
-    printf("========================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════════\n");
 
     while (fread(mov, sizeof(Movimentacao), 1, fp)) {
         if (mov->status == 1) {
@@ -208,7 +197,7 @@ void listarFinanceiro() {
         }
     }
     
-    printf("========================================================================================\n");
+    printf("════════════════════════════════════════════════════════════════════════════════════════\n");
 
     if (movAtivas == 0) {
         printf("Nenhuma movimentação ativa encontrada.\n");

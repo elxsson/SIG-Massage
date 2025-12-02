@@ -28,8 +28,11 @@ void agendamentos();
 void menuAgendamentos();
 void cadastrarAgendamento();
 void listarAgendamentos();
+void buscarAgendamento();
 void atualizarAgendamento();
 void deletarAgendamento();
 int salvarAgendamento(Agendamento *a);
+int carregarAgendamentos(Agendamento **agendamento, int *quantidade);
+int atualizarArquivoAgendamentos(Agendamento *agendamento, int quantidade);
 
 #endif
