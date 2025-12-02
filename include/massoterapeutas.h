@@ -19,10 +19,10 @@ typedef struct {
 
 typedef enum {
     Relaxante = 1,
-    Terapeutica = 2,
-    Esportiva = 3,
-    Quiropratica = 4,
-    Ayurvedica = 5
+    Terapeutica,
+    Esportiva,
+    Quiropratica,
+    Ayurvedica
 } Especialidade;
 
 void massoterapeutas();

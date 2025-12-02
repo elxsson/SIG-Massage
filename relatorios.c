@@ -576,18 +576,17 @@ void listagemInversaAgendamentos(){
     printf("══════════════════════════════════════════════════════════════════════════════════\n");
     printf("                              AGENDAMENTOS RECENTES                               \n");
     printf("══════════════════════════════════════════════════════════════════════════════════\n");
-    printf("ID   CPF Cliente      Crefito Massoterapeuta     Data de criação    Hora\n");
+    printf("ID   CPF Cliente      Crefito Massoterapeuta     Data de criação                  \n");
     printf("══════════════════════════════════════════════════════════════════════════════════\n");
     
     NoAgendamento* auxiliar = lista;
     while (auxiliar != NULL) {
         if (auxiliar->dados.status == 1) {
-            printf("%-3s %-17s %-30s %-13s %-2s\n",
+            printf("%-3s %-17s %-30s %-13s\n",
                 auxiliar->dados.id,
                 auxiliar->dados.cpfCliente,
                 auxiliar->dados.crefitoMassoterapeuta,
-                auxiliar->dados.dataDoAgendamento,
-                auxiliar->dados.hora);
+                auxiliar->dados.dataDoAgendamento);
         }
         auxiliar = auxiliar->prox;
     }
